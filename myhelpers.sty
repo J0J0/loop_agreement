@@ -1,0 +1,74 @@
+\ProvidesPackage{myhelpers}
+
+\RequirePackage{ifmtarg}
+
+
+% takes a macro (e.g. \cmd) and yields its name (e.g. cmd)
+\newcommand*{\@removebackslash}[1]{\expandafter\@gobble\string#1}
+
+
+% execute #1 for each token in #2
+\providecommand\@callforeachtoken[2]{%
+\@tfor \next := #2 \do{%
+\expandafter#1\expandafter{\next}%
+}%
+}
+
+% define command #1 to be a 'foreach token' version of #2
+\newcommand\@newforeachtokencommand[2]{%
+\newcommand{#1}[1]{\@callforeachtoken{#2}{##1}}%
+}
+
+
+% this takes a greek letter macro, e.g. \epsilon,
+% and does the following things:
+% - save \epsilon as \origepsilon
+% - overwrite \epsilon with \varepsilon
+\newcommand*{\@varifygreekletter}[1]{%
+\begingroup
+    \edef\@tempname{\@removebackslash{#1}}%
+    \edef\@tempvar{\csname var\@tempname\endcsname}%
+    \edef\@temporig{\csname orig\@tempname\endcsname}%
+    \expandafter\newcommand\@temporig{} % just make sure LaTeX complains if we
+                                        % intend to overwrite an existing macro
+    \expandafter\global\expandafter\let\@temporig=#1%
+    \global\let#1=\@tempvar%
+\endgroup
+}
+
+% like the macro above but takes a list of macros, e.g:
+% \epsilon\theta\phi
+\@newforeachtokencommand\varifygreekletters\@varifygreekletter
+
+
+
+% can be used to make single letter shortcuts for special sets like N,Z,\dots.
+% example: \defmathbbsymbol{N}, then type \N in mathmode
+\newcommand{\@defmathbbsymbol}[1]{%
+    \expandafter\newcommand\csname #1\endcsname{\mathbb{#1}}%
+}
+
+% like the above but makes a 'subscript version':
+% the defined commands can be called like this
+% \N[>0]
+% to produce \N_{>0}
+\newcommand{\@defmathbbsymbolsub}[1]{%
+    \expandafter\newcommand\csname #1\endcsname[1][]{%
+        \@ifmtarg{##1}{\mathbb{#1}}{\mathbb{#1}_{##1}}%
+    }%
+}
+
+% tokenlist versions of the two commands above.
+% example: \defmathbbsymbols{N Z Q} or \defmathbbsymbolsubs{N Z Q}
+\@newforeachtokencommand\defmathbbsymbols\@defmathbbsymbol
+\@newforeachtokencommand\defmathbbsymbolsubs\@defmathbbsymbolsub
+
+
+% make some commands that create text shortcuts
+\newcommand{\qXq}[1]{\expandafter\newcommand\csname q#1q\endcsname{\quad\csname#1\endcsname\quad}}
+\newcommand{\qXAq}[1]{\expandafter\newcommand\csname q#1q\endcsname[1]{\quad\csname#1\endcsname{##1}\quad}}
+\qXAq{text}
+\newcommand{\qTXq}[1]{\expandafter\newcommand\csname q#1q\endcsname{\qtextq{#1}}}
+\newcommand{\qqtextqq}[1]{\qquad\text{#1}\qquad}
+\newcommand{\qqTXqq}[1]{\expandafter\newcommand\csname qq#1qq\endcsname{\qqtextqq{#1}}}
+

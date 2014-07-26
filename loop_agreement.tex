@@ -1,0 +1,253 @@
+\documentclass[11pt,a4paper,ngerman,DIV=11,bibliography=totoc,titlepage=false]{scrreprt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage[all]{xy}
+\usepackage{tikz}
+
+\usepackage[babel]{csquotes}
+\usepackage[shortlabels]{enumitem}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{ifmtarg}
+\usepackage{xstring}
+\usepackage{remreset}
+
+\usepackage[lowtilde]{url}
+\usepackage[pdftex,bookmarks,colorlinks=false,pdfborder={0 0 0},%
+            pdftitle={Bachelor Thesis: Classification of Loop Agreement Tasks},%
+            pdfauthor={Johannes Prem}]{hyperref}
+%
+\usepackage{cleveref}
+\let\cref=\Cref
+
+\usepackage{myhelpers}  % my own myhelpers.sty
+\usepackage{mymathmisc} % my own mymathmisc.sty
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% macro definitions and other things
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% don't reset footnote numbers
+\makeatletter
+\@removefromreset{footnote}{chapter}
+\makeatother
+
+
+% set the url style (especially for the bibliography)
+\urlstyle{sf}
+
+% make parenthesized versions of \ref and cleveref's \cref
+\newcommand*{\pref}[1]{(\ref{#1})}
+\newcommand*{\pcref}[1]{(\cref{#1})}
+
+% make a even more clever \mycref that produces "Lemma 42 (a)" etc.
+\newcommand{\mycref}[1]{%
+    \begingroup%
+    \StrCount{#1}{:}[\mycrefCount]%
+    \StrBefore[\mycrefCount]{#1}{:}[\myrefMain]%
+    \expandafter\cref\expandafter{\myrefMain}\,\ref{#1}%
+    \endgroup%
+}
+
+% make \varepsilon and \varphi default
+\varifygreekletters{\epsilon\phi}
+
+% change the qedsymbol to my favoured blacksquare
+\renewcommand{\qedsymbol}{$\blacksquare$}
+
+% style for /all/ theorem like environments
+\newtheoremstyle{mythms}
+ {15pt}% space above
+ {12pt}% space below 
+ {}% body font
+ {}% indent amount
+ {\bfseries}% theorem head font
+ {.}% punctuation after theorem head
+ {0.6cm plus 0.25cm minus 0.1cm}% space after theorem head (\newline possible)
+ {}% theorem head spec 
+ 
+% set style and define thm like environments
+\theoremstyle{mythms}
+\newtheorem{globalnum}{DUMMY DUMMY DUMMY}[chapter]
+\newtheorem{thDef}[globalnum]{Definition}
+\newtheorem{thTheorem}[globalnum]{Theorem}
+\newtheorem{thProposition}[globalnum]{Proposition}
+\newtheorem{thLemma}[globalnum]{Lemma}
+\newtheorem{thCorollary}[globalnum]{Corollary}
+
+\newtheorem{thSetup}[globalnum]{Setup}
+\newtheorem{thNotation}[globalnum]{Notation}
+\newtheorem{thConvention}[globalnum]{Convention}
+\newtheorem{thExample}[globalnum]{Example}
+\newtheorem{thExamples}[globalnum]{Examples}
+\newenvironment{ExampleList}[1][]{%
+\nopagebreak\begin{thExamples}#1%
+\hfill\begin{enumerate}[(a),parsep=0pt,itemsep=0.8ex,leftmargin=2em]%
+}{%
+\end{enumerate}\end{thExamples}
+}
+%
+
+% also define a 'proofsketch' version of 'proof'
+\newenvironment{proofsketch}[1][]{%
+\begin{proof}[proofsketch#1]
+}{%
+\end{proof}
+}
+
+% inject pdfbookmarks at thm like environments
+\makeatletter
+\let\origthmhead=\thmhead
+\renewcommand{\thmhead}[3]{%
+\origthmhead{#1}{#2}{#3}%
+\belowpdfbookmark{#1\@ifnotempty{#1}{ }#2\thmnote{ (#3)}}{#1#2}%
+}
+\makeatother
+
+% avoid "already defined"
+\let\ker=\relax
+% new math 'operators'
+\newcommand{\sDMO}[1]{\expandafter\DeclareMathOperator\csname#1\endcsname{#1}}
+
+\sDMO{car}
+\sDMO{const}
+\sDMO{id}
+\sDMO{im}
+\sDMO{ker}
+\sDMO{Pot}
+
+% categories
+\newcommand{\MakeCategoryName}[1]{%
+    \expandafter\DeclareMathOperator\csname#1\endcsname{\mathsf{#1}}
+}
+
+\MakeCategoryName{Ab}
+\MakeCategoryName{Group}
+\MakeCategoryName{Mod}
+\MakeCategoryName{Ring}
+\MakeCategoryName{Set}
+\MakeCategoryName{Simp}
+\MakeCategoryName{Top}
+
+%
+\newcommand{\lXX}[2]{\mathop{{}_{#2}\mkern-2.5mu#1}}
+\newcommand{\makeLRcat}[1]{%
+    \expandafter\newcommand\csname l#1\endcsname{\expandafter\lXX\csname#1\endcsname}
+    \expandafter\newcommand\csname r#1\endcsname[1]{\csname#1\endcsname_{##1}}
+}
+%
+\makeLRcat{Mod}
+
+% make quantors that use \limits per default
+\DeclareMathOperator*{\Exists}{\exists}
+\DeclareMathOperator*{\forAll}{\forall}
+
+% define an 'abs', 'norm' and 'Spann' command
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\DeclarePairedDelimiter{\Spann}{\langle}{\rangle}
+
+% define missing arrows
+\newcommand{\longto}{\longrightarrow}
+\newcommand{\longhookrightarrow}{\lhook\joinrel\relbar\joinrel\rightarrow}
+\newcommand{\isorightarrow}[1][]{\xrightarrow[#1]{\smash{\raisebox{-2pt}{$\sim$}}}}
+
+% provide mathbb symbols \N \Z \Q \R and \C
+\defmathbbsymbols{Z Q C}
+\defmathbbsymbolsubs{N R}
+
+% define some point set topology specific macros
+\newcommand{\setclosure}[1]{\overline{#1}}
+\newcommand{\setinterior}[1]{#1^\circ}
+\newcommand{\setboundary}[1]{\partial #1}
+
+% quotient by means of groups/rings/vector spaces
+\newcommand{\Quot}[3][\big]{%
+\raisebox{2pt}{$\mathsurround=0pt\displaystyle #2$}\mkern-3mu%
+#1/%
+\mkern-3mu\raisebox{-3.5pt}{$\displaystyle #3$}%
+}
+
+\newcommand{\txtZQuot}[1]{\Z/#1\Z}
+
+% just some shortcuts
+\newcommand{\after}{\surround{\mskip4mu plus 2mu minus 1mu}{\mathord{\circ}}}
+\newcommand{\defeq}{\coloneqq}
+\newcommand{\eqdef}{\eqqcolon}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\isum}[1][0]{\sum_{i=#1}}
+\newcommand{\ksum}[1][0]{\sum_{k=#1}}
+\newcommand{\mr}{\mathrm}
+\newcommand{\pot}[1]{\Pot(#1)}
+\newcommand{\scdot}{\,\cdot\,}
+\newcommand{\setOneto}[1]{\{1,\ldots,#1\}}
+\newcommand{\setZeroto}[1]{\{0,\ldots,#1\}}
+\newcommand{\surround}[2]{#1#2#1}
+\newcommand{\thalf}{\tfrac{1}{2}}
+
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+
+% some text shortcuts
+\qXq{iff}
+\qXq{implies}
+\qTXq{or}
+\qTXq{and}
+\qqTXqq{and}
+
+
+%% use some tikz libraries
+%\usetikzlibrary{arrows,calc,intersections}
+
+% xy tip selection (ComputerModern)
+\SelectTips{cm}{}
+\UseTips
+
+% other xy specific settings
+\newcommand{\xyhookdirspacing}{4pt}
+\newdir{`}{\dir^{(}} 
+\newdir{ `}{{}*!/-\xyhookdirspacing/\dir{`}}
+\iffalse)\fi % fix syntax highlighting
+
+% listing with -- is nicer than with bullets 
+\setlist[itemize,1]{label=--}
+
+%%% start at chapter 0
+%%\setcounter{chapter}{-1}
+
+% format chapters with roman numbers
+\renewcommand*{\chapterformat}{\mbox{\Roman{chapter}\autodot\enskip}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\input{titlepage}
+
+\appendix
+\nocite{bookc:munkres00}
+\nocite{bookc:herlihyetal13}
+\bibliographystyle{plaindin}
+\bibliography{bibsources}
+
+\end{document}
+
+
+
+
+

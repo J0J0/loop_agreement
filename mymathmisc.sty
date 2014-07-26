@@ -1,0 +1,148 @@
+\ProvidesPackage{mymathmisc}
+
+% want a shorter command for matrices \dots
+\newcommand*{\Matrix}[1]{%
+\begin{pmatrix} #1 \end{pmatrix}%
+}
+
+% \dots and vectors
+\newcommand{\vect}{}
+\let\vect=\Matrix
+
+% \dots and right aligned matrices
+\newcommand*{\RMatrix}[1]{%
+\begin{pmatrix*}[r] #1 \end{pmatrix*}%
+}
+
+% \dots and smallmatrices
+\newcommand*{\smallmat}[1]{%
+\begin{psmallmatrix} #1 \end{psmallmatrix}%
+}
+\newcommand*{\smallRmat}[1]{%
+    \begin{psmallmatrix*}[r] #1 \end{psmallmatrix*}%
+}
+
+
+%---
+% the following creates an operator norm as a tripple stroke \vert
+% (source: mathabx fonts)
+\DeclareFontFamily{U}{matha}{\hyphenchar\font45}
+\DeclareFontShape{U}{matha}{m}{n}{
+      <5> <6> <7> <8> <9> <10> gen * matha
+      <10.95> matha10 <12> <14.4> <17.28> <20.74> <24.88> matha12
+      }{}
+\DeclareSymbolFont{matha}{U}{matha}{m}{n}
+\DeclareFontFamily{U}{mathx}{\hyphenchar\font45}
+\DeclareFontShape{U}{mathx}{m}{n}{
+      <5> <6> <7> <8> <9> <10>
+      <10.95> <12> <14.4> <17.28> <20.74> <24.88>
+      mathx10
+      }{}
+\DeclareSymbolFont{mathx}{U}{mathx}{m}{n}
+
+\DeclareMathDelimiter{\vvvert}{0}{matha}{"7E}{mathx}{"17}
+\DeclarePairedDelimiter{\opnorm}{\vvvert}{\vvvert}
+%---
+
+%===
+% define a \Mid command as flexible replacement for \mid in set definitions.
+
+%---
+% to that end we construct a stack that does some bookkeeping about
+% \left\right and \bigl\bigr "scopes".
+
+\newtoks{\@biggerscope} % the stack
+\@biggerscope={}
+
+% check if the stack is empty
+\newcommand\if@biggerscope@empty{%
+\expandafter\if\expandafter\relax\expandafter\detokenize\expandafter
+{\the\@biggerscope}\relax}
+
+% expands to the top element of the stack
+\newcommand{\@biggerscope@top}{%
+\expandafter\@biggerscope@top@helper\the\@biggerscope\relax\@endofstack}
+\def\@biggerscope@top@helper#1#2\@endofstack{#1}
+
+% push onto the stack (only push a single macro!)
+\newcommand{\@biggerscope@push}[1]{%
+\global\@biggerscope=\expandafter{\expandafter#1\the\@biggerscope}}
+
+% pop off the stack (expands to nothing)
+\newcommand{\@biggerscope@pop}{\if@biggerscope@empty\else
+\expandafter\@biggerscope@pop@helper\the\@biggerscope\@endofstack\fi}
+\def\@biggerscope@pop@helper#1#2\@endofstack{\@biggerscope@set{#2}}
+
+% set the stack
+\newcommand{\@biggerscope@set}[1]{\global\@biggerscope={#1}}
+% reset the stack to the empty stack
+\newcommand{\@biggerscope@reset}{\@biggerscope@set{}}
+
+% backup \left and \right as \@left and \@right, respecitvely
+\let\@left=\left
+\let\@right=\right
+% patch \left and \right
+\renewcommand{\left}{\@biggerscope@push\middle\@left}
+\renewcommand{\right}{\@biggerscope@pop\@right}
+
+% redefine all variants of \bigl and \bigr
+\@for\@big@:=big,Big,bigg,Bigg\do{%
+    \toks0=\expandafter{\csname\@big@\endcsname}
+    \toks2=\expandafter{\csname\@big@ l\endcsname}
+    \toks4=\expandafter{\csname @\@big@ l\endcsname}
+    
+    % backup "\bigl" as "\@bigl"
+    \edef\@tempa{\let\the\toks4=\the\toks2}\@tempa
+    % redefine "\bigl"
+    \edef\@tempa{\def\the\toks2{\noexpand\@biggerscope@push\the\toks0%
+        \noexpand\mathopen\the\toks0}}\@tempa
+    
+    \toks2=\expandafter{\csname\@big@ r\endcsname}
+    \toks4=\expandafter{\csname @\@big@ r\endcsname}
+    
+    % backup "\bigr" as "\@bigr"
+    \edef\@tempa{\let\the\toks4=\the\toks2}\@tempa
+    % redefine "\bigr"
+    \edef\@tempa{\def\the\toks2{\noexpand\@biggerscope@pop%
+        \noexpand\mathclose\the\toks0}}\@tempa
+}
+\let\@big@=\undefined
+
+% let the user reset the stack (e.g. after unbalanced \bigl\bigr scopes)
+\newcommand{\biggerscopereset}{\@biggerscope@reset}
+%---
+
+% define the desired \Mid macro
+\newcommand{\Mid}[1][\Midspacing]{%
+\@Mid[#1]{\@biggerscope@top}%
+}
+
+% this version doesn't depend on the above code but only works with \left\right
+\newcommand{\lrMid}[1][\Midspacing]{%
+\ifnum\currentgrouptype=16% inside \left ... \right scope
+\@Mid[#1]{\middle}%
+\else
+\@Mid[#1]{}%
+\fi
+}
+
+% and this version allows for custom size control
+\newcommand{\cMid}[2][\Midspacing]{%
+\@Mid[#1]{#2}%
+}
+
+% finally a version just for consistent spacing
+\newcommand{\nMid}[1][\Midspacing]{%
+\@Mid[#1]{}%   
+}
+
+% default spacing for the \Mid command family
+\newcommand{\Midspacing}{\;}
+% internal wrapper called by each of the commands above
+\newcommand{\@Mid}[2][\Midspacing]{%
+#1%
+#2\vert%
+#1%
+}
+
+%===

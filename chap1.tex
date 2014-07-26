@@ -1,0 +1,348 @@
+\chapter{Introduction and Basics}
+%
+\section{Motivation}
+bla bla  % TODO
+
+
+\section{Simplicial Complexes}
+Because our model fundamentally relies on \emph{simplicial complexes}
+this section gives a brief review about the basic definitions and properties
+used in the rest of this thesis. We include this for the sake of completeness
+but \emph{not} to replace a introduction on the topic by a good text book.
+You may want to consult for example (?? .. ??) % TODO
+for further reading.
+ 
+\begin{thDef}[(abstract) simplicial complex]
+    \begin{itemize}
+        \item
+            Let $V$ be any set and let $K\subset\pot V$. The tuple $(V,K)$ is
+            an \emph{(abstract) simplicial complex} if every element of~$K$ is
+            a finite set, $K$ is closed under taking subsets (i.\,e. for
+            $F\in K$ and $F'\subset F$ we have $F'\in K$) and $K$ contains
+            all singleton subsets of~$V$ (i.\,e. for $v\in V$ we have
+            $\{v\}\in K$).
+            
+        \item
+            Let $(V,K)$ be a simplicial complex. An element~$F$ of~$K$ is
+            a \emph{simplex (of~$K$)} and $\dim(F)\defeq\abs{F}-1
+            \in\N\union\{-1\}$ is its dimension.
+            
+        \item
+            The \emph{dimension of $(V,K)$} is
+            \[ \dim(K) \defeq \max_{F\in K} \dim(F) \;\in\,\N\cup\{-1,\infty\}
+            \]
+            whenever $K\neq\emptyset$ and $-2$ otherwise.
+            
+        \item
+            The simplicial complex $(V,K)$ is called \emph{finite} if
+            $\abs{K}$ is finite.
+            
+        \item
+            A \emph{subcomplex of $(V,K)$} is a simplicial complex~$(V',K')$
+            such that $V'\subset V$ and $K'\subset K$. For $k\in\N$ the
+            subcomplex
+            \[ \bigl( V, \{ F\in K \Mid \dim(F) \leq k \} \bigr) \]
+            of $(V,K)$ is the \emph{$k$-skeleton of $(V,K)$} which
+            we denote by $(V,K)^{\leq k}$.
+    \end{itemize}
+\end{thDef}
+
+\begin{thConvention}
+    \begin{itemize}
+        \item
+            Instead of $(V,K)$ we mostly speak of a simplicial complex~$K$ where it
+            is understood that $V(K)\defeq V = \bigcup K$.
+            
+        \item
+            By an \emph{$n$-simplex} we mean a simplex of dimension~$n$.
+            
+        \item
+            Note that every simplicial complex is partially ordered by
+            inclusion and we shall occasionally use this fact without
+            further notice.
+    \end{itemize}
+\end{thConvention}
+
+\begin{thDef}[simplicial map]
+    Let $K,L$ be simplicial complexes. A \emph{simplicial map $f\colon K\to L$}
+    is a map $f\colon V(K)\to V(L)$ such that simplices of~$K$ are taken to
+    simplices of~$L$, i.\,e. for $F\in K$ we have $f(F) \in L$.
+\end{thDef}
+
+\begin{thDef}[category of simplicial complexes]
+    Simplicial complexes together with simplicial maps form a category~$\Simp$.
+    For $n\in\N\cup\{-1\}$ we also denote its full subcategory of
+    $n$-dimensional simplicial complexes by $\Simp_n$.
+\end{thDef}
+
+Analogously, we define \emph{geometric simplicial complexes}:
+
+\begin{thDef}[geometric simplicial complex]
+    Let $d\in\N$.
+    \begin{itemize}
+        \item
+            Let $A\subset\R^d$ be a finite and affinely independet set
+            of vectors. Then the convex hull
+            \[ \sigma \defeq \conv(A) 
+                = \bigcap \bigl\{ A'\subset\R^d 
+                                \Mid A\subset A' \text{ convex} \bigr\}
+            \]
+            is called a \emph{(geometric) simplex (in $\R^d$)} of
+            \emph{dimension $\dim(\sigma) \defeq \abs{A} - 1$}, or simply
+            an \emph{$n$-simplex} if $n=\dim(\sigma)$. The elements of~$A$
+            are the \emph{vertices of $\sigma$}.
+            
+        \item
+            Let $A'\subset A$. Then $\conv(A')$ is again a simplex,
+            called a \emph{face of $\sigma$}.
+            %If $A'\subsetneq A$ it is a \emph{proper face}.
+            
+        \item
+            For $n=d-1\geq 0$ the convex hull
+            \[ \Delta^n \defeq \conv(e_1,\dots,e_d) \]
+            of the unit vectors in $\R^d$ is the \emph{$n$-dimensional
+            standard simplex}.
+            
+        \item
+            A non-empty set $\Delta$ of geometric simplices in $\R^d$ is a
+            \emph{geometric simplicial complex (in $\R^d$)} if it satisfies
+            the following conditions:
+            \begin{itemize}
+                \item
+                    For all $\sigma\in\Delta$ every face of $\sigma$ is also
+                    an element of~$\Delta$.
+                \item
+                    For all $\sigma,\sigma'\in\Delta$ the intersection
+                    $\sigma\cap\sigma'$ is a face of both $\sigma$ and
+                    $\sigma'$.
+            \end{itemize}
+            
+        \item
+            Let $\Delta$ be a geometric simplicial complex in $\R^d$.
+            It is \emph{finite} if $\abs{\Delta}$ is finite.
+            The \emph{dimension of~$\Delta$} is
+            \[ \dim(\Delta) \defeq \max_{\sigma\in\Delta} \dim(\sigma)
+                \;\in\,\N\cup\{-1}
+            \]
+            and the \emph{polyhedron of $\Delta$} is
+            \[ \norm\Delta \defeq \bigcup \Delta  \;\subset\,\R^d \]
+            which we endow with the colimit topology induced by the canonical
+            inclusions of the simplices.
+            
+        \item
+            A \emph{subcomplex of $\Delta$} is a geometric simplicial
+            complex~$\Delta'$ with $\Delta'\subset\Delta$.
+    \end{itemize}
+\end{thDef}
+
+\begin{thExample}[standard simplex as a complex]
+    For $n\in\N$ the standard simplex $\Delta^n$ together with all its faces
+    forms a geometric simplicial complex. By abuse of notation we also
+    write~$\Delta^n$ for this complex when the meaning is clear from the
+    context.
+\end{thExample}
+
+Given a simplicial complex~$K$, we have a canonical procedure to build a
+topological space from it, the so called \emph{geometric realization}:
+
+\begin{thDef}[geometric realization]
+    For a simplicial complex $K$ let
+    \[ \norm{K} \defeq \coprod_{F\in K} \Delta^{\dim(F)} \,\big/\,{\sim}  , \]
+    where $\sim$ is the equivalence relation that encodes the obvious gluing
+    of faces that is encoded in~$K$.
+    (For a more explicit description see (??).) % TODO
+\end{thDef}
+
+For a finite simplicial complex~$K$ it is easy to see, this is in fact also
+(homeomorphic to) the polyhedron of a suitable geometric simplicial complex:
+Let $n \defeq \abs{V(K)} - 1$ and choose a bijective map from $V(K)$ to the
+set of vertices of the standard simplex~$\Delta^n$. Then the obvious subcomplex
+of~$\Delta^n$ induced by this map is a geometric simplicial complex~$\Delta$
+in $\R^{\abs{V(K)}}$ with $\norm{\Delta} \cong \norm{K}$.
+
+On the other hand, for a given geometric simplicial complex, the sets of
+vertices of its simplices form a finite abstract simplicial complex in the
+obvious way.
+
+\begin{thConvention}[finite complexes: abstract vs. geometric]
+    When we are concerned with finite complexes, we will conveniently (but a bit
+    sloppily) not strictly differentiate between abstract and geometric finite
+    simplicial complexes.
+    When we say \enquote{let $K$ be a (simplicial) complex}, we always mean an
+    abstract complex, though.
+%
+%    When we say \emph{(simplicial) complex~$K$} me mostly mean an
+%    abstract simplicial complex~$K$, but whenever we talk about geometric
+%    (or topological) properties of~$K$ and its simplices we mean a
+%    either given 
+%
+%    We therefore only say \emph{(simplicial) complex} by which we generelly
+%    mean an abstract complex but ean either
+%    type, appropriatly identified with a type of the other if necessary.
+\end{thConvention}
+
+\begin{thDef}[triangulation]
+    Let $X$ be a topological space. Then $X$ is \emph{triangulable} if
+    there exists a simplicial complex~$K$ and a homeomorphism
+    $f\colon\norm{K}\to X$. Such a pair $(K,f)$ is then called
+    a \emph{triangulation of~$X$}.
+\end{thDef}
+
+
+\section{Distributed Computing via Combinatorial Topology}
+Now that we have an appropriate combinatorial description of (sufficiently
+well-behaved) topological spaces we can define and (briefly) explain our
+model for \emph{distributed tasks} and \emph{protocols that solve tasks}.
+We give the strict mathematical definions first and explain their interpretation
+in the context of distributed computing afterwards.
+
+\subsection{Mathematical Framework}
+The following definitions rely on an additional type of map operating on
+simplicial complexes that is more flexible than simplicial maps:
+
+\begin{thDef}[carrier map]
+    Let $K,L$ be simplicial complexes. 
+    \begin{itemize}
+        \item
+            A \emph{carrier map $\Phi\colon K\to L$} is a monotonic map
+            \[ \Phi\colon K \to \{ L' \Mid L'\subset L \text{ is a subcomplex} \}  , \]
+            where both sets are partially ordered by inclusion. More explicitly:
+            for simplicies $F' \subset F$ in $K$ we demand $\Phi(F') \subset
+            \Phi(F)$ as subcomplexes of~$L$.
+            
+        \item
+            Let $\Phi\colon K\to L$ be a carrier map. Then $\Phi$ is
+            \emph{strict} if it satisfies
+            \[ \Phi(F\cap F') = \Phi(F) \cap \Phi(F') \]
+            for all simplices $F,F'\in K$.
+            
+        \item
+            For $A\subset K$ the subcomplex
+            \[ \Phi[A] \defeq \bigcup \Phi(A) \]
+            of~$L$ is the \emph{combined image of $A$ under $\Phi$}
+            and we call $\Phi[K]$ simply \emph{combined image of~$\Phi$}.
+            
+        \item
+            Let $\Psi\colon L\to M$ be another carrier map. Then the
+            \emph{composition of $\Phi$ and $\Psi$} is defined as
+            \[ (\Psi\after\Phi)(F) \defeq \Psi[\Phi(F)] \]
+            for all $F\in K$ (which is a carrier map $K\to M$).
+    \end{itemize}
+\end{thDef}
+
+Note: while we say \enquote{carrier map $K\to L$}, the codomain of a carrier map
+is \emph{not} actually~$L$ (but the set of subcomplexes of the latter).
+% FIXME: ^ maybe introduce a notation for "set of subcomplexes"!?
+
+\begin{thDef}[carrier]
+    Let $\Phi\colon K\to L$ be a strict carrier map and let $F'\in\Phi[K]$.
+    The \emph{carrier of $F'$ (under $\Phi$)} is the (unique) simplex
+    \[ \car_\Phi(F') \defeq \min \{ F \in K \Mid F'\in\Phi(F) \}  . \]
+\end{thDef}
+
+We can also compose carrier maps with simplicial maps in the following ways:
+
+\begin{thDef}[composition of carrier maps with simplicial maps]
+    \begin{itemize}
+        \item
+            For a simplicial map $f\colon K\to L$ and a subcomplex $K'$ of
+            $K$ we call the subcomplex
+            \[ f[K'] \defeq \{ f(F) \Mid F\in K' \} \]
+            of~$L$ the \emph{image complex of $K'$ under $f$}.
+            
+        \item
+            Now let $\Phi\colion K_2\to K_3$ be a carrier map and let
+            $f\colon K_1\to K_2$ and $g\colon K_3\to K_4$ be simplicial
+            maps. We define the carrier maps
+            $\Phi\after f\colon K_1\to K_3$ and $g\after\Phi\colon K_2\to K_4$
+            as follows:
+            \[ (\Phi\after f)(F) \defeq \Phi(f(F))
+                \qandq
+                (g\after \Phi)(F') \defeq g[\Phi(F')]
+            \]
+            for all $F\in K_1$, $F'\in K_2$.
+    \end{itemize}
+\end{thDef}
+
+We are now ready to define our main objects of interest, namely \emph{tasks}
+and \emph{protocols} as well as the concept of \emph{task solving}.
+
+\begin{thDef}[task and protocol]
+    \label{ch1:def:taskprotocol}
+    %
+    \begin{itemize}
+        \item
+            A \emph{task} is a carrier map $\Phi\colon\cI\to\cO$.
+            We call $\cI$ and $\cO$ the \emph{input} and \emph{output complex},
+            respectively.
+            
+        \item
+            A \emph{protocol} is a strict carrier map $\Xi\colon\cI\to\cP$
+            where $\cP$ is the combined image of~$\Xi$.
+            We call $\cI$ and $\cP$ the \emph{input} and \emph{protocol
+            complex}, respectively.
+    \end{itemize}
+\end{thDef}
+
+\begin{thDef}[task solving]
+    Let $\cI,\cO$ and $\cP$ be simplicial complexes,
+    let $\Phi\colon\cI\to\cO$ be a task,
+    and let $\Xi\colon\cI\to\cP$ be a protocol.
+    Then \emph{$\Xi$ solves $\Phi$} if there exists a simplicial map
+    \[ \delta\colon\cP\to\cO \] 
+    such that $\delta\after\Xi$ \emph{is carried by $\Phi$},
+    which means that
+    \[ (\delta\after\Xi)(F) \subset \Phi(F) \]
+    as subcomplexes of $\cO$ is satisfied for all $F\in\cI$.
+\end{thDef}
+
+\subsection{Interpretation of the model}
+It is about time that we explain some of the definitions of the previous
+subsection in the context of our headline \emph{distributed computing}.
+We start with an example:
+
+\begin{thExample}[consensus]
+    Let $X$ be a finite set.
+    Suppose we have a system with a number of processes, each with an initial
+    private \enquote{piece of information} which we require to be an element
+    of~$X$. (The input values need not be distinct.) Now the processes may
+    communicate (subject to certain constrains of the considered system) and
+    finally have to \enquote{decide} on exactly one of the input values. That is
+    all processes halt with a private output value and all of these values have
+    to be the same (and additionally one of the input values). For obvious
+    reasons, this task is called \emph{consensus}. Note that we are only
+    interested in the set of assigned input values and the (in this example
+    singleton) set of private output values.
+    
+    Now we explain what the corresponding input and output complexes are:
+    The input complex encodes every possible \emph{input configuration},
+    that is $F$ is a simplex of $\cI$ in this case if and only if
+    $\emptyset\neq F\subset X$. (If it makes you more comfortable, assume that
+    there are more processes than input values.) The output complex encodes
+    every allowed \emph{output configuration}, that is $F'\in\cO$ if and only
+    if $F'\subset X$ is a singleton set. The carrier map $\Phi$ then encodes
+    which input configurations may lead to which output configurations:
+    If all processes start with $x\in X$ the only allowed output configuration
+    is $\{x\}$, so $\Phi(\{x\})$ would be $\{\{x\}\}$. If the input configuration
+    is $\{x,y\}$ (with $x\neq y$) the processes may either choose $x$ or $y$
+    as their consensus, so $\Phi(\{x,y\})$ is $\{ \{x\}, \{y\} \}$. In general:
+    \[ \Phi(F) = \{ \{t\} \Mid t\in F \}  . \]
+    It is readily verified that $\Phi\colon\cI\to\cO$ is a task in the sense
+    of~\cref{ch0:def:taskprotocol}. Observe that $\cI$ is isomorphic to (the
+    complex obtained from) the standard simplex~$\Delta^{\abs{X}-1}$ and $\cO$
+    is its $0$-skeleton.
+\end{thExample}
+
+This example easily generalizes to other tasks:
+$\cI$~always encodes the possible input configurations,
+$\cO$~represents valid output configurations and
+$\Phi\colon\cI\to\cO$ specifies the actual task, that is
+for each input configuration it specifies a set of output
+configurations which are considered a \enquote{successful
+completion of the task} according to the task's description.
+
+A protocol $\Xi\colon\cI\to\cP$ permitts a similar interpretation:
+Again, every simplex in $\cI$ is a possible input configuration to
+the system of processes. Then these processes run some sort of
+algorithm whose possible output configurations are captured
+by $\Xi$ and $\cP$. 

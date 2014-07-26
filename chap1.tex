@@ -294,6 +294,7 @@ and \emph{protocols} as well as the concept of \emph{task solving}.
     which means that
     \[ (\delta\after\Xi)(F) \subset \Phi(F) \]
     as subcomplexes of $\cO$ is satisfied for all $F\in\cI$.
+    Such a map $\delta$ is called a \emph{decision map}.
 \end{thDef}
 
 \subsection{Interpretation of the model}
@@ -344,5 +345,32 @@ completion of the task} according to the task's description.
 A protocol $\Xi\colon\cI\to\cP$ permitts a similar interpretation:
 Again, every simplex in $\cI$ is a possible input configuration to
 the system of processes. Then these processes run some sort of
-algorithm whose possible output configurations are captured
-by $\Xi$ and $\cP$. 
+(communication) algorithm whose possible output configurations are
+captured by $\Xi$ and $\cP$. That means if $F\in\cI$ is an input
+configuration, $\Xi(F) \subset \cP$ includes every possibly output
+configuration that may arise from the input configuration~$F$ and
+one execution of the specified algorithm. Note, that in this case
+an \enquote{algorithm} is not entirely deterministic (in the sense
+that we cannot predict the exact ouput configuration) because the
+communication between processes introduces a degree of uncertainty.
+As mentioned % TODO: check
+in the introducion, this corresponds to the fact that we require
+protocols to be \emph{wait-free}.
+
+Finally, if $\Xi$ solves $\Phi$ and $\delta\colon\cP\to\cO$ is a decicion map,
+it is clear that $\delta$ is the \enuqote{function that gets applied} to a
+process's output value after running a communication protocol to produce a valid
+task output value. The protocol output value represents \enquote{everything a
+process has learned} during the communication and the map~$\delta$
+\enquote{decides which task output value to choose based on that information},
+hence the name \emph{decicion} map.
+
+You may have noticed that we did not use the simplicial properties of the maps
+$\Phi$, $\Xi$ or $\delta$ in our informal description, so it is natural to ask
+why we chose simplicial complexes as a mathematical basis. Simply put, those
+properties are related to the various assumptions about the underlying
+distributional system. In this thesis, however, we will not go into much more
+detail, but you can find an extensive discussion of the correspondece between
+the above \enquote{combinatorical model} and the \enquote{operational model}
+(which describes tasks and protocols from a computer scientist's point of view)
+in the book by Herlihy et~al.~\cite[Ch.\,4]{bookc:herlihyetal13}.

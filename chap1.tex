@@ -24,8 +24,9 @@ for further reading.
             
         \item
             Let $(V,K)$ be a simplicial complex. An element~$F$ of~$K$ is
-            a \emph{simplex (of~$K$)} and $\dim(F)\defeq\abs{F}-1
-            \in\N\cup\{-1\}$ is its dimension.
+            a \emph{simplex (of~$K$)}, $\dim(F)\defeq\abs{F}-1
+            \in\N\cup\{-1\}$ is its dimension, and each subset of~$F$ is
+            called a \emph{face of~$F$}.
             
         \item
             The \emph{dimension of $(V,K)$} is
@@ -104,7 +105,7 @@ Analogously, we define \emph{geometric simplicial complexes}:
             standard simplex}.
             
         \item
-            A non-empty set $\Delta$ of geometric simplices in $\R^d$ is a
+            A set $\Delta$ of geometric simplices in $\R^d$ is a
             \emph{geometric simplicial complex (in~$\R^d$)} if it satisfies
             the following conditions:
             \begin{itemize}[topsep=0pt]
@@ -195,7 +196,7 @@ obvious way.
 Now that we have an appropriate combinatorial description of (sufficiently
 well-behaved) topological spaces we can define and (briefly) explain our
 model for \emph{distributed tasks} and \emph{protocols that solve tasks}.
-We give the strict mathematical definions first and explain their interpretation
+We give the strict mathematical definitions first and explain their interpretation
 in the context of distributed computing afterwards.
 
 \subsection{Mathematical framework}
@@ -385,15 +386,15 @@ scientist's point of view) in the book by
 Herlihy et~al.~\cite[Ch.\,4]{bookc:herlihyetal13}.
 
 \subsection{Set agreement}
-We are going to describe another example of a task, a relaxed version
+We are going to describe another class of examples, relaxed versions
 of the consensus task \pcref{ch1:consensus} that will play an
 important role in section~\ref{ch2:sec:consequences}.
 
-\begin{thExample}[$p$-values $k$-set agreement]
+\begin{thExample}[set agreement]
     Let $X$ be a finite set of cardinality~$p$ and assume there are
     $n$~processes where $n\geq p$.  The \emph{$p$-values $k$-set
     agreement task} (or \emph{$(p,k)$-set agreement} for short) is
-    defined by the follwing task description:
+    defined by the following task description:
     Each process's input value is an element of~$X$ (where different
     processes may be assigned the same input value) and each process's
     output value is one of the assigned input values such that
@@ -443,3 +444,52 @@ important role in section~\ref{ch2:sec:consequences}.
     \end{itemize}
 \end{thExample}
 
+\subsection{Mathematical framework continued}
+Now that we have seen some examples we extend our mathematical
+framework by some additional definitions and properties that we
+will need in the following chapter.
+
+In \cref{ch1:def:carriermap} we saw how to compose carrier maps,
+which naturally applies to tasks (because a taks is just a carrier
+map without further restrictions). Since we would also like to compose
+protocols we proof the following
+
+\begin{thLemma}[composition of strict carrier maps]
+    Let $K,L,M$ be simplicial complexes and let $\Phi\colon K\to L$
+    and $\Psi\colon L\to M$ be strict carrier maps.
+    Then their composition $\Psi\after\Phi$ is strict as well.
+\end{thLemma}
+
+\begin{proof}
+    Let $F$ and $F'$ be simplices of~$K$. We have to show that
+    \[ (\Psi\after\Phi)(F\cap F')
+        = (\Psi\after\Phi)(F) \cap (\Psi\after\Phi)(F')
+    . \]
+    By definition of $\Psi\after\Phi$, basic set theory and strictness
+    of~$\Psi$ we obtain:
+    \[ (\Psi\after\Phi)(F) \cap (\Psi\after\Phi)(F')
+        \,=
+        \Bigl( \mkern2mu \bigcup_{G\in\mathrlap{\Phi(F)}} \, \Psi(G) \Bigr)
+            \cap \Bigl( \bigcup_{G'\in\mathrlap{\Phi(F')}} \, \Psi(G') \Bigr)
+        \mkern8mu=
+        \bigcup_{G\in\Phi(F)} \; \bigcup_{G'\in\Phi(F')}
+            \Psi(G\cap G')
+    . \]
+    Since $\Phi(F)$ and $\Phi(F')$ are subcomplexes of~$L$, they contain every
+    face of $G\in\Phi(F)$ and $G'\in\Phi(F')$, respectively. In particular,
+    $G\cap G'$ is already a simplex of $\Phi(F)\cap\Phi(F')$ which shows the
+    non-trivial inclusion of the following equality:
+    \[ \bigcup_{G\in\Phi(F)} \; \bigcup_{G'\in\Phi(F')} \Psi(G\cap G')
+        \quad\surround{\mkern2mu}{=}
+        \bigcup_{\tilde G\in\Phi(F)\cap \Phi(F')} \Psi(\tilde G)
+    . \]
+    By strictness of~$\Phi$ and the definition of $\Psi\after\Phi$ the right
+    hand side is equal to $(\Psi\after\Phi)(F\cap F')$.
+    \\
+\end{proof}
+
+\begin{thCorollary}[composition of protocols]
+    Let $\Xi\colon\cI\to\cP$ and $\Xi'\colon\cI'\to\cP'$ be protocols
+    with $\cP\subset\cI'$. Then the composition $\Xi'\after\Xi$ is again
+    a protocol onto its image complex $(\Xi'\after\Xi)[\cI]$.
+\end{thCorollary}

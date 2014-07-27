@@ -203,6 +203,8 @@ The following definitions rely on an additional type of map operating on
 simplicial complexes that is more flexible than simplicial maps:
 
 \begin{thDef}[carrier map]
+    \label{ch1:def:carriermap}
+    %
     Let $K,L$ be simplicial complexes. 
     \begin{itemize}
         \item
@@ -306,7 +308,9 @@ subsection in the context of our headline \emph{distributed computing}.
 We start with an example:
 
 \begin{thExample}[consensus]
-    Let $X$ be a finite set.
+    \label{ch1:consensus}
+    %
+    Let $X$ be a finite set of cardinality~$p$.
     Suppose we have a system with a number of processes, each with an initial
     private \enquote{piece of information} which we require to be an element
     of~$X$. (The input values need not be distinct.) Now the processes may
@@ -314,14 +318,14 @@ We start with an example:
     finally have to \enquote{decide} on exactly one of the input values. That is
     all processes halt with a private output value and all of these values have
     to be the same (and additionally one of the input values). For obvious
-    reasons, this task is called \emph{consensus}. Note that we are only
+    reasons, this task is called \emph{$p$-consensus}. Note that we are only
     interested in the set of assigned input values and the (in this example
     singleton) set of private output values.
     
     Now we explain what the corresponding input and output complexes are:
     The input complex encodes every possible \emph{input configuration},
     that is $F$ is a simplex of $\cI$ in this case if and only if
-    $\emptyset\neq F\subset X$. (If it makes you more comfortable, assume that
+    $F\subset X$. (If it makes you more comfortable, assume that
     there are more processes than input values.) The output complex encodes
     every allowed \emph{output configuration}, that is $F'\in\cO$ if and only
     if $F'\subset X$ is a singleton set. The carrier map~$\Phi$ then encodes
@@ -333,7 +337,7 @@ We start with an example:
     \[ \Phi(F) = \bigl\{ \{t\} \Mid t\in F \bigr\}  . \]
     It is readily verified that $\Phi\colon\cI\to\cO$ is a task in the sense
     of~\cref{ch1:def:taskprotocol}. Observe that $\cI$ is isomorphic to (the
-    complex obtained from) the standard simplex~$\Delta^{\abs{X}-1}$ and $\cO$
+    complex obtained from) the standard simplex~$\Delta^{p-1}$ and $\cO$
     is its $0$-skeleton.
 \end{thExample}
 
@@ -379,3 +383,63 @@ the above \enquote{combinatorical model} and the \enquote{operational
 model} (which describes tasks and protocols from a computer
 scientist's point of view) in the book by
 Herlihy et~al.~\cite[Ch.\,4]{bookc:herlihyetal13}.
+
+\subsection{Set agreement}
+We are going to describe another example of a task, a relaxed version
+of the consensus task \pcref{ch1:consensus} that will play an
+important role in section~\ref{ch2:sec:consequences}.
+
+\begin{thExample}[$p$-values $k$-set agreement]
+    Let $X$ be a finite set of cardinality~$p$ and assume there are
+    $n$~processes where $n\geq p$.  The \emph{$p$-values $k$-set
+    agreement task} (or \emph{$(p,k)$-set agreement} for short) is
+    defined by the follwing task description:
+    Each process's input value is an element of~$X$ (where different
+    processes may be assigned the same input value) and each process's
+    output value is one of the assigned input values such that
+    the output configuration (set of all chosen output values)
+    is a subset of~$X$ of cardinality at most~$k$. Put another way,
+    the task requires the processes to choose at most $k$ distict
+    output values (from the set of input values).
+    
+    An analogous analysis as in \cref{ch1:consensus} shows, that
+    the formal task (in the sense of \cref{ch1:def:taskprotocol})
+    is given by the input complex~$\Delta^{p-1}$, the ouput complex
+    $(\Delta^{p-1})^{\leq k-1}$ and the following carrier map~$\skel^{k-1}$:
+    if $F\in\Delta^p$ is an input configuration, $\skel^{k-1}(F)$ is the
+    $k$-skeleton of the complex determined by $F$ and all its faces:
+    \[ \skel^{k-1}(F)
+        = F^{\leq k-1}
+        \defeq \{ F' \Mid F'\subset F \}^{\leq k-1}
+    ; \]
+    this obviously defines a carrier map. (To keep the notation
+    readable we denote only $\skel^{k-1}$ even though the carrier map,
+    of course, also depends on~$p$.)
+    
+    A few notes:
+    \begin{itemize}
+        \item
+            Whereas the task description assumes that sufficiently many
+            processes are involved, the number of processes~$n$ is completely
+            irrelevant for the formal definition of $(p,k)$-set agreement
+            as the task
+            $\skel^{k-1}\colon\Delta^{p-1}\to(\Delta^{p-1})^{\leq k-1}$.
+            
+        \item
+            For $k=1$, we see that $(p,1)$-set agreement equals $p$-consensus
+            \pcref{ch1:consensus}.
+            
+        \item
+            If $p\leq k$, the task is trivial because every process simply
+            chooses its input value. Formally: Since $p\leq k$ we have
+            $(\Delta^{p-1})^{\leq k-1} = \Delta^{p-1}$ and the carrier map
+            $\skel^{k-1}$ assigns to a simplex the complex determined by all its
+            faces. Furthermore $\skel^{k-1}$ is strict, as you may easily check.
+            (With essentially the same arguments, this also holds in the general
+            case where $p > k$.) So the task
+            $\skel^{k-1}\colon\Delta^{p-1}\to\Delta^{p-1}$
+            is solved by $\skel^{k-1}$ (viewed as a protocol) with the
+            \enquote{identity} on $\Delta^{p-1}$ as decision map.
+    \end{itemize}
+\end{thExample}
+

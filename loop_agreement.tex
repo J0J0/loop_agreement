@@ -121,6 +121,7 @@
 \newcommand{\sDMO}[1]{\expandafter\DeclareMathOperator\csname#1\endcsname{#1}}
 
 \sDMO{car}
+\sDMO{conv}
 \sDMO{const}
 \sDMO{id}
 \sDMO{im}
@@ -222,13 +223,14 @@
 \iffalse)\fi % fix syntax highlighting
 
 % listing with -- is nicer than with bullets 
-\setlist[itemize,1]{label=--}
+\setlist[itemize,1]{label=--,topsep=2pt,itemsep=0pt,labelindent=1.3em,leftmargin=!}
+\setlist[itemize,2]{label=\textasteriskcentered}
 
 %%% start at chapter 0
 %%\setcounter{chapter}{-1}
 
-% format chapters with roman numbers
-\renewcommand*{\chapterformat}{\mbox{\Roman{chapter}\autodot\enskip}}
+%% format chapters with roman numbers
+%\renewcommand*{\chapterformat}{\mbox{\Roman{chapter}\autodot\enskip}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -239,9 +241,12 @@
 
 \input{titlepage}
 
+\tableofcontents
+
+\input{chap1}
+
 \appendix
 \nocite{bookc:munkres00}
-\nocite{bookc:herlihyetal13}
 \bibliographystyle{plaindin}
 \bibliography{bibsources}
 

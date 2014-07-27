@@ -17,12 +17,13 @@
 
 \usepackage[babel]{csquotes}
 \usepackage[shortlabels]{enumitem}
-\usepackage[numbers,sort&compress]{natbib}
 \usepackage{ifmtarg}
 \usepackage{xstring}
 \usepackage{remreset}
-
 \usepackage[lowtilde]{url}
+
+\usepackage[backend=biber,style=numeric,firstinits=true]{biblatex}
+
 \usepackage[pdftex,bookmarks,colorlinks=false,pdfborder={0 0 0},%
             pdftitle={Bachelor Thesis: Classification of Loop Agreement Tasks},%
             pdfauthor={Johannes Prem}]{hyperref}
@@ -43,6 +44,8 @@
 \@removefromreset{footnote}{chapter}
 \makeatother
 
+% select bibliography input file
+\addbibresource{bibsources.bib}
 
 % set the url style (especially for the bibliography)
 \urlstyle{sf}
@@ -247,8 +250,7 @@
 
 \appendix
 \nocite{bookc:munkres00}
-\bibliographystyle{plaindin}
-\bibliography{bibsources}
+\printbibliography
 
 \end{document}
 

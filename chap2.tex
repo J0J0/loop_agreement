@@ -1,0 +1,38 @@
+\chapter{Loop Agreement Tasks}
+\section{Definition and Examples}
+\emph{Loop agreement tasks} form a class of tasks in the sense of
+\cref{ch1:taskprotocol}. They are related to loops in topolgical spaces
+and in fact our main result in this chapter \pcref{.} % TODO
+connects the sovability of one such task through another with the
+\emph{fundamental groups} of the (geometric realizations of the)
+involved complexes. We start with the definition of a combinatorical
+model of loops:
+
+\begin{thDef}[walk, path, cycle]
+    Let $K$ be a simplicial complex.
+    \begin{itemize}
+        \item
+            A \emph{walk in $K$} is a tuple $(v_0,\dots,v_n)$
+            where $n\in\N$ and $v_0,\dots,v_n$ are vertices
+            of~$K$ such that $\{v_j,v_{j+1}\}$ is a $1$-simplex of~$K$
+            for all $j\in\setZeroto{n-1}$.
+            
+        \item
+            A \emph{(simple) path in $K$} is a walk in~$K$ such that the
+            vertices of the walk are pairwise distinct.
+            
+        \item
+            A \emph{cycle in $K$} is a walk $(v_0,\dots,v_n)$ such that
+            $n\in\N[\geq2]$, $v_0 = v_n$ and $(v_0,\dots,v_{n-1})$ is a path.
+    \end{itemize}
+\end{thDef}
+
+Our terminology concides with the typical definitions found in an introduction
+to graph theory and as a matter of fact the above definition is just a
+restatement of the classical terms in the context of the graph~$K^{\leq 1}$.
+
+
+\section{Classification}
+
+\section{Consequences}
+\label{ch2:sec:consequences}

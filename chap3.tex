@@ -1,0 +1,150 @@
+\chapter{Loop Agreement Tasks}
+\section{Definition and Examples}
+\emph{Loop agreement tasks} form a class of tasks in the sense of
+\cref{ch1:def:taskprotocol}. They are related to loops in topolgical spaces
+and in fact our main result in this chapter \pcref{.} % TODO
+connects the sovability of one such task through another with the
+\emph{fundamental groups} of the (geometric realizations of the)
+involved complexes. We start with the definition of a combinatorical
+model of loops:
+
+\begin{thDef}[walk, path, cycle]
+    Let $K$ be a simplicial complex.
+    \begin{itemize}
+        \item
+            A \emph{walk in $K$} is a tuple $w = (v_0,\dots,v_n)$
+            where $n\in\N$ and $v_0,\dots,v_n$ are vertices
+            of~$K$ such that $\{v_j,v_{j+1}\}$ is a $1$-simplex of~$K$
+            (called an \emph{edge of $w$}) for all $j\in\setZeroto{n-1}$.
+            
+        \item
+            A \emph{(simple) path in $K$} is a walk in~$K$ such that the
+            vertices of the walk are pairwise distinct.
+            
+        \item
+            A \emph{cycle in $K$} is a walk $(v_0,\dots,v_n)$ in~$K$ such that
+            $n\in\N[\geq2]$, $v_0 = v_n$ and $(v_0,\dots,v_{n-1})$ is a path.
+    \end{itemize}
+\end{thDef}
+
+Our terminology concides with the typical definitions found in an introduction
+to graph theory and as a matter of fact the above definition is just a
+restatement of the classical terms in the context of the graph~$K^{\leq 1}$.
+
+\begin{thDef}[composition of walks]
+    Let $K$ be a simplicial complex.
+    \begin{itemize}
+        \item
+            If $w = (v_0,\dots,v_n)$ is a walk in~$K$, we denote by
+            $\dot w \defeq v_0$ and $\ddot w \defeq v_n$ the first and
+            last vertex of~$w$, respectively.
+            
+        \item
+            Let $k\in\N[\geq1]$ and let $w_1,\dots,w_k$ be walks in~$K$
+            where $w_j = (v_{j,0}, \dots, v_{j,n_j})$ for all $j\in\setOneto{k}$.
+            We say $w_1\ast\dots\ast w_k$ is a \emph{valid composition}
+            if $\ddot{w}_j = \dot{w}_{j+1}$ for all $j\in\setOneto{k-1}$ and
+            in that case we define the \emph{composition of $w_1,\dots,w_k$}
+            as the walk
+            \[ w_1\ast\dots\ast w_k
+                \defeq (v_{1,0},\dots,v_{1,n_1-1},
+                        \dots,
+                        v_{k-1,0},\dots,v_{k-1,n_{k-1}-1},
+                        v_{k,0},\dots,v_{k,n_k})
+            . \]
+    \end{itemize}
+\end{thDef}
+
+\begin{thDef}[triangle loop]
+    Let $K$ be a simplicial complex.
+    A \emph{triangle loop in $K$} is a triple $(p_0,p_1,p_2)$ of three
+    paths in~$K$ such that $p_0\ast p_1\ast p_2$ is a valid composition
+    and a cycle in~$K$. In that case we call $\dot{p}_0,\dot{p}_1,\dot{p}_2$
+    the \emph{distinguished vertices} of the triangle loop.
+\end{thDef}
+
+Given a triangle loop in~$K$, this loop gives rise to a distributed task:
+the processes are assigned input values that correspond to the distinguished
+vertices of the loop and the output configuration has to be a simplex of~$K$
+that \enquote{lies (on the path) between the input vertices}. We shall make this
+precise soon, but first we introduce some useful conventions.
+
+\begin{thConvention}\hfill
+    \begin{itemize}
+        \item
+            In the following, we identify the abstract complex (corresponding to
+            the complex obtained by the standard simplex) $\Delta^2$ with
+            $\Pot(\{0,1,2\})$. For convenience, we also denote its $1$-skeleton
+            by $\partial\Delta^2$.
+            
+        \item
+            Let $K$ be a simplicial complex and let $\ppp$ be a triangle loop
+            in~$K$. For $j\in\{0,1,2\}$ the subcomplex of~$K$ determined
+            by~$p_j$ is denoted $K(p_j)$; more precisely: $K(p_j)$ is the
+            smallest subcomplex of~$K$ containing all edges of~$p_j$.
+            
+        \item
+            Let $\finSimp$ denote the full subcategory of $\Simp_2$ that has
+            \emph{finite connected $2$-dimensional simplicial complexes} as its
+            objects.
+    \end{itemize}
+\end{thConvention}
+
+\begin{thDef}[loop agreement task]
+    Let $K\in\finSimp$ and let $\kappa = \ppp$ be a triangle loop in~$K$. The
+    associated \emph{loop agreement task $\Loop{K,\kappa}\colon\Delta^2 \to K$}
+    is defined as:
+    \[
+        F \mapsto \begin{cases}
+            \{\dot{p}_j\} &\quad \text{if } F = \{j\},   \\
+            K(p_0)        &\quad \text{if } F = \{0,1\}, \\
+            K(p_1)        &\quad \text{if } F = \{1,2\}, \\
+            K(p_2)        &\quad \text{if } F = \{0,2\}, \\
+            K             &\quad \text{if } F = \{0,1,2\}
+        . \end{cases}
+    \]
+\end{thDef}
+
+Our informal description above has an exact interpretation now: if the input
+configuration is, say, $\{0,1\}\in\Delta^2$, the output configuration has to
+be a simplex of $K(p_0)\subset K$, that is a vertex or edge of the given
+path~$p_0$ in~$K$.
+
+\begin{thExample}[$(3,2)$-set agreement as loop agreement task]
+    As a first but important example, we observe that the
+    $(3,2)$-set agreement task \pcref{ch1:setagreement}
+    \[ \skel^1\colon\Delta^2\to\partial\Delta^2 \]
+    is the same as the loop agreement task
+    \[ \Loop{\partial\Delta^2,\,\kappa}
+        \qtextq{for}
+        \kappa = \bigl( (0,1),\, (1,2),\, (2,0) \bigr)
+    . \]
+\end{thExample}
+
+\begin{thExample}[$2$-dim. barycentric agreement as loop agreement task]
+    Let $N\in\N$. Let $p_0$ be the unique path from $\sd_{\Delta^2}^N(\{0\})$
+    to $\sd_{\Delta^2}^N(\{1\})$ in $\sd_{\Delta^2}^N(\{0,1\})$ and let
+    $p_1,p_2$ be defined analogously. Then the barycentric agreement task
+    \[ \sd_{\Delta^2}^N\colon \Delta^2 \to \sd^N \Delta^2 \]
+    is the same as the loop agreement task
+    \[ \Loop{\sd^N\!\Delta^2, \; (p_0,p_1,p_2)}  . \]
+\end{thExample}
+
+Some more examples can be found in the book by
+Herlihy et~al.~\cite[sec.~5.6.3]{bookc:herlihyetal13}.
+
+\section{Topological Aspects}
+
+\section{Classification}
+Our goal is to prove the following
+
+\begin{thTheorem}[classification of loop agreement tasks]
+    Let $\Loop{K,\kappa}$ and $\Loop{L,\lambda}$ be loop agreement tasks.
+    Then $\Loop{K,\kappa}$ implements $\Loop{L,\lambda}$ if and only if
+    there exists a group homomorphism $\pi_1(K)\to\pi_1(L)$ mapping
+    $[\kappa]$ to $[\lambda]$.
+\end{thTheorem}
+
+
+\section{Consequences}
+\label{ch2:sec:consequences}

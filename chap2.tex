@@ -1,150 +1,360 @@
-\chapter{Loop Agreement Tasks}
-\section{Definition and Examples}
-\emph{Loop agreement tasks} form a class of tasks in the sense of
-\cref{ch1:def:taskprotocol}. They are related to loops in topolgical spaces
-and in fact our main result in this chapter \pcref{.} % TODO
-connects the sovability of one such task through another with the
-\emph{fundamental groups} of the (geometric realizations of the)
-involved complexes. We start with the definition of a combinatorical
-model of loops:
+\chapter{Distributed Computing via Combinatorial Topology}
+Based on the combinatorial description of (sufficiently well-behaved)
+topological spaces by simplicial complexes we can define and (briefly) explain
+our model for \emph{distributed tasks} and \emph{protocols that solve tasks}.
+We give the strict mathematical definitions first and explain their
+interpretation in the context of distributed computing afterwards.
 
-\begin{thDef}[walk, path, cycle]
-    Let $K$ be a simplicial complex.
+\section{Mathematical framework}
+The following definitions rely on an additional type of map operating on
+simplicial complexes that is more flexible than simplicial maps:
+
+\begin{thDef}[carrier map]
+    \label{ch1:def:carriermap}
+    %
+    Let $K,L$ be simplicial complexes. 
     \begin{itemize}
         \item
-            A \emph{walk in $K$} is a tuple $w = (v_0,\dots,v_n)$
-            where $n\in\N$ and $v_0,\dots,v_n$ are vertices
-            of~$K$ such that $\{v_j,v_{j+1}\}$ is a $1$-simplex of~$K$
-            (called an \emph{edge of $w$}) for all $j\in\setZeroto{n-1}$.
+            A \emph{carrier map $\Phi\colon K\to L$} is a monotonic map
+            \[ \Phi\colon K \to \{ L' \Mid L'\subset L \text{ is a subcomplex} \}  , \]
+            where both sets are partially ordered by inclusion. More explicitly:
+            for simplicies $F' \subset F$ in $K$ we require $\Phi(F') \subset
+            \Phi(F)$ as subcomplexes of~$L$.
             
         \item
-            A \emph{(simple) path in $K$} is a walk in~$K$ such that the
-            vertices of the walk are pairwise distinct.
+            Let $\Phi\colon K\to L$ be a carrier map. Then $\Phi$ is
+            \emph{strict} if it satisfies
+            \[ \Phi(F\cap F') = \Phi(F) \cap \Phi(F') \]
+            for all simplices $F,F'\in K$.
+            
+\pagebreak[2]
+        \item
+            For $A\subset K$ the subcomplex
+            \[ \Phi[A] \defeq \bigcup \Phi(A) \]
+            of~$L$ is the \emph{image complex of $A$ under $\Phi$}
+            and we call $\Phi[K]$ simply \emph{image complex of~$\Phi$}.
             
         \item
-            A \emph{cycle in $K$} is a walk $(v_0,\dots,v_n)$ in~$K$ such that
-            $n\in\N[\geq2]$, $v_0 = v_n$ and $(v_0,\dots,v_{n-1})$ is a path.
+            Let $\Psi\colon L\to M$ be another carrier map. Then the
+            \emph{composition of $\Phi$ and $\Psi$} is defined as
+            \[ (\Psi\after\Phi)(F) \defeq \Psi[\Phi(F)] \]
+            for all $F\in K$ (which is a carrier map $K\to M$).
     \end{itemize}
 \end{thDef}
 
-Our terminology concides with the typical definitions found in an introduction
-to graph theory and as a matter of fact the above definition is just a
-restatement of the classical terms in the context of the graph~$K^{\leq 1}$.
+Note: while we say \enquote{carrier map $K\to L$}, the codomain of a carrier map
+is \emph{not} actually~$L$ (but the set of subcomplexes of the latter).
+% FIXME: ^ maybe introduce a notation for "set of subcomplexes"!?
 
-\begin{thDef}[composition of walks]
-    Let $K$ be a simplicial complex.
+\begin{thDef}[carrier]
+    Let $\Phi\colon K\to L$ be a strict carrier map and let $F'\in\Phi[K]$.
+    The \emph{carrier of $F'$ (under $\Phi$)} is the (unique) simplex
+    \[ \car_\Phi(F') \defeq \min \{ F \in K \Mid F'\in\Phi(F) \}  . \]
+\end{thDef}
+
+We can also compose carrier maps with simplicial maps in the following ways:
+
+\begin{thDef}[composition of carrier maps with simplicial maps]\hfill
     \begin{itemize}
         \item
-            If $w = (v_0,\dots,v_n)$ is a walk in~$K$, we denote by
-            $\dot w \defeq v_0$ and $\ddot w \defeq v_n$ the first and
-            last vertex of~$w$, respectively.
+            For a simplicial map $f\colon K\to L$ and a subcomplex $K'$ of
+            $K$ we call the subcomplex
+            \[ f[K'] \defeq \{ f(F) \Mid F\in K' \} \]
+            of~$L$ the \emph{image complex of $K'$ under $f$}.
             
         \item
-            Let $k\in\N[\geq1]$ and let $w_1,\dots,w_k$ be walks in~$K$
-            where $w_j = (v_{j,0}, \dots, v_{j,n_j})$ for all $j\in\setOneto{k}$.
-            We say $w_1\ast\dots\ast w_k$ is a \emph{valid composition}
-            if $\ddot{w}_j = \dot{w}_{j+1}$ for all $j\in\setOneto{k-1}$ and
-            in that case we define the \emph{composition of $w_1,\dots,w_k$}
-            as the walk
-            \[ w_1\ast\dots\ast w_k
-                \defeq (v_{1,0},\dots,v_{1,n_1-1},
-                        \dots,
-                        v_{k-1,0},\dots,v_{k-1,n_{k-1}-1},
-                        v_{k,0},\dots,v_{k,n_k})
-            . \]
+            Let $\Phi\colon K_2\to K_3$ be a carrier map and let
+            $f\colon K_1\to K_2$ and $g\colon K_3\to K_4$ be simplicial
+            maps. We define the carrier maps
+            $\Phi\after f\colon K_1\to K_3$ and $g\after\Phi\colon K_2\to K_4$
+            as follows:
+            \[ (\Phi\after f)(F) \defeq \Phi(f(F))
+                \qandq
+                (g\after \Phi)(F') \defeq g[\Phi(F')]
+            \]
+            for all $F\in K_1$, $F'\in K_2$.
     \end{itemize}
 \end{thDef}
 
-\begin{thDef}[triangle loop]
-    Let $K$ be a simplicial complex.
-    A \emph{triangle loop in $K$} is a triple $(p_0,p_1,p_2)$ of three
-    paths in~$K$ such that $p_0\ast p_1\ast p_2$ is a valid composition
-    and a cycle in~$K$. In that case we call $\dot{p}_0,\dot{p}_1,\dot{p}_2$
-    the \emph{distinguished vertices} of the triangle loop.
-\end{thDef}
+We are now ready to define our main objects of interest, namely \emph{tasks}
+and \emph{protocols} as well as the concept of \emph{task solving}.
 
-Given a triangle loop in~$K$, this loop gives rise to a distributed task:
-the processes are assigned input values that correspond to the distinguished
-vertices of the loop and the output configuration has to be a simplex of~$K$
-that \enquote{lies (on the path) between the input vertices}. We shall make this
-precise soon, but first we introduce some useful conventions.
-
-\begin{thConvention}\hfill
+\begin{thDef}[task and protocol]\hfill
+    \label{ch1:def:taskprotocol}
+    %
     \begin{itemize}
         \item
-            In the following, we identify the abstract complex (corresponding to
-            the complex obtained by the standard simplex) $\Delta^2$ with
-            $\Pot(\{0,1,2\})$. For convenience, we also denote its $1$-skeleton
-            by $\partial\Delta^2$.
+            A \emph{task} is a carrier map $\Phi\colon\cI\to\cO$.
+            We call $\cI$ and $\cO$ the \emph{input} and \emph{output complex},
+            respectively.
             
         \item
-            Let $K$ be a simplicial complex and let $\ppp$ be a triangle loop
-            in~$K$. For $j\in\{0,1,2\}$ the subcomplex of~$K$ determined
-            by~$p_j$ is denoted $K(p_j)$; more precisely: $K(p_j)$ is the
-            smallest subcomplex of~$K$ containing all edges of~$p_j$.
-            
-        \item
-            Let $\finSimp$ denote the full subcategory of $\Simp_2$ that has
-            \emph{finite connected $2$-dimensional simplicial complexes} as its
-            objects.
+            A \emph{protocol} is a strict carrier map $\Xi\colon\cI\to\cP$
+            where $\cP$ is the image complex of~$\Xi$.
+            We call $\cI$ and $\cP$ the \emph{input} and \emph{protocol
+            complex}, respectively.
     \end{itemize}
-\end{thConvention}
-
-\begin{thDef}[loop agreement task]
-    Let $K\in\finSimp$ and let $\kappa = \ppp$ be a triangle loop in~$K$. The
-    associated \emph{loop agreement task $\Loop{K,\kappa}\colon\Delta^2 \to K$}
-    is defined as:
-    \[
-        F \mapsto \begin{cases}
-            \{\dot{p}_j\} &\quad \text{if } F = \{j\},   \\
-            K(p_0)        &\quad \text{if } F = \{0,1\}, \\
-            K(p_1)        &\quad \text{if } F = \{1,2\}, \\
-            K(p_2)        &\quad \text{if } F = \{0,2\}, \\
-            K             &\quad \text{if } F = \{0,1,2\}
-        . \end{cases}
-    \]
 \end{thDef}
 
-Our informal description above has an exact interpretation now: if the input
-configuration is, say, $\{0,1\}\in\Delta^2$, the output configuration has to
-be a simplex of $K(p_0)\subset K$, that is a vertex or edge of the given
-path~$p_0$ in~$K$.
+\begin{thDef}[task solving]
+    Let $\cI,\cO$ and $\cP$ be simplicial complexes,
+    let $\Phi\colon\cI\to\cO$ be a task,
+    and let $\Xi\colon\cI\to\cP$ be a protocol.
+    Then \emph{$\Xi$ solves $\Phi$} if there exists a simplicial map
+    \[ \delta\colon\cP\to\cO \] 
+    such that $\delta\after\Xi$ \emph{is carried by $\Phi$},
+    which means that
+    \[ (\delta\after\Xi)(F) \subset \Phi(F) \]
+    as subcomplexes of $\cO$ is satisfied for all $F\in\cI$.
+    Such a map $\delta$ is called a \emph{decision map}.
+\end{thDef}
 
-\begin{thExample}[$(3,2)$-set agreement as loop agreement task]
-    As a first but important example, we observe that the
-    $(3,2)$-set agreement task \pcref{ch1:setagreement}
-    \[ \skel^1\colon\Delta^2\to\partial\Delta^2 \]
-    is the same as the loop agreement task
-    \[ \Loop{\partial\Delta^2,\,\kappa}
-        \qtextq{for}
-        \kappa = \bigl( (0,1),\, (1,2),\, (2,0) \bigr)
+\section{Interpretation of the model}
+It is about time that we explain some of the definitions of the previous
+section in the context of our headline \emph{distributed computing}.
+We start with an example:
+
+\begin{thExample}[consensus]
+    \label{ch1:consensus}
+    %
+    Let $X$ be a finite set of cardinality~$p$.
+    Suppose we have a system with a number of processes, each with an initial
+    private \enquote{piece of information} which we require to be an element
+    of~$X$. (The input values need not be distinct.) Now the processes may
+    communicate (subject to certain constrains of the considered system) and
+    finally have to \enquote{decide} on exactly one of the input values. That is
+    all processes halt with a private output value and all of these values have
+    to be the same (and additionally one of the input values). For obvious
+    reasons, this task is called \emph{$p$-consensus}. Note that we are only
+    interested in the set of assigned input values and the (in this example
+    singleton) set of private output values.
+    
+    Now we explain what the corresponding input and output complexes are:
+    The input complex encodes every possible \emph{input configuration},
+    that is $F$ is a simplex of $\cI$ in this case if and only if
+    $F\subset X$. (If it makes you more comfortable, assume that
+    there are more processes than input values.) The output complex encodes
+    every allowed \emph{output configuration}, that is $F'\in\cO$ if and only
+    if $F'\subset X$ is a singleton set. The carrier map~$\Phi$ then encodes
+    which input configurations may lead to which output configurations:
+    If all processes start with $x\in X$ the only allowed output configuration
+    is $\{x\}$, so $\Phi(\{x\})$ would be $\{\{x\}\}$. If the input configuration
+    is $\{x,y\}$ (with $x\neq y$) the processes may either choose $x$ or $y$
+    as their consensus, so $\Phi(\{x,y\})$ is $\{ \{x\}, \{y\} \}$. In general:
+    \[ \Phi(F) = \bigl\{ \{t\} \Mid t\in F \bigr\}  . \]
+    It is readily verified that $\Phi\colon\cI\to\cO$ is a task in the sense
+    of~\cref{ch1:def:taskprotocol}. Observe that $\cI$ is isomorphic to (the
+    complex obtained from) the standard simplex~$\Delta^{p-1}$ and $\cO$
+    is its $0$-skeleton.
+\end{thExample}
+
+This example easily generalizes to other tasks:
+$\cI$~always encodes the possible input configurations,
+$\cO$~represents valid output configurations and
+$\Phi\colon\cI\to\cO$ specifies the actual task, that is
+for each input configuration it specifies a set of output
+configurations which are considered a \enquote{successful
+completion of the task} according to the task's description.
+
+A protocol $\Xi\colon\cI\to\cP$ permitts a similar interpretation:
+Again, every simplex in $\cI$ is a possible input configuration to
+the system of processes. Then these processes run some sort of
+(communication) algorithm whose possible output configurations are
+captured by $\Xi$ and $\cP$. That means if $F\in\cI$ is an input
+configuration, $\Xi(F) \subset \cP$ includes every possibly output
+configuration that may arise from the input configuration~$F$ and
+one execution of the specified algorithm. Note, that in this case
+an \enquote{algorithm} is not entirely deterministic (in the sense
+that we cannot predict the exact ouput configuration) because the
+communication between processes introduces a degree of uncertainty.
+As mentioned % TODO: check
+in the introduction, this corresponds to the fact that we require
+protocols to be \emph{wait-free}.
+
+Finally, if $\Xi$ solves $\Phi$ and $\delta\colon\cP\to\cO$ is a decicion
+map, it is clear that $\delta$ is the \enquote{function that gets applied
+to a process's (protocol) output value} to produce a valid task
+output value. The protocol output value represents \enquote{everything
+a process has learned} during the communication and the map~$\delta$
+\enquote{decides which task output value to choose based on that
+information}, hence the name \emph{decicion map}.
+
+You may have noticed that we did not use the simplicial properties of
+$\cI$, $\cO$, $\cP$ or the maps $\Phi$, $\Xi$, $\delta$ in our
+informal description, so it is natural to ask why we chose simplicial
+complexes as a mathematical basis. Simply put, those properties are
+related to the various assumptions about the underlying distributional
+system. In this thesis, however, we will not go into much more detail,
+but you can find an extensive discussion of the correspondece between
+the above \enquote{combinatorical model} and the \enquote{operational
+model} (which describes tasks and protocols from a computer
+scientist's point of view) in the book by
+Herlihy et~al.~\cite[Ch.\,4]{bookc:herlihyetal13}.
+
+\section{Set agreement and barycentric agreement}
+Next, we are going to describe another class of examples, relaxed versions of
+the consensus task \pcref{ch1:consensus}, one of which will play an important
+role in section~\ref{ch2:sec:consequences}.
+
+\begin{thExample}[set agreement]
+    \label{ch1:setagreement}
+    %
+    Let $X$ be a finite set of cardinality~$p$ and assume there are
+    $n$~processes where $n\geq p$.  The \emph{$p$-values $k$-set
+    agreement task} (or \emph{$(p,k)$-set agreement} for short) is
+    defined by the following task description:
+    Each process's input value is an element of~$X$ (where different
+    processes may be assigned the same input value) and each process's
+    output value is one of the assigned input values such that
+    the output configuration (set of all chosen output values)
+    is a subset of~$X$ of cardinality at most~$k$. Put another way,
+    the task requires the processes to choose at most $k$ distict
+    output values (from the set of input values).
+    
+    An analogous analysis as in \cref{ch1:consensus} shows, that
+    the formal task (in the sense of \cref{ch1:def:taskprotocol})
+    is given by the input complex~$\Delta^{p-1}$, the ouput complex
+    $(\Delta^{p-1})^{\leq k-1}$ and the following carrier map~$\skel^{k-1}$:
+    if $F\in\Delta^p$ is an input configuration, $\skel^{k-1}(F)$ is the
+    $(k{-}1)$-skeleton of the complex determined by $F$ and all its faces:
+    \[ \skel^{k-1}(F) = \bigl(\Delta^{p-1}(F)\bigr)^{\leq k-1}
+    ; \]
+    this obviously defines a carrier map. (To keep the notation
+    readable we denote only $\skel^{k-1}$ even though the carrier map,
+    of course, also depends on~$p$.)
+    
+    A few notes:
+    \begin{itemize}
+        \item
+            Whereas the task description assumes that sufficiently many
+            processes are involved, the number of processes~$n$ is completely
+            irrelevant for the formal definition of $(p,k)$-set agreement
+            as the task
+            $\skel^{k-1}\colon\Delta^{p-1}\to(\Delta^{p-1})^{\leq k-1}$.
+            
+        \item
+            For $k=1$, we see that $(p,1)$-set agreement equals $p$-consensus
+            \pcref{ch1:consensus}.
+            
+        \item
+            If $p\leq k$, the task is trivial because every process simply
+            chooses its input value. Formally: Since $p\leq k$ we have
+            $(\Delta^{p-1})^{\leq k-1} = \Delta^{p-1}$ and the carrier map
+            $\skel^{k-1}$ assigns to a simplex the complex determined by all its
+            faces. Furthermore $\skel^{k-1}$ is strict, as you may easily check.
+            (With essentially the same arguments, this also holds in the general
+            case where $p > k$.) So the task
+            $\skel^{k-1}\colon\Delta^{p-1}\to\Delta^{p-1}$
+            is solved by $\skel^{k-1}$ (viewed as a protocol) with the
+            \enquote{identity} on $\Delta^{p-1}$ as decision map.
+    \end{itemize}
+\end{thExample}
+
+Another important class of examples are \emph{barycentric agreement tasks}. To
+state them formally, we first need to recognize $\sd$ as a carrier map:
+Let $K$ be a simplicial complex. For a simplex~$F$ of~$K$ we define
+$\sd_K(F) \defeq \sd K(F)$ which is a subcomplex of~$\sd K$. Thus we
+obtain a carrier map $\sd_K\colon K\to\sd K$. Since we can compose
+$\sd_K$ with $\sd_{\sd K}$ and so on, we also obtain a carrier map
+$K\to\sd^N\!K$ for all $N\in\N$ which we denote by $\sd_K^N$.
+
+\begin{thExample}[barycentric agreement]
+    \label{ch1:barycentricagreement}
+    Let $K$ be a simplicial complex and let $N\in\N$. The
+    \emph{$N$-th barycentric agreement task for the input complex~$K$}
+    is the task $\sd_K^N\colon K\to\sd^N K$.
+    
+    Informally, the processes are assigned vertices of some simplex~$F$
+    of~$K$ and the task is to decide on vertices of a simplex
+    of~$\sd_K^N(F)$, the $N$-th barycentric subdivision of~$F$
+    (as a subcomplex of $\sd^N K$).
+\end{thExample}
+
+Also note, that for all $K\in\Simp$ and all $N\in\N$ the carrier map
+$\sd_K^N$ is strict and \enquote{surjective} (in the sense of the image
+complex). Therefore $\sd_K^N$ is also a protocol which we denote by
+the same symbol (there is not actually any danger of confusion).
+
+
+\section{Mathematical framework continued}
+Now that we have seen some examples we extend our mathematical
+framework by some additional definitions and properties that we
+will need in the following chapter.
+
+In \cref{ch1:def:carriermap} we saw how to compose carrier maps,
+which naturally applies to tasks (because a taks is just a carrier
+map without further restrictions). Since we would also like to compose
+protocols we proof the following
+
+\begin{thLemma}[composition of strict carrier maps]
+    Let $K,L,M$ be simplicial complexes and let $\Phi\colon K\to L$
+    and $\Psi\colon L\to M$ be strict carrier maps.
+    Then their composition $\Psi\after\Phi$ is strict as well.
+\end{thLemma}
+
+\begin{proof}
+    Let $F$ and $F'$ be simplices of~$K$. We have to show that
+    \[ (\Psi\after\Phi)(F\cap F')
+        = (\Psi\after\Phi)(F) \cap (\Psi\after\Phi)(F')
     . \]
-\end{thExample}
+    By definition of $\Psi\after\Phi$, basic set theory and strictness
+    of~$\Psi$ we obtain:
+    \[ (\Psi\after\Phi)(F) \cap (\Psi\after\Phi)(F')
+        \,=
+        \Bigl( \mkern2mu \bigcup_{G\in\mathrlap{\Phi(F)}} \, \Psi(G) \Bigr)
+            \cap \Bigl( \bigcup_{G'\in\mathrlap{\Phi(F')}} \, \Psi(G') \Bigr)
+        \mkern8mu=
+        \bigcup_{G\in\Phi(F)} \; \bigcup_{G'\in\Phi(F')}
+            \Psi(G\cap G')
+    . \]
+    Since $\Phi(F)$ and $\Phi(F')$ are subcomplexes of~$L$, they contain every
+    face of $G\in\Phi(F)$ and $G'\in\Phi(F')$, respectively. In particular,
+    $G\cap G'$ is already a simplex of $\Phi(F)\cap\Phi(F')$ which shows the
+    non-trivial inclusion of the following equality:
+    \[ \bigcup_{G\in\Phi(F)} \; \bigcup_{G'\in\Phi(F')} \Psi(G\cap G')
+        \quad\surround{\mkern2mu}{=}
+        \bigcup_{\tilde G\in\Phi(F)\cap \Phi(F')} \Psi(\tilde G)
+    . \]
+    By strictness of~$\Phi$ and the definition of $\Psi\after\Phi$ the right
+    hand side is equal to $(\Psi\after\Phi)(F\cap F')$.
+    \\
+\end{proof}
 
-\begin{thExample}[$2$-dim. barycentric agreement as loop agreement task]
-    Let $N\in\N$. Let $p_0$ be the unique path from $\sd_{\Delta^2}^N(\{0\})$
-    to $\sd_{\Delta^2}^N(\{1\})$ in $\sd_{\Delta^2}^N(\{0,1\})$ and let
-    $p_1,p_2$ be defined analogously. Then the barycentric agreement task
-    \[ \sd_{\Delta^2}^N\colon \Delta^2 \to \sd^N \Delta^2 \]
-    is the same as the loop agreement task
-    \[ \Loop{\sd^N\!\Delta^2, \; (p_0,p_1,p_2)}  . \]
-\end{thExample}
+\begin{thCorollary}[composition of protocols]
+    Let $\Xi\colon\cI\to\cP$ and $\Xi'\colon\cI'\to\cP'$ be protocols
+    with $\cP\subset\cI'$. Then the composition $\Xi'\after\Xi$ is again
+    a protocol onto its image complex $(\Xi'\after\Xi)[\cI]$.
+\end{thCorollary}
 
-Some more examples can be found in the book by
-Herlihy et~al.~\cite[sec.~5.6.3]{bookc:herlihyetal13}.
+We also want a formal interpretation of the following situation: suppose we are
+given a set of tasks~$T$ and for each $\Phi\in T$ a protocol that
+solves $\Phi$, can we use these protocols to to solve another task~$\Phi'$? If
+this is the case, we say \emph{the tasks of $T$ implement $\Phi'$}.
 
-\section{Topological Aspects}
+In this thesis, however, we only need a restriced version of this concept.
+First of all, when we talk about whether some \emph{task implements another},
+we always assume that the set of solved tasks includes the barycentric agreement
+tasks \pcref{ch1:barycentricagreement} for all~$N\in\N$ and all occuring
+complexes. Second, we only consider the case where the first task's carrier map
+is strict, which means it \enquote{solves itself as a protocol} (like in the
+$(p\mkern1mu{\leq}\mkern1muk)$-case of \cref{ch1:setagreement}). And lastly, we
+only allow a specific amount and order of protocols used. Put formally, this
+becomes:
 
-\section{Classification}
-Our goal is to prove the following
+\begin{thDef}[task implementing a task]
+    Let $\Phi\colon\cI\to\cO$ and $\Phi'\colon\cI'\to\cO'$ be tasks and
+    let the carrier map of $\Phi$ be strict (so that we can consider $\Phi$
+    as a protocol onto its image complex). Then \emph{$\Phi$ implements
+    $\Phi'$} if there exists an $N\in\N$ and a barycentric agreement protocol
+    $\sd_{\cI}^N\colon\cI\to\sd^N\cI$ such that
+    $\sd_{\cI}^N \after \Phi$ solves $\Phi'$.
+\end{thDef}
 
-\begin{thTheorem}[classification of loop agreement tasks]
-    Let $\Loop{K,\kappa}$ and $\Loop{L,\lambda}$ be loop agreement tasks.
-    Then $\Loop{K,\kappa}$ implements $\Loop{L,\lambda}$ if and only if
-    there exists a group homomorphism $\pi_1(K)\to\pi_1(L)$ mapping
-    $[\kappa]$ to $[\lambda]$.
-\end{thTheorem}
-
-
-\section{Consequences}
-\label{ch2:sec:consequences}
+We will see later % TODO: maybe ref
+that this is enough for our purposes. We also note, that the assumption
+that barycentric agreement protocols are available is not absurd, to the
+contrary: Herlihy et~al.~\cite{bookc:herlihyetal13} % TODO: precise ref
+show that our underlying computational model permitts a (operational)
+implementation of those protocols and even better, that they can be
+obtained from rather simple building blocks, so called \emph{immediate
+snapshot protocols}.

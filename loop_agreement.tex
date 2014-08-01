@@ -1,4 +1,4 @@
-\documentclass[11pt,a4paper,ngerman,DIV=11,bibliography=totoc,titlepage=false]{scrreprt}
+\documentclass[11pt,a4paper,english,DIV=11,bibliography=totoc,titlepage=false]{scrreprt}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% packages
@@ -30,6 +30,7 @@
             pdfauthor={Johannes Prem}]{hyperref}
 %
 \usepackage{cleveref}
+\let\cref=\Cref
 
 \usepackage{myhelpers}  % my own myhelpers.sty
 \usepackage{mymathmisc} % my own mymathmisc.sty
@@ -208,9 +209,9 @@
 \newcommand{\surround}[2]{#1#2#1}
 \newcommand{\thalf}{\tfrac{1}{2}}
 
-\newcommand{\cI}{\mathcal{I}}
-\newcommand{\cO}{\mathcal{O}}
-\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cI}{I}
+\newcommand{\cO}{O}
+\newcommand{\cP}{P}
 
 % some text shortcuts
 \qXq{iff}

@@ -36,7 +36,7 @@ simplicial complexes that is more flexible than simplicial maps:
             
         \item
             Let $\Psi\colon L\to M$ be another carrier map. Then the
-            \emph{composition of $\Phi$ and $\Psi$} is defined as
+            \emph{composition of $\Phi$ and $\Psi$} is defined by
             \[ (\Psi\after\Phi)(F) \defeq \Psi[\Phi(F)] \]
             for all $F\in K$ (which is a carrier map $K\to M$).
     \end{itemize}
@@ -46,42 +46,45 @@ Note: while we say \enquote{carrier map $K\to L$}, the codomain of a carrier map
 is \emph{not} actually~$L$ (but the set of subcomplexes of the latter).
 % FIXME: ^ maybe introduce a notation for "set of subcomplexes"!?
 
-\begin{thDef}[carrier]
-    Let $\Phi\colon K\to L$ be a strict carrier map and let $F'\in\Phi[K]$.
-    The \emph{carrier of $F'$ (under $\Phi$)} is the (unique) simplex
-    \[ \car_\Phi(F') \defeq \min \{ F \in K \Mid F'\in\Phi(F) \}  . \]
+% TODO: example(s) / illustration for carrier maps
+
+% TODO: v  check if we use the carrier at all
+%\begin{thDef}[carrier]
+%    Let $\Phi\colon K\to L$ be a strict carrier map and let $F'\in\Phi[K]$.
+%    The \emph{carrier of $F'$ (under $\Phi$)} is the (unique) simplex
+%    \[ \car_\Phi(F') \defeq \min \{ F \in K \Mid F'\in\Phi(F) \}  . \]
+%\end{thDef}
+
+We can also compose carrier maps with simplicial maps from from both sides.
+To define that properly, we need
+
+\begin{thDef}[image complex under a simplicial map]
+    For a simplicial map $f\colon K\to L$ and a subcomplex $K'$ of
+    $K$ we call the subcomplex
+    \[ f[K'] \defeq \{ f(F) \Mid F\in K' \} \]
+    of~$L$ the \emph{image complex of $K'$ under $f$}.
 \end{thDef}
 
-We can also compose carrier maps with simplicial maps in the following ways:
-
-\begin{thDef}[composition of carrier maps with simplicial maps]\hfill
-    \begin{itemize}
-        \item
-            For a simplicial map $f\colon K\to L$ and a subcomplex $K'$ of
-            $K$ we call the subcomplex
-            \[ f[K'] \defeq \{ f(F) \Mid F\in K' \} \]
-            of~$L$ the \emph{image complex of $K'$ under $f$}.
-            
-        \item
-            Let $\Phi\colon K_2\to K_3$ be a carrier map and let
-            $f\colon K_1\to K_2$ and $g\colon K_3\to K_4$ be simplicial
-            maps. We define the carrier maps
-            $\Phi\after f\colon K_1\to K_3$ and $g\after\Phi\colon K_2\to K_4$
-            as follows:
-            \[ (\Phi\after f)(F) \defeq \Phi(f(F))
-                \qandq
-                (g\after \Phi)(F') \defeq g[\Phi(F')]
-            \]
-            for all $F\in K_1$, $F'\in K_2$.
-    \end{itemize}
+\begin{thDef}[composition of carrier maps with simplicial maps]
+    Let $\Phi\colon K_2\to K_3$ be a carrier map and let
+    $f\colon K_1\to K_2$ and $g\colon K_3\to K_4$ be simplicial
+    maps. We define the carrier maps
+    $\Phi\after f\colon K_1\to K_3$ and $g\after\Phi\colon K_2\to K_4$
+    as follows:
+    \[ (\Phi\after f)(F) \defeq \Phi(f(F))
+        \qandq
+        (g\after \Phi)(F') \defeq g[\Phi(F')]
+    \]
+    for all $F\in K_1$, $F'\in K_2$.
 \end{thDef}
 
 We are now ready to define our main objects of interest, namely \emph{tasks}
 and \emph{protocols} as well as the concept of \emph{task solving}.
 
-\begin{thDef}[task and protocol]\hfill
+\begin{thDef}[task and protocol]
     \label{ch1:def:taskprotocol}
     %
+    Let $\cI,\cO,\cP$ be simplicial complexes.
     \begin{itemize}
         \item
             A \emph{task} is a carrier map $\Phi\colon\cI\to\cO$.
@@ -149,14 +152,14 @@ We start with an example:
 \end{thExample}
 
 This example easily generalizes to other tasks:
-$\cI$~always encodes the possible input configurations,
-$\cO$~represents valid output configurations and
-$\Phi\colon\cI\to\cO$ specifies the actual task, that is
-for each input configuration it specifies a set of output
-configurations which are considered a \enquote{successful
-completion of the task} according to the task's description.
+the complex $\cI$~always encodes the possible input configurations,
+$\cO$~represents valid output configurations and $\Phi\colon\cI\to\cO$
+specifies the actual task, that is for each input configuration it
+specifies the set of output configurations that are considered a
+\enquote{successful completion of the task} according to the task's
+description.
 
-A protocol $\Xi\colon\cI\to\cP$ permitts a similar interpretation:
+A protocol $\Xi\colon\cI\to\cP$ permits a similar interpretation:
 Again, every simplex in $\cI$ is a possible input configuration to
 the system of processes. Then these processes run some sort of
 (communication) algorithm whose possible output configurations are
@@ -168,8 +171,8 @@ an \enquote{algorithm} is not entirely deterministic (in the sense
 that we cannot predict the exact ouput configuration) because the
 communication between processes introduces a degree of uncertainty.
 As mentioned % TODO: check
-in the introduction, this corresponds to the fact that we require
-protocols to be \emph{wait-free}.
+in the introduction, this corresponds to the fact that we model
+protocols that are \emph{wait-free}.
 
 Finally, if $\Xi$ solves $\Phi$ and $\delta\colon\cP\to\cO$ is a decicion
 map, it is clear that $\delta$ is the \enquote{function that gets applied
@@ -190,11 +193,12 @@ the above \enquote{combinatorical model} and the \enquote{operational
 model} (which describes tasks and protocols from a computer
 scientist's point of view) in the book by
 Herlihy et~al.~\cite[Ch.\,4]{bookc:herlihyetal13}.
+% TODO ^  explain at least one "simplical assumption" ...
 
-\section{Set agreement and barycentric agreement}
+\section{Examples: set agreement and barycentric agreement}
 Next, we are going to describe another class of examples, relaxed versions of
 the consensus task \pcref{ch1:consensus}, one of which will play an important
-role in section~\ref{ch2:sec:consequences}.
+role in \cref{ch2:sec:consequences}.
 
 \begin{thExample}[set agreement]
     \label{ch1:setagreement}
@@ -208,19 +212,19 @@ role in section~\ref{ch2:sec:consequences}.
     output value is one of the assigned input values such that
     the output configuration (set of all chosen output values)
     is a subset of~$X$ of cardinality at most~$k$. Put another way,
-    the task requires the processes to choose at most $k$ distict
+    the task requires the processes to choose at most $k$ distinct
     output values (from the set of input values).
     
     An analogous analysis as in \cref{ch1:consensus} shows, that
     the formal task (in the sense of \cref{ch1:def:taskprotocol})
-    is given by the input complex~$\Delta^{p-1}$, the ouput complex
+    is given by the input complex~$\Delta^{p-1}$, the output complex
     $(\Delta^{p-1})^{\leq k-1}$ and the following carrier map~$\skel^{k-1}$:
     if $F\in\Delta^p$ is an input configuration, $\skel^{k-1}(F)$ is the
-    $(k{-}1)$-skeleton of the complex determined by $F$ and all its faces:
-    \[ \skel^{k-1}(F) = \bigl(\Delta^{p-1}(F)\bigr)^{\leq k-1}
+    $(k{-}1)$-skeleton of the complex determined by $F$:
+    \[ \skel^{k-1}(F) \defeq \bigl(\Delta^{p-1}(F)\bigr)^{\leq k-1}
     ; \]
     this obviously defines a carrier map. (To keep the notation
-    readable we denote only $\skel^{k-1}$ even though the carrier map,
+    readable we write only $\skel^{k-1}$ even though the carrier map,
     of course, also depends on~$p$.)
     
     A few notes:
@@ -237,16 +241,16 @@ role in section~\ref{ch2:sec:consequences}.
             \pcref{ch1:consensus}.
             
         \item
-            If $p\leq k$, the task is trivial because every process simply
-            chooses its input value. Formally: Since $p\leq k$ we have
+            If $p\leq k$, the task is trivial because every process can simply
+            choose its input value. Formally: Since $p\leq k$ we have
             $(\Delta^{p-1})^{\leq k-1} = \Delta^{p-1}$ and the carrier map
             $\skel^{k-1}$ assigns to a simplex the complex determined by all its
-            faces. Furthermore $\skel^{k-1}$ is strict, as you may easily check.
-            (With essentially the same arguments, this also holds in the general
-            case where $p > k$.) So the task
-            $\skel^{k-1}\colon\Delta^{p-1}\to\Delta^{p-1}$
-            is solved by $\skel^{k-1}$ (viewed as a protocol) with the
-            \enquote{identity} on $\Delta^{p-1}$ as decision map.
+            faces. Furthermore $\skel^{k-1}$ is strict, as one may easily check.
+            (With essentially the same arguments, the last assertion also holds
+            in the general case where $p > k$.) So the task
+            $\skel^{k-1}\colon\Delta^{p-1}\to\Delta^{p-1}$ is solved by
+            $\skel^{k-1}$ (viewed as a protocol) with the identity map
+            on $V(\Delta^{p-1})$ as decision map.
     \end{itemize}
 \end{thExample}
 
@@ -284,12 +288,12 @@ will need in the following chapter.
 In \cref{ch1:def:carriermap} we saw how to compose carrier maps,
 which naturally applies to tasks (because a taks is just a carrier
 map without further restrictions). Since we would also like to compose
-protocols we proof the following
+protocols we prove the following
 
 \begin{thLemma}[composition of strict carrier maps]
     Let $K,L,M$ be simplicial complexes and let $\Phi\colon K\to L$
     and $\Psi\colon L\to M$ be strict carrier maps.
-    Then their composition $\Psi\after\Phi$ is strict as well.
+    Then their composition $\Psi\after\Phi\colon K\to M$ is strict as well.
 \end{thLemma}
 
 \begin{proof}
@@ -309,7 +313,7 @@ protocols we proof the following
     . \]
     Since $\Phi(F)$ and $\Phi(F')$ are subcomplexes of~$L$, they contain every
     face of $G\in\Phi(F)$ and $G'\in\Phi(F')$, respectively. In particular,
-    $G\cap G'$ is already a simplex of $\Phi(F)\cap\Phi(F')$ which shows the
+    $G\cap G'$ is already a simplex of $\Phi(F)\cap\Phi(F')$, which shows the
     non-trivial inclusion of the following equality:
     \[ \bigcup_{G\in\Phi(F)} \; \bigcup_{G'\in\Phi(F')} \Psi(G\cap G')
         \quad\surround{\mkern2mu}{=}
@@ -321,8 +325,9 @@ protocols we proof the following
 \end{proof}
 
 \begin{thCorollary}[composition of protocols]
-    Let $\Xi\colon\cI\to\cP$ and $\Xi'\colon\cI'\to\cP'$ be protocols
-    with $\cP\subset\cI'$. Then the composition $\Xi'\after\Xi$ is again
+    Let $\cI,\cP,\cI',\cP'$ be simplicial complexes with~$\cP\subset\cI'$,
+    and let $\Xi\colon\cI\to\cP$ and $\Xi'\colon\cI'\to\cP'$ be protocols.
+    Then the composition~$\Xi'\after\Xi$ is again
     a protocol onto its image complex $(\Xi'\after\Xi)[\cI]$.
 \end{thCorollary}
 
@@ -354,7 +359,7 @@ We will see later % TODO: maybe ref
 that this is enough for our purposes. We also note, that the assumption
 that barycentric agreement protocols are available is not absurd, to the
 contrary: Herlihy et~al.~\cite{bookc:herlihyetal13} % TODO: precise ref
-show that our underlying computational model permitts a (operational)
+show that our underlying computational model permits a (operational)
 implementation of those protocols and even better, that they can be
 obtained from rather simple building blocks, so called \emph{immediate
 snapshot protocols}.

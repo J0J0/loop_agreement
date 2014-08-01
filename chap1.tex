@@ -5,28 +5,29 @@ bla bla  % TODO
 
 
 \section{Simplicial Complexes}
-Because our model fundamentally relies on \emph{simplicial complexes}
-this section gives a brief review about the basic definitions and properties
-used in the rest of this thesis. We include this for the sake of completeness
-but \emph{not} to replace a introduction on the topic by a good text book.
-You may want to consult for example (?? .. ??) % TODO
+Because our mathematical model for distributed computing fundamentally relies on
+\emph{simplicial complexes} this section gives a brief review of the basic
+definitions and properties used in this thesis. We include this for
+the sake of completeness but \emph{not} to replace a introduction on the topic
+by a good text book.  You may want to consult for example (?? .. ??) % TODO
 for further reading.
  
 \begin{thDef}[(abstract) simplicial complex]\hfill
     \begin{itemize}
         \item
-            Let $V$ be any set and let $K\subset\pot V$. The tuple $(V,K)$ is
+            Let $V$ be a set and let $K\subset\pot V$. The pair $(V,K)$ is
             an \emph{(abstract) simplicial complex} if every element of~$K$ is
-            a finite set, $K$ is closed under taking subsets (i.\,e. for
+            a finite set, $K$ is closed under taking subsets (i.\,e. for all
             $F\in K$ and $F'\subset F$ we have $F'\in K$) and $K$ contains
-            all singleton subsets of~$V$ (i.\,e. for $v\in V$ we have
+            all singleton subsets of~$V$ (i.\,e. for all $v\in V$ we have
             $\{v\}\in K$).
             
         \item
             Let $(V,K)$ be a simplicial complex. An element~$F$ of~$K$ is
             a \emph{simplex (of~$K$)}, $\dim(F)\defeq\abs{F}-1
-            \in\N\cup\{-1\}$ is its dimension, and each subset of~$F$ is
-            called a \emph{face of~$F$}.
+            \in\N\cup\{-1\}$ is its \emph{dimension}, and each subset of~$F$ is
+            called a \emph{face of~$F$}. A simplex of dimension~$n$ is also
+            called an \emph{$n$-simplex}.
             
         \item
             The \emph{dimension of $(V,K)$} is
@@ -43,7 +44,7 @@ for further reading.
             such that $V'\subset V$ and $K'\subset K$. For $k\in\N$ the
             subcomplex
             \[ \bigl( V,\; \{ F\in K \cMid[\,]{} \dim(F) \leq k \} \bigr) \]
-            of $(V,K)$ is the \emph{$k$-skeleton of $(V,K)$} which
+            of $(V,K)$ is the \emph{$k$-skeleton of $(V,K)$}, which
             we denote by $(V,K)^{\leq k}$.
             
         \item
@@ -53,14 +54,12 @@ for further reading.
     \end{itemize}
 \end{thDef}
 
+\pagebreak[2]
 \begin{thConvention}\hfill
     \begin{itemize}
         \item
             Instead of $(V,K)$ we mostly speak of a simplicial complex~$K$ where it
             is understood that $V(K)\defeq V = \bigcup K$.
-            
-        \item
-            By an \emph{$n$-simplex} we mean a simplex of dimension~$n$.
             
         \item
             Note that every simplicial complex is partially ordered by
@@ -76,7 +75,8 @@ for further reading.
 \end{thDef}
 
 \begin{thDef}[category of simplicial complexes]
-    Simplicial complexes together with simplicial maps form a category~$\Simp$.
+    Simplicial complexes together with simplicial maps (and usual function
+    composition) form a category~$\Simp$.
     For $n\in\N\cup\{-1\}$ we also denote its full subcategory of
     $n$-dimensional simplicial complexes by $\Simp_n$.
 \end{thDef}
@@ -87,8 +87,8 @@ Analogously, we define \emph{geometric simplicial complexes}:
     Let $d\in\N$.
     \begin{itemize}
         \item
-            Let $A\subset\R^d$ be a finite and affinely independet set
-            of vectors. Then the convex hull
+            Let $A\subset\R^d$ be a finite and affinely independet set.
+            Then the convex hull
             \[ \sigma \defeq \conv(A) 
                 =\mkern1mu \bigcap \mkern1mu \bigl\{ A'\subset\R^d 
                                 \Mid A\subset A' \text{ convex} \bigr\}
@@ -134,7 +134,8 @@ Analogously, we define \emph{geometric simplicial complexes}:
             and the \emph{polyhedron of $\Delta$} is
             \[ \geom\Delta \defeq \bigcup \Delta  \;\subset\,\R^d \]
             which we endow with the colimit topology induced by the canonical
-            inclusions of the simplices.
+            inclusions of the simplices (where the simplices carry the topology
+            induced from~$\R^d$).
             
         \item
             A \emph{subcomplex of $\Delta$} is a geometric simplicial
@@ -148,6 +149,8 @@ Analogously, we define \emph{geometric simplicial complexes}:
     write~$\Delta^n$ for this complex when the meaning is clear from the
     context.
 \end{thExample}
+
+% FIXME: \Delta^n is used as abstract complex in the following!
 
 \begin{thDef}[geometric realization]\hfill
     \begin{itemize}

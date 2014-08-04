@@ -196,11 +196,11 @@ need note be induced by a continuous map. For finite simplicial complexes,
 however, we have the following
 
 \begin{thLemma}[contiuous realization of homomorphism]
-    Let $K,L$ be finite connected simplicial complexes with $\dim(K)\leq 2$,
-    let $x$ and~$y$ be vertices of $K$ and~$L$, respectively, and let
-    $\phi\colon\pi_1(K,x)\to\pi_1(L,y)$ be a group homomorphism. Then there
-    exists a continuous map $f\colon(\geom K,\geom x)\to(\geom L, \geom y)$
-    of pointed spaces such that $\pi_1(f) = \phi$.
+    Let $K$ be a finite connected simplicial complex with $\dim(K)\leq 2$,
+    let $(Y,y_0)$ be a pointed topological space, let $x$ be a vertiex of $K$,
+    and let $\phi\colon\pi_1(K,x)\to\pi_1(Y,y_0)$ be a group homomorphism.
+    Then there exists a base point preserving continuous map
+    $f\colon(\geom K,\geom x)\to(Y,y_0)$ such that $\pi_1(f) = \phi$.
 \end{thLemma}
 
 \begin{proof}
@@ -212,7 +212,7 @@ however, we have the following
     $q\colon \geom K \to \geom K / \geom{K^\ast} \eqdef X$
     is a homotopy equivalence. Let
     \[ \psi \defeq \phi\after\pi_1(q)^{-1}\colon
-        \pi_1(X,[x_0]) \to \pi_1(L,y)
+        \pi_1(X,[x_0]) \to \pi_1(Y,y_0)
     \]
     and let $X^1 \defeq q(\geom{K^{\leq 1}})$. Clearly, since $K^\ast$ was a
     spanning tree, all vertices of~$K$ are identified in~$X^1$ and therefore
@@ -221,11 +221,11 @@ however, we have the following
     in~$K^\ast$. For $j\in\setOneto k$ let $\gamma_j\colon S^1\to X^1$
     be the inclusion of the $j$-th loop into this wedge sum, and let
     $[\eta_j]_\ast \defeq \psi([\gamma_j]_\ast)$. Then the loops
-    $\eta_j\colon (S^1,[0])\to(\geom L,\geom y)$ combine to a map
-    \[ g_1\colon X^1 \to \geom L \]
+    $\eta_j\colon (S^1,[0])\to(Y,y_0)$ combine to a map
+    \[ g_1\colon X^1 \to Y \]
     (because \enquote{$\vee$} is the coproduct in the category of pointed
     spaces). Now we extend $g_1$ to~$X$. Since only parts of
-    $\geom{K^{\leq 1}}$ are identified to a point by~$q$ we see that
+    $\geom{K^{\leq 1}}$ are identified to a point by~$q$, we see that
     $X$ fits into a pushout diagram
     \[
         \xymatrix@R=0.5cm@C=1.2cm{
@@ -249,7 +249,7 @@ however, we have the following
     It is easy to see that $\phi_j$ is pointed contractible in~$X$ because
     it is the projected boundary loop of a $2$-simplex in~$\geom{K}$. The
     following calculation shows that $g_1\after\phi_j$ is pointed contractible
-    in~$\geom L$ as well:
+    in~$Y$ as well:
     \begin{align*}
         [g_1\after\phi_j]_\ast
         &= [g_1\after\gamma]_\ast \cdot [g_1\after\gamma']_\ast \cdot
@@ -258,7 +258,7 @@ however, we have the following
         &= \psi([\gamma]_\ast) \cdot \psi([\gamma']_\ast) \cdot
             \psi([\gamma'']_\ast)
         \\
-        &= \psi([\phi_j]_\ast) = \psi(1) = 1 \in \pi_1(L,y)
+        &= \psi([\phi_j]_\ast) = \psi(1) = 1 \in \pi_1(Y,y_0)
     ; \end{align*}
     in the second equality $[g_1\after\gamma]_\ast = \psi([\gamma]_\ast)$ (and
     likewise for $\gamma'$ and $\gamma''$) clearly holds if $\gamma$ is the
@@ -266,8 +266,8 @@ however, we have the following
     \[ [g_1\after\gamma_{j'}]_\ast = [\eta_{j'}]_\ast = \psi([\gamma_{j'}]_\ast)
     \]
     by definition of $g_1$ and $\eta_{j'}$. But if $g_1\after\phi_j\colon
-    S^1\to\geom L$ is contractible it can be extended to a map $g_{2j}\colon
-    D^2\to\geom L$.
+    S^1\to Y$ is contractible it can be extended to a map
+    $g_{2j}\colon D^2\to Y$.
     %
     Thus we obtain a commutative diagram
     \[
@@ -278,13 +278,13 @@ however, we have the following
             \coprod_{j=1}^\ell D^2 \ar[r] \ar@/_1pc/[rrd]_{\coprod_{j=1}^\ell g_{2j}}
             & X \ar@{-->}[rd]^g
             \\
-            & & \geom L
+            & & Y
             \rlap{,}
         }
     \]
     and by virtue of the universal property of the pushout a map
-    $g\colon X\to\geom L$ fitting into the diagram. The composition
-    \[ f\defeq g\after q\colon \geom K\to\geom L \]
+    $g\colon X\to Y$ fitting into the diagram. The composition
+    \[ f\defeq g\after q\colon \geom K\to Y \]
     is the desired map, because: the equivalence classes of the loops
     $\gamma_1,\dots,\gamma_k$ obviously generate~$\pi_1(X,[x_0])$ and $g$
     restricts to $g_1$ on~$X^1$, so $\pi(g) = \psi$; by functoriality of $\pi_1$

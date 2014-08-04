@@ -2,7 +2,7 @@
 \section{Definition and Examples}
 \emph{Loop agreement tasks} form a class of tasks in the sense of
 \cref{ch1:def:taskprotocol}. They are related to loops in topolgical spaces
-and in fact our main result in this chapter \pcref{.} % TODO
+and in fact our main result in this chapter \pcref{ch3:classification}
 connects the sovability of one such task through another with the
 \emph{fundamental groups} of the (geometric realizations of the)
 involved complexes. We start with the definition of a combinatorical
@@ -57,10 +57,11 @@ restatement of the classical terms in the context of the graph~$K^{\leq 1}$.
 
 \begin{thDef}[triangle loop]
     Let $K$ be a simplicial complex.
-    A \emph{triangle loop in $K$} is a triple $(p_0,p_1,p_2)$ of three
-    paths in~$K$ such that $p_0\ast p_1\ast p_2$ is a valid composition
-    and a cycle in~$K$. In that case we call $\dot{p}_0,\dot{p}_1,\dot{p}_2$
-    the \emph{distinguished vertices} of the triangle loop.
+    A \emph{triangle loop in $K$} is a triple $\kappa = (p_0,p_1,p_2)$ of paths
+    in~$K$ such that $p_0\ast p_1\ast p_2$ is a valid composition and a cycle
+    in~$K$. In that case we call $\dot{p}_0,\dot{p}_1,\dot{p}_2$ the
+    \emph{distinguished vertices} and $\dot\kappa \defeq \dot{p}_0$ the
+    \emph{base point} of~$\kappa$.
 \end{thDef}
 
 Given a triangle loop in~$K$, this loop gives rise to a distributed task:
@@ -74,8 +75,10 @@ precise soon, but first we introduce some useful conventions.
         \item
             In the following, we identify the abstract complex (corresponding to
             the complex obtained by the standard simplex) $\Delta^2$ with
-            $\Pot(\{0,1,2\})$. For convenience, we also denote its $1$-skeleton
-            by $\partial\Delta^2$.
+            $\Pot(\{0,1,2\})$.
+            % TODO: ^  check against chap1 if this is a repetition
+            For convenience, we also denote its $1$-skeleton by
+            $\partial\Delta^2$.
             
         \item
             Let $K$ be a simplicial complex and let $\ppp$ be a triangle loop
@@ -131,14 +134,171 @@ path~$p_0$ in~$K$.
 \end{thExample}
 
 Some more examples can be found in the book by
-Herlihy et~al.~\cite[sec.~5.6.3]{bookc:herlihyetal13}.
+Herlihy et~al.~\cite[Sec.~5.6.3]{bookc:herlihyetal13}.
 
 \section{Topological Aspects}
+In this section we define an \emph{algebraic signature} of a loop agreement task
+based on the \emph{fundamental group} of its simplicial complex's geometric
+realization. We also show that every homomorphism between fundamental groups
+of $2$-dimensional finite simplicial complexes  % TODO: is "finite" necessary!?
+is in fact induced by a continuous map and how that affects \emph{maps between
+algebraic signatures}.
+% TODO: ^  sounds awkward -.-
+
+\begin{thDef}[topological loop associated to a triangle loop]
+    Let $K\in\finSimp$.
+    \begin{itemize}
+        \item
+            Let $c=(v_0,\dots,v_n)$ be a cycle in~$K$ and for
+            $j\in\setZeroto{n-1}$ let $i_j\colon\Delta^1\to\geom K$ be the
+            canonical inclusion of the geometric $1$-Simplex corresponding to
+            the $1$-Simplex $\{v_j,v_{j+1}\}$ of~$K$.
+            The \emph{(topological) loop~$\gamma_c$ associated to~$c$} is the
+            (well-defined) injective continuous map
+            \[
+                S^1\to\geom K, \quad
+                [t]\mapsto i_j(1-\tau,\tau) \qtextq{for} \tau=tn-j,
+                    \qtextq{if} t\in\bigl[\tfrac{j}{n}, \tfrac{j+1}{n}\bigr]
+            . \]
+            
+        \item
+            Let $\kappa=\ppp$ be a triangle loop in~$K$. The \emph{(topolgical)
+            loop~$\gamma_\kappa$ associated to~$\kappa$} is
+            \[ \gamma_\kappa \defeq \gamma_{p_0\ast p_1\ast p_2}  . \]
+    \end{itemize}
+\end{thDef}
+
+\begin{thConvention}[fundamental group of a complex]
+    Let $K$ be a simplicial complex and let $v$ be a vertex of~$K$.
+    We write
+    \[ \pi_1(K,v) \defeq \pi_1(\geom K, \geom v) \]
+    for the \emph{fundamental group of~$\geom K$ based at~$\geom v$}.
+    % and conveniently call this the \emph{fundamental group of~$K$ based at~$v$}.
+\end{thConvention}
+
+\begin{thDef}[algebraic signature]
+    Let $K\in\finSimp$ and let $\kappa$ be a triangle loop in~$K$. The
+    \emph{algebraic signature of the loop agreement task~$\Loop{K,\kappa}$}
+    is the pair
+    \[ \bigl( \pi_1(K,\dot\kappa), \, [\gamma_\kappa]_\ast \bigr) . \]
+    Let $L\in\finSimp$ be another complex and let $\lambda$ be a triangle loop
+    in~$L$. If $\phi\colon\pi_1(K,\dot\kappa)\to\pi_1(L,\dot\lambda)$ is a
+    group homomorphism that maps $[\gamma_\kappa]_\ast$ to
+    $[\gamma_\lambda]_\ast$ we call
+    \[ \phi\colon \bigl( \pi_1(K,\dot\kappa), \, [\gamma_\kappa]_\ast \bigr)
+        \to \bigl( \pi_1(L,\dot\lambda), \, [\gamma_\lambda]_\ast \bigr)
+    \]
+    a \emph{map of algebraic signatures}.
+\end{thDef}
+
+In general, a group homorphism between fundamental groups of topolgical spaces
+need note be induced by a continuous map. For finite simplicial complexes,
+however, we have the following
+
+\begin{thLemma}[contiuous realization of homomorphism]
+    Let $K,L$ be finite connected simplicial complexes with $\dim(K)\leq 2$,
+    let $x$ and~$y$ be vertices of $K$ and~$L$, respectively, and let
+    $\phi\colon\pi_1(K,x)\to\pi_1(L,y)$ be a group homomorphism. Then there
+    exists a continuous map $f\colon(\geom K,\geom x)\to(\geom L, \geom y)$
+    of pointed spaces such that $\pi_1(f) = \phi$.
+\end{thLemma}
+
+\begin{proof}
+    Let $K^\ast$ be a spanning tree of the graph~$K^{\leq 1}$ and let
+    $x_0\defeq\geom x\in\geom K$. Then $\geom{K^\ast} \subset \geom K$ is
+    contractible
+    and since the inclusion of a subcomplex is a cofibration % TODO: ref
+    this implies that the quotient map
+    $q\colon \geom K \to \geom K / \geom{K^\ast} \eqdef X$
+    is a homotopy equivalence. Let
+    \[ \psi \defeq \phi\after\pi_1(q)^{-1}\colon
+        \pi_1(X,[x_0]) \to \pi_1(L,y)
+    \]
+    and let $X^1 \defeq q(\geom{K^{\leq 1}})$. Clearly, since $K^\ast$ was a
+    spanning tree, all vertices of~$K$ are identified in~$X^1$ and therefore
+    \[ X^1 \cong \bigvee\nolimits^k S^1  , \]
+    where $k\in\N$ is the number of $1$-simplices of~$K$ not contained
+    in~$K^\ast$. For $j\in\setOneto k$ let $\gamma_j\colon S^1\to X^1$
+    be the inclusion of the $j$-th loop into this wedge sum, and let
+    $[\eta_j]_\ast \defeq \psi([\gamma_j]_\ast)$. Then the loops
+    $\eta_j\colon (S^1,[0])\to(\geom L,\geom y)$ combine to a map
+    \[ g_1\colon X^1 \to \geom L \]
+    (because \enquote{$\vee$} is the coproduct in the category of pointed
+    spaces). Now we extend $g_1$ to~$X$. Since only parts of
+    $\geom{K^{\leq 1}}$ are identified to a point by~$q$ we see that
+    $X$ fits into a pushout diagram
+    \[
+        \xymatrix@R=0.5cm@C=1.2cm{
+            \coprod_{j=1}^\ell S^1 \ar[r]^-{\coprod_{j=1}^\ell \phi_j} \ar@{ `->}[d]
+            & X^1 \ar[d]
+            \\
+            \coprod_{j=1}^\ell D^2 \ar[r]
+            & X
+            \rlap{,}
+        }
+    \]
+    where $\ell\in\N$ is the number of $2$-simplices of~$K$. Fix
+    $j\in\setOneto{\ell}$. Then
+    \[
+        [\phi_j]_\ast = [\gamma]_\ast \cdot [\gamma']_\ast \cdot [\gamma'']_\ast
+        \;\in\,\pi_1(X,[x_0])
+    \]
+    where $\gamma,\gamma',\gamma''$ correspond to the three $1$-dimensional
+    faces of the original $2$-simplex of~$K$, so each of those is either
+    the constant loop at~$[x_0]\in X$ or one of the loops~$\gamma_{j'}$.
+    It is easy to see that $\phi_j$ is pointed contractible in~$X$ because
+    it is the projected boundary loop of a $2$-simplex in~$\geom{K}$. The
+    following calculation shows that $g_1\after\phi_j$ is pointed contractible
+    in~$\geom L$ as well:
+    \begin{align*}
+        [g_1\after\phi_j]_\ast
+        &= [g_1\after\gamma]_\ast \cdot [g_1\after\gamma']_\ast \cdot
+            [g_1\after\gamma'']_\ast
+        \\
+        &= \psi([\gamma]_\ast) \cdot \psi([\gamma']_\ast) \cdot
+            \psi([\gamma'']_\ast)
+        \\
+        &= \psi([\phi_j]_\ast) = \psi(1) = 1 \in \pi_1(L,y)
+    ; \end{align*}
+    in the second equality $[g_1\after\gamma]_\ast = \psi([\gamma]_\ast)$ (and
+    likewise for $\gamma'$ and $\gamma''$) clearly holds if $\gamma$ is the
+    constant loop and for $\gamma=\gamma_{j'}$ we have
+    \[ [g_1\after\gamma_{j'}]_\ast = [\eta_{j'}]_\ast = \psi([\gamma_{j'}]_\ast)
+    \]
+    by definition of $g_1$ and $\eta_{j'}$. But if $g_1\after\phi_j\colon
+    S^1\to\geom L$ is contractible it can be extended to a map $g_{2j}\colon
+    D^2\to\geom L$.
+    %
+    Thus we obtain a commutative diagram
+    \[
+        \xymatrix@R=0.5cm@C=1.2cm{
+            \coprod_{j=1}^\ell S^1 \ar[r]^-{\coprod_{j=1}^\ell \phi_j} \ar@{ `->}[d]
+            & X^1 \ar[d] \ar@/^1pc/[rdd]^{g_1}
+            \\
+            \coprod_{j=1}^\ell D^2 \ar[r] \ar@/_1pc/[rrd]_{\coprod_{j=1}^\ell g_{2j}}
+            & X \ar@{-->}[rd]^g
+            \\
+            & & \geom L
+            \rlap{,}
+        }
+    \]
+    and by virtue of the universal property of the pushout a map
+    $g\colon X\to\geom L$ fitting into the diagram. The composition
+    \[ f\defeq g\after q\colon \geom K\to\geom L \]
+    is the desired map, because: the equivalence classes of the loops
+    $\gamma_1,\dots,\gamma_k$ obviously generate~$\pi_1(X,[x_0])$ and $g$
+    restricts to $g_1$ on~$X^1$, so $\pi(g) = \psi$; by functoriality of $\pi_1$
+    and definition of $\psi$, it follows that $\pi_1(f) = \phi$.
+    \\
+\end{proof}
+
 
 \section{Classification}
 Our goal is to prove the following
 
 \begin{thTheorem}[classification of loop agreement tasks]
+    \label{ch3:classification}
+    %
     Let $\Loop{K,\kappa}$ and $\Loop{L,\lambda}$ be loop agreement tasks.
     Then $\Loop{K,\kappa}$ implements $\Loop{L,\lambda}$ if and only if
     there exists a group homomorphism $\pi_1(K)\to\pi_1(L)$ mapping

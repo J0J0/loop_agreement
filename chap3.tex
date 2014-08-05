@@ -196,6 +196,8 @@ need note be induced by a continuous map. For finite simplicial complexes,
 however, we have the following
 
 \begin{thLemma}[contiuous realization of homomorphism]
+    \label{ch3:continuousrealization}
+    %
     Let $K$ be a finite connected simplicial complex with $\dim(K)\leq 2$,
     let $(Y,y_0)$ be a pointed topological space, let $x$ be a vertiex of $K$,
     and let $\phi\colon\pi_1(K,x)\to\pi_1(Y,y_0)$ be a group homomorphism.
@@ -289,6 +291,60 @@ however, we have the following
     $\gamma_1,\dots,\gamma_k$ obviously generate~$\pi_1(X,[x_0])$ and $g$
     restricts to $g_1$ on~$X^1$, so $\pi(g) = \psi$; by functoriality of $\pi_1$
     and definition of $\psi$, it follows that $\pi_1(f) = \phi$.
+    \\
+\end{proof}
+
+\begin{thCorollary}[alg. signature map vs. continous map]
+    Let $K,L\in\finSimp$ and let $\kappa,\lambda$ be triangle loops
+    in $K$ and $L$, respectively. Then there exists a map of
+    algebraic signatures
+    \[ \phi\colon \bigl( \pi_1(K,\dot\kappa), \, [\gamma_\kappa]_\ast \bigr)
+        \to \bigl( \pi_1(L,\dot\lambda), \, [\gamma_\lambda]_\ast \bigr)
+    \]
+    if and only of there exists a continuous map
+    \[ f\colon \geom K\to \geom L
+        \qtextq{with} f\after\gamma_\kappa = \gamma_\lambda
+    . \]
+\end{thCorollary}
+
+\begin{proof}
+    If $f$ is a map as above, the induced homomorphism~$\pi_1(f)$ yields
+    the map of algebraic signatures as required. Conversely, let $\phi$
+    be such a map of algebraic signatures. By \cref{ch3:continuousrealization}
+    there exists a map $f'\colon\geom K\to\geom L$ such that $\pi_1(f')=\phi$.
+    Then the loop~$f'\after\gamma_\kappa$ is, by assumption, pointed homotopic
+    to~$\gamma_\lambda$; let $h\colon S^1\times[0,1]\to\geom L$ be such a
+    pointed homotopy. By definition of~$\gamma_\kappa$ we see, that
+    $\gamma_\kappa$ defines a homeomorphism between $S^1$ and a
+    ($1$-dimensional) subcomplex of~$\geom L$, hence $\gamma_\kappa$
+    is a cofibration. % TODO: ref (as above)
+    Therefore, we obtain a pointed homotopy
+    $H\colon\geom K\times[0,1]\to\geom L$ such that the following diagram
+    commutes:
+    \[
+        \xymatrix@C=2cm{
+            S^1
+                \ar[r]^{\gamma_\kappa}
+                \ar[d]_{\id_{S^1}\times\const_0}
+            & \geom K
+                \ar[d]_{\id_{\geom K}\times\const_0}
+                \ar@/^1pc/[rdd]^{f'}
+            \\
+            S^1\times[0,1]
+                \ar[r]_{\gamma_\kappa\times\id_{[0,1]}}
+                \ar@/_1pc/[rrd]_h
+            & \geom{K}\times[0,1]
+                \ar@{-->}[rd]^H
+            \\
+            & & \geom L
+            \rlap{.}
+        }
+    \]
+    Let $f \defeq H(\scdot,1)\colon \geom K\to \geom L$, then
+    \[ f\after\gamma_\kappa = H \after (\gamma_\kappa\times\const_1)
+        = h(\scdot,1) = \gamma_\lambda
+    \]
+    and since $f$ and $f'$ are homotopic: $\pi_1(f) = \pi_1(f') = \phi$.
     \\
 \end{proof}
 

@@ -10,7 +10,7 @@ The following definitions rely on an additional type of map operating on
 simplicial complexes that is more flexible than simplicial maps:
 
 \begin{thDef}[carrier map]
-    \label{ch1:def:carriermap}
+    \label{ch2:def:carriermap}
     %
     Let $K,L$ be simplicial complexes. 
     \begin{itemize}
@@ -82,7 +82,7 @@ We are now ready to define our main objects of interest, namely \emph{tasks}
 and \emph{protocols} as well as the concept of \emph{task solving}.
 
 \begin{thDef}[task and protocol]
-    \label{ch1:def:taskprotocol}
+    \label{ch2:def:taskprotocol}
     %
     Let $\cI,\cO,\cP$ be simplicial complexes.
     \begin{itemize}
@@ -118,7 +118,7 @@ section in the context of our headline \emph{distributed computing}.
 We start with an example:
 
 \begin{thExample}[consensus]
-    \label{ch1:consensus}
+    \label{ch2:consensus}
     %
     Let $X$ be a finite set of cardinality~$p$.
     Suppose we have a system with a number of processes, each with an initial
@@ -146,7 +146,7 @@ We start with an example:
     as their consensus, so $\Phi(\{x,y\})$ is $\{ \{x\}, \{y\} \}$. In general:
     \[ \Phi(F) = \bigl\{ \{t\} \Mid t\in F \bigr\}  . \]
     It is readily verified that $\Phi\colon\cI\to\cO$ is a task in the sense
-    of~\cref{ch1:def:taskprotocol}. Observe that $\cI$ is isomorphic to (the
+    of~\cref{ch2:def:taskprotocol}. Observe that $\cI$ is isomorphic to (the
     complex obtained from) the standard simplex~$\Delta^{p-1}$ and $\cO$
     is its $0$-skeleton.
 \end{thExample}
@@ -197,11 +197,11 @@ Herlihy et~al.~\cite[Ch.\,4]{bookc:herlihyetal13}.
 
 \section{Examples: set agreement and barycentric agreement}
 Next, we are going to describe another class of examples, relaxed versions of
-the consensus task \pcref{ch1:consensus}, one of which will play an important
+the consensus task \pcref{ch2:consensus}, one of which will play an important
 role in \cref{ch2:sec:consequences}.
 
 \begin{thExample}[set agreement]
-    \label{ch1:setagreement}
+    \label{ch2:setagreement}
     %
     Let $X$ be a finite set of cardinality~$p$ and assume there are
     $n$~processes where $n\geq p$.  The \emph{$p$-values $k$-set
@@ -215,8 +215,8 @@ role in \cref{ch2:sec:consequences}.
     the task requires the processes to choose at most $k$ distinct
     output values (from the set of input values).
     
-    An analogous analysis as in \cref{ch1:consensus} shows, that
-    the formal task (in the sense of \cref{ch1:def:taskprotocol})
+    An analogous analysis as in \cref{ch2:consensus} shows, that
+    the formal task (in the sense of \cref{ch2:def:taskprotocol})
     is given by the input complex~$\Delta^{p-1}$, the output complex
     $(\Delta^{p-1})^{\leq k-1}$ and the following carrier map~$\skel^{k-1}$:
     if $F\in\Delta^p$ is an input configuration, $\skel^{k-1}(F)$ is the
@@ -238,7 +238,7 @@ role in \cref{ch2:sec:consequences}.
             
         \item
             For $k=1$, we see that $(p,1)$-set agreement equals $p$-consensus
-            \pcref{ch1:consensus}.
+            \pcref{ch2:consensus}.
             
         \item
             If $p\leq k$, the task is trivial because every process can simply
@@ -263,7 +263,7 @@ $\sd_K$ with $\sd_{\sd K}$ and so on, we also obtain a carrier map
 $K\to\sd^N\!K$ for all $N\in\N$ which we denote by $\sd_K^N$.
 
 \begin{thExample}[barycentric agreement]
-    \label{ch1:barycentricagreement}
+    \label{ch2:barycentricagreement}
     Let $K$ be a simplicial complex and let $N\in\N$. The
     \emph{$N$-th barycentric agreement task for the input complex~$K$}
     is the task $\sd_K^N\colon K\to\sd^N K$.
@@ -285,7 +285,7 @@ Now that we have seen some examples we extend our mathematical
 framework by some additional definitions and properties that we
 will need in the following chapter.
 
-In \cref{ch1:def:carriermap} we saw how to compose carrier maps,
+In \cref{ch2:def:carriermap} we saw how to compose carrier maps,
 which naturally applies to tasks (because a taks is just a carrier
 map without further restrictions). Since we would also like to compose
 protocols we prove the following
@@ -339,20 +339,21 @@ this is the case, we say \emph{the tasks of $T$ implement $\Phi'$}.
 In this thesis, however, we only need a restriced version of this concept.
 First of all, when we talk about whether some \emph{task implements another},
 we always assume that the set of solved tasks includes the barycentric agreement
-tasks \pcref{ch1:barycentricagreement} for all~$N\in\N$ and all occuring
+tasks \pcref{ch2:barycentricagreement} for all~$N\in\N$ and all occuring
 complexes. Second, we only consider the case where the first task's carrier map
 is strict, which means it \enquote{solves itself as a protocol} (like in the
-$(p\mkern1mu{\leq}\mkern1muk)$-case of \cref{ch1:setagreement}). And lastly, we
+$(p\mkern1mu{\leq}\mkern1muk)$-case of \cref{ch2:setagreement}). And lastly, we
 only allow a specific amount and order of protocols used. Put formally, this
 becomes:
 
 \begin{thDef}[task implementing a task]
-    Let $\Phi\colon\cI\to\cO$ and $\Phi'\colon\cI'\to\cO'$ be tasks and
-    let the carrier map of $\Phi$ be strict (so that we can consider $\Phi$
-    as a protocol onto its image complex). Then \emph{$\Phi$ implements
-    $\Phi'$} if there exists an $N\in\N$ and a barycentric agreement protocol
-    $\sd_{\cI}^N\colon\cI\to\sd^N\cI$ such that
-    $\sd_{\cI}^N \after \Phi$ solves $\Phi'$.
+    Let $\cI,\cO,\cO'$ be simplicial complexes, let
+    $\Phi\colon\cI\to\cO$ and $\Phi'\colon\cI\to\cO'$ be tasks, and
+    let the carrier map of $\Phi$ be strict (so that we can consider $\Phi$ as a
+    protocol onto its image complex). Then \emph{the task~$\Phi$ implements the
+    task~$\Phi'$} if there exists an $N\in\N$ such that $\sd_{\cI}^N\after\Phi$,
+    the composition of a barycentric agreement protocol
+    $\sd_{\cI}^N\colon\cI\to\sd^N\cI$ and~$\Phi$, solves~$\Phi'$.
 \end{thDef}
 
 We will see later % TODO: maybe ref

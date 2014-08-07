@@ -1,7 +1,7 @@
 \chapter{Loop Agreement Tasks}
 \section{Definition and Examples}
 \emph{Loop agreement tasks} form a class of tasks in the sense of
-\cref{ch1:def:taskprotocol}. They are related to loops in topolgical spaces
+\cref{ch2:def:taskprotocol}. They are related to loops in topolgical spaces
 and in fact our main result in this chapter \pcref{ch3:classification}
 connects the sovability of one such task through another with the
 \emph{fundamental groups} of the (geometric realizations of the)
@@ -114,8 +114,10 @@ be a simplex of $K(p_0)\subset K$, that is a vertex or edge of the given
 path~$p_0$ in~$K$.
 
 \begin{thExample}[$(3,2)$-set agreement as loop agreement task]
+    \label{ch3:32setagreement}
+    %
     As a first but important example, we observe that the
-    $(3,2)$-set agreement task \pcref{ch1:setagreement}
+    $(3,2)$-set agreement task \pcref{ch2:setagreement}
     \[ \skel^1\colon\Delta^2\to\partial\Delta^2 \]
     is the same as the loop agreement task
     \[ \Loop{\partial\Delta^2,\,\kappa}
@@ -125,6 +127,8 @@ path~$p_0$ in~$K$.
 \end{thExample}
 
 \begin{thExample}[$2$-dim. barycentric agreement as loop agreement task]
+    \label{ch3:2dimbaryagreement}
+    %
     Let $N\in\N$. Let $p_0$ be the unique path from $\sd_{\Delta^2}^N(\{0\})$
     to $\sd_{\Delta^2}^N(\{1\})$ in $\sd_{\Delta^2}^N(\{0,1\})$ and let
     $p_1,p_2$ be defined analogously. Then the barycentric agreement task
@@ -146,6 +150,8 @@ algebraic signatures}.
 % TODO: ^  sounds awkward -.-
 
 \begin{thDef}[topological loop associated to a triangle loop]
+    \label{ch3:def:assoctopoloop}
+    %
     Let $K\in\finSimp$.
     \begin{itemize}
         \item
@@ -295,6 +301,8 @@ however, we have the following
 \end{proof}
 
 \begin{thCorollary}[alg. signature map vs. continous map]
+    \label{ch3:algsignvscontinuous}
+    %
     Let $K,L\in\finSimp$ and let $\kappa,\lambda$ be triangle loops
     in $K$ and $L$, respectively. Then there exists a map of
     algebraic signatures
@@ -317,7 +325,7 @@ however, we have the following
     pointed homotopy. By definition of~$\gamma_\kappa$ we see, that
     $\gamma_\kappa$ defines a homeomorphism between $S^1$ and a
     ($1$-dimensional) subcomplex of~$\geom L$, hence $\gamma_\kappa$
-    is a cofibration. % TODO: ref (as above)
+    is a pointed cofibration. % TODO: ref (as above)
     Therefore, we obtain a pointed homotopy
     $H\colon\geom K\times[0,1]\to\geom L$ such that the following diagram
     commutes:
@@ -325,9 +333,9 @@ however, we have the following
         \xymatrix@C=2cm{
             S^1
                 \ar[r]^{\gamma_\kappa}
-                \ar[d]_{\id_{S^1}\times\const_0}
+                \ar[d]_{(\id_{S^1},\,\const_0)}
             & \geom K
-                \ar[d]_{\id_{\geom K}\times\const_0}
+                \ar[d]_{(\id_{\geom K},\,\const_0)}
                 \ar@/^1pc/[rdd]^{f'}
             \\
             S^1\times[0,1]
@@ -349,9 +357,9 @@ however, we have the following
 \end{proof}
 
 
-\section{Classification}
-Our goal is to prove the following
-
+\section{Classification and Consequences}
+\label{ch2:sec:consequences}
+%
 \begin{thTheorem}[classification of loop agreement tasks]
     \label{ch3:classification}
     %
@@ -363,6 +371,139 @@ Our goal is to prove the following
         \to ( \pi_1(L,\dot\lambda), \, [\gamma_\lambda]_\ast )$.
 \end{thTheorem}
 
+Note, that loop agreement tasks always have strict carrier maps (which
+is immediate from the definition), so the theorem makes sense as stated.
 
-\section{Consequences}
-\label{ch2:sec:consequences}
+\begin{proof}[Proof of the theorem]
+    \newcommand{\geo}{{\scriptscriptstyle\mr{geo}}}
+    \newcommand{\sdNkappa}{\sd^N\!\kappa}
+    %
+    For the whole proof let $\ppp = \kappa$ and $(q_0,q_1,q_2) = \lambda$.
+    First, let a map of algebraic signatures as above exist. Then,
+    by \cref{ch3:algsignvscontinuous}, there exists a map
+    $f_\geo\colon\geom K\to\geom L$ such that
+    $f_\geo\after\gamma_\kappa = \gamma_\lambda$. By the simplicial
+    approximation theorem \pref{?}, % TODO !
+    there exists an $N\in\N$ and a simplicial map
+    $f\colon\sdNK \to L$ such that $f$ is a simplicial approximation
+    to $f_\geo\after\beta_K^N$. We claim, that $\sd_K^N\after\Loop{K,\kappa}$
+    solves $\Loop{L,\lambda}$ with decision map~$f$:
+    \[ \tag{$\star$} \label{ch3:classification:proof:star}
+        \begin{gathered}
+            \xymatrix@C=1.5cm{
+                K \ar[r]^{\sd_K^N} & \sdNK \ar[d]^-f
+                \\
+                \Delta^2 \ar[u]^-{\Loop{K,\kappa}} \ar[r]^{\Loop{L,\lambda}} & L
+            }
+        \end{gathered}
+    \]
+    we have to show, that $f\after(\sd_K^N\after\Loop{K,\kappa})$ is carried
+    by~$\Loop{L,\lambda}$. In the following, we identify the distinguished
+    vertices of~$\kappa$ with the corresponding vertices of~$\sdNK$.
+    Since $f$ is a simplicial approximation to
+    $f_\geo\after\beta_K^N$ and $f_\geo(\geom{\dot{p_j}}) = \geom{\dot{q_j}}$
+    for all $j\in\{0,1,2\}$ by assumption on~$f_\geo$, we have
+    \[ \supp\bigl(\geom{f}(\geom{\dot{p}_j})\bigr)
+        \subset \supp\bigl( (f_\geo\after\beta_K^N)(\geom{\dot{p}_j}) \bigr)
+        = \supp(\geom{\dot{q}_j}) = \{\dot{q}_j\}
+    . \]
+    The case of the $2$-simplex is trivial, so it remains to show
+    that
+    \[ \bigl(f\after(\sd_K^N\after\Loop{K,\kappa})\bigr)(F)
+        \subset \Loop{L,\lambda}(F)
+    \]
+    for all $1$-simplices~$F$ of~$\Delta^2$. Let $F\in\Delta^2$ be a $1$-simplex
+    and let $j\in\{0,1,2\}$ such that $\Loop{K,\kappa}(F) = K(p_j)$. Then, if
+    $F'$ is a simplex of $K(p_j)$ and $F''$ is a simplex of $\sd_K^N(F')$, we must have
+    $f(F'')\in L(q_j)$, because
+    \[ (f_\geo\after\beta_K^N)(\geom{F''}) \subset f_\geo(\geom{F'})
+        \subset f_\geo\bigl(\geom{K(p_j)}\bigr) \subset \geom{L(q_j)}
+    \]
+    and $f(F'')\notin L(q_j)$ would contradict the fact that $f$ is
+    a simplicial approximation to $f_\geo\after\beta_K^N$. Therefore
+    \[ \bigl(f\after(\sd_K^N\after\Loop{K,\kappa})\bigr)(F)
+        = f\Bigl[ \bigcup \sd_K^N\bigl(K(p_j)\bigr) \Bigr]
+        \subset L(q_j)
+    , \]
+    which completes the first half of the proof.
+    
+    Now assume, that $\Loop{K,\kappa}$ implements $\Loop{L,\lambda}$ and that we
+    are given $N\in\N$ and a simplicial map $f\colon\sdNK\to L$ such that
+    $\sd_K^N\after\Loop{K,\kappa}$ solves $\Loop{L,\lambda}$ with decision
+    map~$f$ (see \eqref{ch3:classification:proof:star}). Then we let
+    \[ f_\geo \defeq \geom{f} \after (\beta_K^N)^{-1}
+        \colon\geom K\to\geom L
+    \]
+    and claim that $\pi_1(f_\geo)$ is a map of algebraic signatures as desired.
+    To that end, let $\gamma_{\sdNkappa}$ denote the loop
+    $S^1\to\geom{\sdNK}$ that is defined like $\gamma_\kappa$
+    \pcref{ch3:def:assoctopoloop} with the barycenters added to the cycle's
+    vertices in the only sensible way. Then the following diagram commutes
+    \[
+        \xymatrix{
+            S^1 \ar[r]^{\gamma_\kappa} \ar[dr]_{\gamma_{\sdNkappa}}
+            & \geom{K}
+            \\
+            & \sdNK \ar[u]_{\beta_K^N}
+        }
+    \]
+    (which can be seen by inspection of the definitions).
+    Furthermore, since $f\after(\sd_K^N\after\Loop{K,\kappa})$ is
+    carried by~$\Loop{L,\lambda}$, every simplex of~$\sd_K^N(K(p_j))$
+    is mapped into~$L(q_j)$ by~$f$ and likewise for the corresponding
+    geometric simplices. It follows, that
+    \[ (\geom{f}\after\gamma_{\sdNkappa})\Bigl(
+        \gamma_{\sdNkappa}^{-1}\bigl(\geom[\big]{\sd_K^N[K(p_j)]\mkern1mu}
+        \bigr) \Bigr)
+        \subset \geom{L(q_j)}
+    , \]
+    which clearly implies, that $\geom{f}\after\gamma_{\sdNkappa}$
+    wraps around $\im(\gamma_\lambda)\cong S^1$ only once,
+    and thus we have
+    \[ f_\geo\after\gamma_\kappa 
+        = \geom{f}\after(\beta_K^N)^{-1} \after\gamma_\kappa
+        = \geom{f}\after\gamma_{\sdNkappa}
+        \simeq_\ast \gamma_\lambda
+    . \]
+    This completes the proof.
+    \\
+\end{proof}
+
+\pagebreak[2]
+Now we list some immediate consequences of the classification theorem:
+
+\begin{thCorollary}[$(3,2)$-set agreement implements any loop agreement task]
+    \label{ch3:32setagreementisboss}
+    %
+    Recall from \cref{ch3:32setagreement}, that $(3,2)$-set agreement can be
+    interpreted as the loop agreement task~$\Loop{\partial\Delta^2,\,\kappa}$
+    where $\kappa = ((0,1),\,(1,2),\,(2,0))$. Therefore the algebraic signature
+    of~$\Loop{\partial\Delta^2,\,\kappa}$ is
+    \[ \bigl( \pi_1(\partial\Delta^2,0), [\gamma_\kappa]_\ast) \bigr)
+        \cong \bigl( \pi_1(S^1,[0]), [\id_{S^1}]_\ast \bigr)
+        \cong (\Z,1)
+    . \]
+    For a group~$G$ and an element $g\in G$ there is exactly one group
+    homorphism $\Z\to G$ that maps $1$ to $g$, which implies, by the
+    classification theorem~\pref{ch3:classification}, that the $(3,2)$-set
+    agreement task~$\Loop{\partial\Delta^2,\kappa}$ implements any other
+    loop agreement task.
+\end{thCorollary}
+
+\begin{thCorollary}[no $(3,2)$-set agreement from barycentric agreement]
+    Let $\Loop{\partial\Delta^2,\kappa}$ be the $(3,2)$-set agreement task as
+    in the previous corollary~\pref{ch3:32setagreementisboss}, let $N\in\N$ and
+    recall from~\cref{ch3:2dimbaryagreement} that $2$-dimensional $N$-th
+    barycentric agreement (on $\Delta^2$) is a loop agreement task which we
+    denote $\Loop{\sdNK,\,\mu}$ here. Then $\Loop{\sdNK,\,\mu}$ does
+    \emph{not} implement $\Loop{\partial\Delta^2,\kappa}$, because:
+    $\sdNK$ is contractible, so the algebraic signature of
+    $\Loop{\sdNK,\,\mu}$ is
+    \[ \bigl( \pi_1(\sdNK,\dot\mu), [\const_{\geom{\dot\mu}}]_\ast
+        \bigr) \cong (\{0\}, 0)
+    \]
+    and we already saw in \cref{ch3:32setagreementisboss} that the algebraic
+    signature of $\Loop{\partial\Delta^2,\kappa}$ is (isomorphic to) $(\Z,1)$.
+    Since there is only the trivial homomorphism $0\to\Z$, our assertion follows
+    from the classification theorem~\pref{ch3:classification}.
+\end{thCorollary}

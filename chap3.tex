@@ -198,7 +198,7 @@ algebraic signatures}.
 \end{thDef}
 
 In general, a group homorphism between fundamental groups of topolgical spaces
-need note be induced by a continuous map. For finite simplicial complexes,
+need not be induced by a continuous map. For finite simplicial complexes,
 however, we have the following
 
 \begin{thLemma}[contiuous realization of homomorphism]
@@ -444,7 +444,7 @@ is immediate from the definition), so the theorem makes sense as stated.
             S^1 \ar[r]^{\gamma_\kappa} \ar[dr]_{\gamma_{\sdNkappa}}
             & \geom{K}
             \\
-            & \sdNK \ar[u]_{\beta_K^N}
+            & \geom{\sdNK} \ar[u]_{\beta_K^N}
         }
     \]
     (which can be seen by inspection of the definitions).
@@ -452,9 +452,7 @@ is immediate from the definition), so the theorem makes sense as stated.
     carried by~$\Loop{L,\lambda}$, every simplex of~$\sd_K^N(K(p_j))$
     is mapped into~$L(q_j)$ by~$f$ and likewise for the corresponding
     geometric simplices. It follows, that
-    \[ (\geom{f}\after\gamma_{\sdNkappa})\Bigl(
-        \gamma_{\sdNkappa}^{-1}\bigl(\geom[\big]{\sd_K^N[K(p_j)]\mkern1mu}
-        \bigr) \Bigr)
+    \[ \geom{f}\bigl(\geom[\big]{\sd_K^N[K(p_j)]\mkern1mu}\bigr)
         \subset \geom{L(q_j)}
     , \]
     which clearly implies, that $\geom{f}\after\gamma_{\sdNkappa}$

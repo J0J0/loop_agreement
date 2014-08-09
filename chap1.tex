@@ -87,7 +87,8 @@ for further reading.
     \[ \Delta^n \defeq \setZeroto n  . \]
     The standard simplex~$\Delta^n$ together with all its faces forms a
     simplicial complex, which (by abuse of notation) we also denote by~$\Delta^n$
-    (the meaning will be clear from the context).
+    (the meaning will be clear from the context). We write $\partial\Delta^n$
+    for the $(n{-}1)$-skeleton of $\Delta^n$.
 \end{thExample}
 
 \begin{thDef}[geometric standard simplex]
@@ -129,6 +130,7 @@ for further reading.
 %
 For more explicit definitions see (?? .. ??). % TODO
 
+\pagebreak[2]
 \begin{thDef}[triangulation]
     Let $X$ be a topological space. Then $X$ is \emph{triangulable} if
     there exists a simplicial complex~$K$ and a homeomorphism
@@ -186,4 +188,11 @@ For more explicit definitions see (?? .. ??). % TODO
     $f_\geo\after\beta_K^N\colon\geom{\sdNK}\to\geom L$.
 \end{thTheorem}
 
+\begin{thLemma}[inclusion of subcomplex is cofibration]
+    \label{ch1:inclcofibration}
+    %
+    Let $K$ be a simplicial complex and let $K'$ be a subcomplex
+    of~$K$. Then $\geom{K'}\hookrightarrow\geom{K}$ is a cofibration.
+\end{thLemma}
 
+% TODO: ^  reference!?

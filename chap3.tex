@@ -375,7 +375,6 @@ Note, that loop agreement tasks always have strict carrier maps (which
 is immediate from the definition), so the theorem makes sense as stated.
 
 \begin{proof}[Proof of the theorem]
-    \newcommand{\geo}{{\scriptscriptstyle\mr{geo}}}
     \newcommand{\sdNkappa}{\sd^N\!\kappa}
     %
     For the whole proof let $\ppp = \kappa$ and $(q_0,q_1,q_2) = \lambda$.
@@ -383,10 +382,10 @@ is immediate from the definition), so the theorem makes sense as stated.
     by \cref{ch3:algsignvscontinuous}, there exists a map
     $f_\geo\colon\geom K\to\geom L$ such that
     $f_\geo\after\gamma_\kappa = \gamma_\lambda$. By the simplicial
-    approximation theorem \pref{?}, % TODO !
-    there exists an $N\in\N$ and a simplicial map
-    $f\colon\sdNK \to L$ such that $f$ is a simplicial approximation
-    to $f_\geo\after\beta_K^N$. We claim, that $\sd_K^N\after\Loop{K,\kappa}$
+    approximation theorem \pref{ch1:simpapprox}, there exists an $N\in\N$ and a
+    simplicial map $f\colon\sdNK \to L$ such that $f$ is a simplicial
+    approximation to $f_\geo\after\beta_K^N$.
+    We claim, that $\sd_K^N\after\Loop{K,\kappa}$
     solves $\Loop{L,\lambda}$ with decision map~$f$:
     \[ \tag{$\star$} \label{ch3:classification:proof:star}
         \begin{gathered}

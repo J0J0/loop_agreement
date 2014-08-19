@@ -1,0 +1,73 @@
+\chapter{Two-dimensional Pseudomanifolds}
+\section{Pseudomanifolds}
+\begin{thDef}[(weak) pseudomanifold]
+    \label{ch4:def:pseudomanifold}
+    Let $n\in\N$. 
+    \begin{itemize}
+        \item
+            An \emph{$n$-dimensional weak pseudomanifold (without boundary)}
+            (or \emph{weak $n$-pseudomanifold}) is a simplicial complex~$K$
+            of dimension~$n$ satisfying the following properties:
+            \begin{itemize}
+                \item
+                    Every simplex of~$K$ is a face of an $n$-simplex of~$K$.
+                \item
+                    Every $(n{-}1)$-simplex of~$K$ is the face of exactly two
+                    $n$-simplices of~$K$.
+            \end{itemize}
+            
+        \item
+            An \emph{$n$-dimensional pseudomanifold (without boundary)} (or
+            \emph{$n$-pseudomanifold}) is a weak $n$-pseudomanifold~$K$ that is
+            \emph{strongly connected}, that is it satisfies the following
+            property:
+            \begin{itemize}
+                \item
+                    For all $n$-simplices $F,F'$ of~$K$ there exists a $k\in\N$ and a
+                    finite sequence $F=F_0,F_1,\dots,F_k=F'$ of $n$-simplices of~$K$
+                    such that  $F_j\cap F_{j+1}$ is an $(n{-}1)$-simplex of~$K$ 
+                    for all $j\in\setZeroto{k-1}$.
+            \end{itemize}
+            
+        % TODO:  v clear!?
+        %\item
+        %    A (weak) $n$-pseudomanifold is \emph{finite} if $K$ is finite.
+    \end{itemize}
+\end{thDef}
+
+Suppose $K$ is a weak $n$-pseudomanifold and let $x\in\geom K$.
+Then the following fact is obvious from the definition:
+if $\supp(x)$ is an $n$- or $(n{-}1)$-simplex of~$K$,
+we can find a neighborhood of~$x$ that is homeomorphic
+to~$\R^n$. On the other hand, if the dimension of~$\supp(x)$
+is less than~$n{-}1$, singularities can occur at~$x$.
+% TODO: add example
+Thus, the geometric realization of~$K$ partially behaves like a manifold but may
+fail to be locally euclidean at some points, hence the name \emph{pseudo}manifold.
+
+\begin{thRemark}[(weak) pseudomanifolds with boundary and manifold protocols]
+    If we replace the second property in \cref{ch4:def:pseudomanifold} by
+    \begin{itemize}[label=\textasteriskcentered]
+        \item
+            Every $(n{-}1)$-simplex of~$K$ is the face of exactly one
+            or two $n$-simplices of~$K$,
+    \end{itemize}
+    we get pseudomanifolds \emph{with boundary}. In this thesis we are only
+    concerned with loop agreement tasks on $2$-dimensional pseudomanifolds
+    without boundary, but the notion of pseudomanifolds with boundary plays
+    an important role in so called \emph{manifold protocols}, studied by
+    Herlihy et~al. in Chapter~9 of their book~\cite{bookc:herlihyetal13}.
+    Briefly, a protocol~$\Xi\colon\cI\to\cP$ is a manifold protocol if the
+    complex~$\Xi(F)\subset\cP$ is a pseudomanifold with boundary for
+    all~$F\in\cI$ (and $\Xi$ commutes with taking boundaries in an appropriate
+    way). For instance, it is easy to see that the barycentric agreement
+    protocol~$\sd_K$ \pcref{ch2:barycentricagreement} is a manifold protocol
+    for all~$K\in\Simp$.
+\end{thRemark}
+
+
+\section{Classification of 2-dimensional Pseudomanifolds}
+
+\section{Implementation}
+
+\section{Loop Agreement Tasks on 2-dimensional Pseudomanifolds}

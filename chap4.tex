@@ -1,5 +1,5 @@
 \chapter{Two-dimensional Pseudomanifolds}
-\section{Pseudomanifolds}
+\section{Classification of finite 2-dimensional Pseudomanifolds}
 \begin{thDef}[(weak) pseudomanifold]
     \label{ch4:def:pseudomanifold}
     Let $n\in\N$. 
@@ -65,8 +65,110 @@ fail to be locally euclidean at some points, hence the name \emph{pseudo}manifol
     for all~$K\in\Simp$.
 \end{thRemark}
 
+We are now going to (topologically) classify finite weak
+$2$-pseudomanifolds. (It is well known that the finiteness condition
+corresponds to compactness on the topological side of geometric realizations,
+but in our combinatorial context of simplicial complexes \enquote{finite}
+sounds more appropriately.) The above discussion already shows, that
+we only have to deal with $0$-simplices in the $2$-dimensional case,
+namely with vertices that do not have a euclidean neighborhood.
+To identify those vertices combinatorially, we consider the \emph{star}
+of a vertex:
 
-\section{Classification of 2-dimensional Pseudomanifolds}
+\begin{thDef}[star of a vertex]
+    Let $K$ be a simplicial complex and let $v\in V(K)$ be a vertex of~$K$.
+    The \emph{star of~$v$ (in~$K$)} is the subcomplex of~$K$ that is determined
+    by all simplices of~$K$ containing~$v$, formally:
+    \[ \st(v) \defeq K(\{F\in K\Mid v\in F\})  . \]
+\end{thDef}
+
+\begin{thProposition}[stars in (weak) pseudomanifolds]
+    \label{ch4:starinpmfd}
+    %
+    Let $K$ be a finite weak $2$-pseudo\-manifold and let $v\in V(K)$ be a vertex
+    of~$K$.
+    \begin{itemize}
+        \item
+            Then there exist $k\in\N$ and subcomplexes $K_0,\dots,K_k$ of~$K$,
+            which we call the \emph{components of~$\st(v)$}, with the following
+            properties:
+            \begin{itemize}[labelsep=3mm,leftmargin=!]
+                \item
+                    $\st(v) = \bigcup_{j=0}^k K_j$
+                    and $\{v\} \in \bigcap_{j=0}^k K_j$,
+                \item
+                    $\forall\,j,j'\in\setZeroto k,\,j\neq j'\colon\;
+                    K_j\cap K_{j'} = \bigl\{\emptyset, \{v\}\bigr\}$,
+                \item
+                    $\forall\,j\in\setZeroto k\colon\;
+                    (\geom{K_j},\geom v) \cong (D^2,0)$.
+            \end{itemize}
+            
+        \item
+            Especially, $\geom{\st(v)}\subset\geom{K}$ is homeomorphic to a
+            finite wedge of $2$-disks~$(D^2,0)$ where the base point corresponds
+            to~$\geom{v}$.
+    \end{itemize}
+\end{thProposition}
+
+\begin{proof}
+    First, observe that the star of~$v$ is completely determined by the
+    $2$-simplices containing~$v$, because every $0$- or $1$-simplex is
+    contained in some $2$-simplex by definition of a pseudomanifold.
+    Let $F_0=\{v,x_0,x_1\}\in K$ be a
+    $2$-simplex of which $v$ is a vertex. Then the $1$-simplex
+    $\{v,x_1\}$ is the face of another $2$-simplex $F_1=\{v,x_1,x_2\}$
+    and so on. Since there are only finitely many simplices, this process
+    must terminate, and since $\{v,x_0\}$ is also the face of another
+    $2$-simplex, we obtain a finite sequence $F_0,F_1,\dots,F_k,F_{k+1}=F_0$
+    of $2$-simplices of~$K$ such that $F_j\cap F_{j+1}$ is a $1$-simplex
+    of which $v$ is a vertex for all $j\in\setZeroto k$. % TODO: see figure
+    Clearly, $(\geom{K(\{F_0,\dots,F_k\})},\geom v)$ is pointed
+    homeomorphic to $(D^2,0)$. Proceeding in the same fashion if there are more
+    $2$-simplices containing~$v$, we obtain a finite number of such components.
+    Let $F$ and $F'$ be $2$-simplices of two different components.
+    Then $F\cap F'$ cannot be a $1$-simplex, because that would contradict
+    the fact that every $1$-simplex is the face of exactly two $2$-simplices.
+    It follows, that $F\cap F' = \{v\}$, and thus, $\st(v)$ is the
+    \enquote{combinatorial wedge} of the components. The second assertion
+    follows by passing to the geometric realization.
+    \\
+\end{proof}
+
+\begin{thTheorem}[classification of finite weak $2$-pseudomanifolds]
+    Let $K$ be a finite weak $2$-pseudomanifold. Then $\geom K$ is homeomorphic
+    to a quotient
+    \[ \coprod\nolimits_{j=1}^k S_j \surround{\;}{\Big/} {\sim}
+        \mathrlap{\mkern10mu,}
+    \]
+    where $k\in\N$, each $S_j$ is a closed surface and $\sim$ affects only
+    finitely many points; more precisely:
+    $\abs{\{ x,y \Mid x\sim y,\, x\neq y \}} < \infty$.
+\end{thTheorem}
+
+\begin{proof}
+    Let $V'\subset V(K)$ be the set of vertices~$v$ where $\geom v$ does not
+    have an euclidean neighborhood. By \cref{ch4:starinpmfd} and a standard
+    connectedness argument, this are exactly those vertices whose star consists
+    of more than one component. Let $v\in V'$ and let $K_0,\dots,K_k$ be the
+    components of~$\st(v)$ as in the proposition. Then we form a new complex
+    out of~$K$ in the following way: remove~$v$ and add vertices
+    $v_0,\dots,v_k$; then, for all $j\in\setZeroto k$, replace every $v$ in a
+    simplex of~$K_j$ by~$v_j$. The result is a complex where, by
+    construction, the star of each vertex~$v_j$ consists of a single component.
+    By induction on~$\abs{V'}$ we obtain a complex~$K'$ such that \emph{every}
+    vertex of~$K'$ has that property. By definition of pseudomanifolds and
+    \cref{ch4:starinpmfd}, we see, that every point of~$\geom{K'}$ has an
+    euclidean neighborhood, thus, $\geom{K'}$ is a compact $2$-manifold, that
+    is a disjoint union of closed surfaces. The simplicial projection map
+    $K'\to K$ (which maps newly introduced points~$v_j$ to the point~$v$
+    they originated from) induces a surjective continuous map
+    $\geom{K'}\to\geom{K}$, and since $\geom{K'}$ is compact
+    and $\geom{K}$ is hausdorff, this map is the desired quotient map.
+    \\
+\end{proof}
+
+
 
 \section{Implementation}
 

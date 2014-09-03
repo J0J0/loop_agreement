@@ -1,7 +1,61 @@
 \chapter{Introduction and Basics}
 %
 \section{Motivation}
-bla bla  % TODO
+Usually, \emph{topology} is considered a branch of \enquote{pure mathematics}
+which has the reputation of not beeing particularly usefull in other fields than
+mathematics itself. In this thesis, however, we use topological methods for
+a theoretical model for \emph{distributed computing}, especially so called
+\emph{loop agreement tasks}. Distributed computing is the study of writing
+programs that run simultaniously on multiple proccessing units, which
+communicate through a given network protocol. Often it is a complex problem to
+decide whether a given task can be solved under certain preconditions depending
+on the hardware environment and the constrains imposed by the communication
+protocol. To answer this question for some cases, we define and employ an
+abstract model of distributed computing in \cref{ch2}, using \emph{simplicial
+complexes} and so called \emph{carrier maps} (which are a generalisation of
+\emph{simplicial maps}). Here we follow 
+Herlihy et~al.~\cite{bookc:herlihyetal13} and adopt their definitions found
+in Chapter~4. Then we are going to describe \emph{loop agreement tasks} and
+establish a link to the \emph{fundamental group of a space}. The classification
+result of \cref{ch3} is taken from \cite[Chapter~15]{bookc:herlihyetal13}, but
+our approach and proof will be a bit different. (If you do not have the book
+available, most of the chapter can also be found in an earlier paper by
+Herlihy and Rajsbaum~\cite{paper:herlihyrajsbaum03}.) In the last chapter we
+investigate how the preceeding material can be applied to loop agreement tasks
+living on \emph{(two-dimensional) pseudomanifolds} accompanied by an
+implementation in \emph{Haskell}.
+
+The tasks and protocols (i.\,e. distributed programs) captured by our simplicial
+complex model are subject to the following real world conditions and properties:
+Most importantly, the processes run \emph{asynchronously}, that is, a process
+cannot wait for another process. It has to do its computation in a finite number
+of steps with whatever information it got up to that point. Therefore, such
+programms are called \emph{wait-free}. This also includes the problem of
+\enquote{crashed processes} (processes that halted prematurely, e.\,g. because
+of a hardware malfunction), because in a wait-free computation a process cannot
+know how many other processes are still running. Secondly, tasks are
+\emph{colorless}, which means that it is irrelevant which process has which
+input (respectively output) value, only the set of input (respectively output)
+values is considered. And lastly, the communication between processes happens
+through \emph{shared memory}, every outgoing communication of a process consists
+of \enquote{everything it knows} and reading the memory always happens as an
+\emph{atomic snapshot}. The method of communication does not actually affect
+our model, but Herlihy et~al.~\cite{bookc:herlihyetal13} develop their theory of
+\emph{colorless layered immediate snapshot protocols} and protocols that can be
+built from those around the above assumptions, so we include the latter to
+justify our use of so called \emph{barycentric agreement protocols} in the
+following.
+
+We come back to the model and its interpretation in \cref{ch2}, but we will not
+go into much more detail concerning the above technical terms. More explanations
+on those terms in the context of distributed computing and how they relate to
+the mathematical model can be found in the book by
+Herlihy et~al.~\cite{bookc:herlihyetal13}, a paper by
+Herlihy and Shavit~\cite{papers:herlihyshavit99}, and a paper by
+Herlihy and Rajsbaum~\cite{paper:herlihyrajsbaum03}.
+
+
+
 
 
 \section{Simplicial Complexes}
@@ -9,7 +63,7 @@ Since our mathematical model for distributed computing fundamentally relies on
 \emph{simplicial complexes} this section gives a brief review of the basic
 definitions and properties used in this thesis. We include this for
 the sake of completeness but \emph{not} to replace a introduction on the topic
-by a good text book. You may want to consult for example
+by a good text book. You may want to consult, for example,
 Munkres~\cite[\S1\,ff. and \S14\,ff.]{bookc:munkres84},
 Fritsch and Piccinini~\cite[Ch.~3]{bookc:fritschpiccinini90}
 or Spanier~\cite[Ch.~3]{bookc:spanier66}

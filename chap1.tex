@@ -4,9 +4,9 @@
 Usually, \emph{topology} is considered a branch of \enquote{pure mathematics}
 which has the reputation of not beeing particularly usefull in other fields than
 mathematics itself. In this thesis, however, we use topological methods for
-a theoretical model for \emph{distributed computing}, especially so called
+a theoretical model of \emph{distributed computing}, especially so called
 \emph{loop agreement tasks}. Distributed computing is the study of writing
-programs that run simultaniously on multiple proccessing units, which
+programs that run simultaneously on multiple proccessing units, which
 communicate through a given network protocol. Often it is a complex problem to
 decide whether a given task can be solved under certain preconditions depending
 on the hardware environment and the constrains imposed by the communication
@@ -15,22 +15,23 @@ abstract model of distributed computing in \cref{ch2}, using \emph{simplicial
 complexes} and so called \emph{carrier maps} (which are a generalisation of
 \emph{simplicial maps}). Here we follow 
 Herlihy et~al.~\cite{bookc:herlihyetal13} and adopt their definitions found
-in Chapter~4. Then we are going to describe \emph{loop agreement tasks} and
-establish a link to the \emph{fundamental group of a space}. The classification
-result of \cref{ch3} is taken from \cite[Chapter~15]{bookc:herlihyetal13}, but
-our approach and proof will be a bit different. (If you do not have the book
-available, most of the chapter can also be found in an earlier paper by
-Herlihy and Rajsbaum~\cite{paper:herlihyrajsbaum03}.) In the last chapter we
-investigate how the preceeding material can be applied to loop agreement tasks
-living on \emph{(two-dimensional) pseudomanifolds} accompanied by an
-implementation in \emph{Haskell}.
+in Chapter~4 of their book. Then we are going to describe \emph{loop agreement
+tasks} and establish a link to the \emph{fundamental group of a space}. The
+corresponding classification result of \cref{ch3} is taken from
+\cite[Chapter~15]{bookc:herlihyetal13}, but our approach and proof will be a bit
+different. (If you do not have the book available, most of the chapter can also
+be found in an earlier paper by Herlihy and
+Rajsbaum~\cite{paper:herlihyrajsbaum03}.) In the last chapter we investigate how
+the preceeding material can be applied to loop agreement tasks living on
+\emph{(two-dimensional) pseudomanifolds}, accompanied by an implementation in
+\emph{Haskell}.
 
 The tasks and protocols (i.\,e. distributed programs) captured by our simplicial
 complex model are subject to the following real world conditions and properties:
 Most importantly, the processes run \emph{asynchronously}, that is, a process
 cannot wait for another process. It has to do its computation in a finite number
 of steps with whatever information it got up to that point. Therefore, such
-programms are called \emph{wait-free}. This also includes the problem of
+programs are called \emph{wait-free}. This also includes the problem of
 \enquote{crashed processes} (processes that halted prematurely, e.\,g. because
 of a hardware malfunction), because in a wait-free computation a process cannot
 know how many other processes are still running. Secondly, tasks are
@@ -46,12 +47,12 @@ built from those around the above assumptions, so we include the latter to
 justify our use of so called \emph{barycentric agreement protocols} in the
 following.
 
-We come back to the model and its interpretation in \cref{ch2}, but we will not
+We get back to the model and its interpretation in \cref{ch2}, but we will not
 go into much more detail concerning the above technical terms. More explanations
 on those terms in the context of distributed computing and how they relate to
 the mathematical model can be found in the book by
 Herlihy et~al.~\cite{bookc:herlihyetal13}, a paper by
-Herlihy and Shavit~\cite{papers:herlihyshavit99}, and a paper by
+Herlihy and Shavit~\cite{paper:herlihyshavit99}, and a paper by
 Herlihy and Rajsbaum~\cite{paper:herlihyrajsbaum03}.
 
 \bigskip
@@ -65,7 +66,7 @@ Throughout this thesis, we use the following notation and conventions:
         The natural numbers $\N$ start at $0$.
         
     \item
-        As usual, a \enquote{map} out of a topological space always means
+        A \enquote{map} out of a topological space always means
         \enquote{continuous map}, unless stated otherwise.
 \end{itemize}
 
@@ -83,12 +84,12 @@ for further reading.
 \begin{thDef}[(abstract) simplicial complex]\hfill
     \begin{itemize}
         \item
-            Let $V$ be a set and let $K\subset\pot V$. The pair $(V,K)$ is
-            an \emph{(abstract) simplicial complex} if every element of~$K$ is
-            a finite set, $K$ is closed under taking subsets (i.\,e. for all
-            $F\in K$ and $F'\subset F$ we have $F'\in K$) and $K$ contains
-            all singleton subsets of~$V$ (i.\,e. for all $v\in V$ we have
-            $\{v\}\in K$).
+            Let $V$ be a set and let $K$ be a subset of the powerset of~$V$.
+            The pair $(V,K)$ is an \emph{(abstract) simplicial complex} if every
+            element of~$K$ is a finite set, $K$ is closed under taking subsets
+            (i.\,e. for all $F\in K$ and $F'\subset F$ we have $F'\in K$) and
+            $K$ contains all singleton subsets of~$V$ (i.\,e. for all $v\in V$
+            we have $\{v\}\in K$).
             
         \item
             Let $(V,K)$ be a simplicial complex. An element~$v$ of~$V$ is

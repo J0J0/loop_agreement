@@ -6,7 +6,7 @@ our model for \emph{distributed tasks} and \emph{protocols that solve tasks}.
 We give the strict mathematical definitions first and explain their
 interpretation in the context of distributed computing afterwards.
 
-\section{Mathematical framework}
+\section{Mathematical Framework}
 The following definitions rely on an additional type of map operating on
 simplicial complexes that is more flexible than simplicial maps:
 
@@ -106,7 +106,7 @@ and \emph{protocols} as well as the concept of \emph{task solving}.
     Such a map $\delta$ is called a \emph{decision map}.
 \end{thDef}
 
-\section{Interpretation of the model}
+\section{Interpretation of the Model}
 It is about time that we explain some of the definitions of the previous
 section in the context of our headline \emph{distributed computing}.
 We start with an example:
@@ -189,7 +189,7 @@ scientist's point of view) in the book by
 Herlihy et~al.~\cite[Ch.\,4]{bookc:herlihyetal13}.
 % TODO ^  explain at least one "simplical assumption" ...
 
-\section{Examples: set agreement and barycentric agreement}
+\section{Examples: Set Agreement and Barycentric Agreement}
 Next, we are going to describe another class of examples, relaxed versions of
 the consensus task \pcref{ch2:consensus}, one of which will play an important
 role in \cref{ch2:sec:consequences}.
@@ -274,13 +274,13 @@ complex). Therefore $\sd_K^N$ is also a protocol which we denote by
 the same symbol (there is not actually any danger of confusion).
 
 
-\section{Mathematical framework continued}
-Now that we have seen some examples we extend our mathematical
-framework by some additional definitions and properties that we
-will need in the following chapter.
+\section{Implements-Relation on Tasks}
+Informally, it is relatively clear what it means that some tasks implements
+(or rather can be used to implement) another task. This section will make
+that intuition formal in an appropriate sense.
 
 In \cref{ch2:def:carriermap} we saw how to compose carrier maps,
-which naturally applies to tasks (because a taks is just a carrier
+which naturally applies to tasks (because a task is just a carrier
 map without further restrictions). Since we would also like to compose
 protocols we prove the following
 
@@ -325,7 +325,7 @@ protocols we prove the following
     a protocol onto its image complex $(\Xi'\after\Xi)[\cI]$.
 \end{thCorollary}
 
-We also want a formal interpretation of the following situation: suppose we are
+Generally, we want to formalize the following situation: suppose we are
 given a set of tasks~$T$ and for each $\Phi\in T$ a protocol that
 solves $\Phi$, can we use these protocols to to solve another task~$\Phi'$? If
 this is the case, we say \emph{the tasks of $T$ implement $\Phi'$}.
@@ -350,11 +350,9 @@ becomes:
     $\sd_{\cI}^N\colon\cI\to\sd^N\cI$ and~$\Phi$, solves~$\Phi'$.
 \end{thDef}
 
-We will see later % TODO: maybe ref
-that this is enough for our purposes. We also note, that the assumption
-that barycentric agreement protocols are available is not absurd, to the
-contrary: Herlihy et~al.~\cite{bookc:herlihyetal13} % TODO: precise ref
-show that our underlying computational model permits a (operational)
-implementation of those protocols and even better, that they can be
-obtained from rather simple building blocks, so called \emph{immediate
-snapshot protocols}.
+We will see later that this is enough for our purposes. We also note, that the
+assumption that barycentric agreement protocols are available is not absurd, to
+the contrary: Herlihy et~al.~\cite[Corollary 4.2.10]{bookc:herlihyetal13} show
+that our underlying computational model permits a (operational) implementation
+of those protocols and even better, that they can be obtained directly from 
+\emph{immediate snapshot protocols} (mentioned in the introduction).

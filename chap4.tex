@@ -90,7 +90,7 @@ of a vertex:
     \begin{itemize}
         \item
             Then there exist $k\in\N$ and subcomplexes $K_0,\dots,K_k$ of~$K$,
-            which we call the \emph{components of~$\st(v)$}, with the following
+            which we call the \emph{wedge summands of~$\st(v)$}, with the following
             properties:
             \begin{itemize}[labelsep=3mm,leftmargin=!]
                 \item
@@ -125,12 +125,13 @@ of a vertex:
     of which $v$ is a vertex for all $j\in\setZeroto k$. % TODO: see figure
     Clearly, $(\geom{K(\{F_0,\dots,F_k\})},\geom v)$ is pointed
     homeomorphic to $(D^2,0)$. Proceeding in the same fashion if there are more
-    $2$-simplices containing~$v$, we obtain a finite number of such components.
-    Let $F$ and $F'$ be $2$-simplices of two different components.
+    $2$-simplices containing~$v$, we obtain a finite number of such wedge
+    summands.
+    Let $F$ and $F'$ be $2$-simplices of two different wedge summands.
     Then $F\cap F'$ cannot be a $1$-simplex, because that would contradict
     the fact that every $1$-simplex is the face of exactly two $2$-simplices.
     It follows, that $F\cap F' = \{v\}$, and thus, $\st(v)$ is the
-    \enquote{combinatorial wedge} of the components. The second assertion
+    \enquote{combinatorial wedge} of the wedge summands. The second assertion
     follows by passing to the geometric realization.
     \\
 \end{proof}
@@ -148,23 +149,23 @@ of a vertex:
 
 \begin{proof}
     Let $V'\subset V(K)$ be the set of vertices~$v$ where $\geom v$ does not
-    have an euclidean neighborhood. By \cref{ch4:starinpmfd} and a standard
-    connectedness argument, this are exactly those vertices whose star consists
-    of more than one component. Let $v\in V'$ and let $K_0,\dots,K_k$ be the
+    have a euclidean neighborhood. By \cref{ch4:starinpmfd} and a standard
+    connectedness argument, these are exactly those vertices whose star consists
+    of more than one wedge summand. Let $v\in V'$ and let $K_0,\dots,K_k$ be the
     components of~$\st(v)$ as in the proposition. Then we form a new complex
     out of~$K$ in the following way: remove~$v$ and add vertices
     $v_0,\dots,v_k$; then, for all $j\in\setZeroto k$, replace every $v$ in a
-    simplex of~$K_j$ by~$v_j$. The result is a complex where, by
+    simplex of~$K_j$ by~$v_j$. The result is a two-dimensional pseudomanifold where, by
     construction, the star of each vertex~$v_j$ consists of a single component.
     By induction on~$\abs{V'}$ we obtain a complex~$K'$ such that \emph{every}
     vertex of~$K'$ has that property. By definition of pseudomanifolds and
-    \cref{ch4:starinpmfd}, we see, that every point of~$\geom{K'}$ has an
-    euclidean neighborhood, thus, $\geom{K'}$ is a compact $2$-manifold, that
-    is a disjoint union of closed surfaces. The simplicial projection map
-    $K'\to K$ (which maps newly introduced points~$v_j$ to the point~$v$
-    they originated from) induces a surjective continuous map
-    $\geom{K'}\to\geom{K}$, and since $\geom{K'}$ is compact
-    and $\geom{K}$ is hausdorff, this map is the desired quotient map.
+    \cref{ch4:starinpmfd}, we see, that every point of~$\geom{K'}$ has a
+    euclidean neighborhood, thus, $\geom{K'}$ is a compact $2$-manifold, that is
+    a disjoint union of closed surfaces. The simplicial projection map $K'\to K$
+    (which maps newly introduced points~$v_j$ to the point~$v$ they originated
+    from) induces a surjective continuous map $\geom{K'}\to\geom{K}$, and since
+    $\geom{K'}$ is compact and $\geom{K}$ is hausdorff, this map is the desired
+    quotient map.
     \\
 \end{proof}
 

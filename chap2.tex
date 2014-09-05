@@ -1,7 +1,7 @@
 \chapter{Distributed Computing via Combinatorial Topology}
 \label{ch2}
 Based on the combinatorial description of (sufficiently well-behaved)
-topological spaces by simplicial complexes we can define and (briefly) explain
+topological spaces by simplicial complexes, we can define and (briefly) explain
 our model for \emph{distributed tasks} and \emph{protocols that solve tasks}.
 We give the strict mathematical definitions first and explain their
 interpretation in the context of distributed computing afterwards.
@@ -45,7 +45,6 @@ simplicial complexes that is more flexible than simplicial maps:
 
 Note: while we say \enquote{carrier map $K\to L$}, the codomain of a carrier map
 is \emph{not} actually~$L$ (but the set of subcomplexes of the latter).
-% FIXME: ^ maybe introduce a notation for "set of subcomplexes"!?
 
 % TODO: example(s) / illustration for carrier maps
 
@@ -128,15 +127,17 @@ We start with an example:
     
     Now we explain what the corresponding input and output complexes are:
     The input complex encodes every possible \emph{input configuration},
-    that is $F$ is a simplex of $\cI$ in this case if and only if
+    that is, $F$ is a simplex of $\cI$ in this case if and only if
     $F\subset X$. (If it makes you more comfortable, assume that
-    there are more processes than input values.) The output complex encodes
-    every allowed \emph{output configuration}, that is $F'\in\cO$ if and only
+    there are more processes than input values.) 
+    % TODO: ^  maybe clarify why one might want to assume that
+    The output complex encodes
+    every allowed \emph{output configuration}, that is, $F'\in\cO$ if and only
     if $F'\subset X$ is a singleton set. The carrier map~$\Phi$ then encodes
     which input configurations may lead to which output configurations:
-    If all processes start with $x\in X$ the only allowed output configuration
+    If all processes start with $x\in X$, the only allowed output configuration
     is $\{x\}$, so $\Phi(\{x\})$ would be $\{\{x\}\}$. If the input configuration
-    is $\{x,y\}$ (with $x\neq y$) the processes may either choose $x$ or $y$
+    is $\{x,y\}$ (with $x\neq y$), the processes may either choose $x$ or $y$
     as their consensus, so $\Phi(\{x,y\})$ is $\{ \{x\}, \{y\} \}$. In general:
     \[ \Phi(F) = \bigl\{ \{t\} \Mid t\in F \bigr\}  . \]
     It is readily verified that $\Phi\colon\cI\to\cO$ is a task in the sense
@@ -351,8 +352,8 @@ becomes:
 \end{thDef}
 
 We will see later that this is enough for our purposes. We also note, that the
-assumption that barycentric agreement protocols are available is not absurd, to
+assumption of available barycentric agreement protocols is not absurd, to
 the contrary: Herlihy et~al.~\cite[Corollary 4.2.10]{bookc:herlihyetal13} show
-that our underlying computational model permits a (operational) implementation
+that our underlying computational model permits an (operational) implementation
 of those protocols and even better, that they can be obtained directly from 
 \emph{immediate snapshot protocols} (mentioned in the introduction).

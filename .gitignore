@@ -2,6 +2,7 @@
 *.log
 *.out
 *.toc
+*.ptb
 *.bbl
 *.blg
 *.bcf

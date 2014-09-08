@@ -36,6 +36,7 @@
 \usepackage{myhelpers}  % my own myhelpers.sty
 \usepackage{mymathmisc} % my own mymathmisc.sty
 
+\usepackage{lhs2texheader} % necessary for lhs2TeX
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% macro definitions and other things
@@ -268,10 +269,11 @@
 \input{chap1}
 \input{chap2}
 \input{chap3}
-\input{chap4}
+\input{chap4a}
+% preprocessed by lhs2TeX
+\input{chap4b}
 
 \appendix
-\nocite{bookc:munkres00}
 \printbibliography
 
 \end{document}

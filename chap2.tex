@@ -92,7 +92,33 @@ and \emph{protocols} as well as the concept of \emph{task solving}.
     \end{itemize}
 \end{thDef}
 
-% TODO: !! add convention about the (-1)-simplex
+\begin{thConvention}[the (-1)-simplex]
+    Our definition of a simplicial complex ensures that it always includes the
+    $(-1)$-simplex (i.\,e. the empty simplex) whenever the complex is not empty
+    itself. In the context of tasks and protocols, however, the empty simplex
+    does not have a useful interpretation (see the next section). Therefore, we
+    employ the following rules for dealing with the $(-1)$-simplex.
+    \begin{itemize}
+        \item
+            Unless mentioned otherwise, a task $\Phi\colon\cI\to\cO$ always
+            maps the empty simplex to the empty subcomplex of~$\cO$ (i.\,e.
+            $\Phi(\emptyset) = \emptyset$).
+            
+        \item
+            The same rule applies mutatis mutandis to protocols.
+            
+        \item
+            When we describe tasks or protocols, we often ignore the
+            $(-1)$-simplex as part of all complexes. For instance,
+            we might write something like $\Phi(F) = \{\{x\}\}$ whereas
+            it had to be $\Phi(F) = \{\emptyset,\{x\}\}$ for the
+            latter to be a proper simplicial complex. The effect of
+            this rule is a clearer notation without any actual loss
+            of information. (Note, that this is only a simplification
+            in writing and that the complexes, of course, still contain
+            the $(-1)$-simplex.)
+    \end{itemize}
+\end{thConvention}
 
 \begin{thDef}[task solving]
     Let $\cI,\cO$ and $\cP$ be simplicial complexes,

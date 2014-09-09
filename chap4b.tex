@@ -578,7 +578,7 @@ In our implementation we use the following types to store the multigraph
 \ensuremath{\Conid{GluingGraphD}} represents $e$; a node (of either type) is an \ensuremath{\Conid{Int}} which is
 mapped by \ensuremath{\Conid{GluedVertices}} and \ensuremath{\Conid{GluedComplexes}} to the corresponding object.
 \ensuremath{\Conid{GlueD}} combines all gluing data that we work with.
-To extract that data from the pseudomanifold, we use the next two functions
+To extract that data from the weak pseudomanifold, we use the next two functions
 (with accompanying helpers):
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -748,3 +748,79 @@ draws the multigraph in \cref{ch4:fig:gluinggraph}.
 
 \section{Loop Agreement Tasks on 2-dimensional Pseudomanifolds}
 \label{ch4:sec:loopspmfd}
+Lastly, we consider loop agreement tasks on finite weak $2$-pseudomanifolds.
+We show that the \emph{word problem} for fundamental groups of such $2$-pseudomanifolds
+is solvable and use this fact in conjunction with \cref{ch3:classification}
+to formulate a result about loop agreement tasks.
+
+It is well known that the word problem for fundamental groups of closed surfaces
+is solved by \emph{Dehn's Algorithm}, see
+Stillwell~\cite[Sec.~6.1]{bookc:stillwell93}.
+Then the following proposition is a consequence of this fact and
+\cref{ch4:pmfdclass}.
+
+\begin{thProposition}[solvability of the word problem for %
+                      finite weak $2$-pseudomanifold]
+    \label{ch4:wordproblem}
+    %
+    The word problem for the fundamental group of a $2$-dimensional finite weak
+    pseudomanifold is solvable.
+\end{thProposition}
+
+\begin{proofsketch}
+    First, observe that for finite weak $2$-pseudomanifolds $K,K'$ and vertices
+    $v,v'$ of $K$ and $K'$, respectively, we have 
+    \[  \pi_1\bigl( (K,v) \topowedge (K',v') \bigr)
+            \cong \pi_1(K,v) \ast \pi_1(K',v')
+    \]
+    by the Seifert-van-Kampen theorem (where the wedge of complexes is defined
+    in the obvious way). Secondly, let $K$ be a finite weak $2$-pseudomanifold
+    and let $K'$ be the resulting complex after identifying two distinct vertices
+    $v_1,v_2$ of $K$ to a single vertex~$v'$. Then we have
+    \[ \pi_1(K',v') \cong \pi_1(K,v_1) \ast \Z , \]
+    as can be seen by using the standard construction of the fundamental group
+    of a simplicial complex in terms of generators and relations (see e.\,g.
+    Herlihy~et~al.~\cite[Subsec.~15.1.2]{bookc:herlihyetal13}
+    for the latter).
+
+    Now let $K$ be a finite weak $2$-pseudomanifold and let $v\in V(K)$.
+    By \cref{ch4:pmfdclass} and an inductive application of the above arguments
+    we see that $\pi_1(K,v)$ is isomorphic to a free product of the form
+    \[ \pi_1(S_1,x_1) \ast \cdots \ast \pi_1(S_k,x_k)
+        \ast \underbrace{\Z \ast \cdots \ast \Z}_{\ell\text{ times}}
+    \]
+    where $S_1,\dots,S_k$ are the closed surfaces of \cref{ch4:pmfdclass},
+    $s_j\in S_j$ for all $j\in\setOneto k$, and $\ell\in\N$.
+    A reduced word $x_1x_2\dots x_r$ in such a free product is the identity
+    element if and only if each $x_j$ is the idendity element in its corresponding group.
+    Since we know how to solve the word problem for each free factor
+    of~$\pi_1(K,v)$, we also know how to solve it for $\pi_1(K,v)$ itself.
+    \\
+\end{proofsketch}
+
+\begin{thCorollary}[loop agreement tasks on finite weak 2-pseudomanifolds]
+    Let $K,L$ be finite weak $2$-pseudomanifolds and let $\kappa,\lambda$
+    be triangle loops in $K$ and $L$, respectively.
+    \begin{itemize}
+        \item 
+            It is decidable whether $\gamma_\kappa$ or $\gamma_\lambda$
+            are (pointed) contractible in $\geom{K}$ and $\geom{L}$,
+            respectively.
+            
+        \item
+            Let $\gamma_\kappa$ be (pointed) contractible. Then
+            it is decidable whether $\Loop{K,\kappa}$ implements $\Loop{L,\lambda}$.
+    \end{itemize}
+\end{thCorollary}
+
+\begin{proof}
+    The first part is immediate from \cref{ch4:wordproblem}. For the second
+    part note that the algebraic signature of~$\Loop{K,\kappa}$ is
+    \[ (\pi_1(K,\dot\kappa), 1) \]
+    (where $1\in\pi_1(K,\dot\kappa)$ denotes the identity element).
+    Then \cref{ch3:classification}, the fact that $1$ must be mapped to the
+    identity element of~$\pi_1(L,\dot\lambda)$ by any group homomorphism
+    $\pi_1(K,\dot\kappa)\to\pi_1(L,\dot\lambda)$, and the first part imply
+    the assertion.
+    \\
+\end{proof}

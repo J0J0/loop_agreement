@@ -322,23 +322,24 @@ Then the following proposition is a consequence of this fact and
 \begin{thCorollary}[loop agreement tasks on finite weak 2-pseudomanifolds]
     \label{ch4:latonpmfd}
     %
-    Let $K,L$ be finite weak $2$-pseudomanifolds and let $\kappa,\lambda$
-    be triangle loops in $K$ and $L$, respectively.
+    Let $K,L\in\finSimp$ and let $\kappa,\lambda$ be triangle loops in $K$ and
+    $L$, respectively. Futhermore, let $K$ and $L$ be weak $2$-pseudomanifolds.
     \begin{itemize}
         \item 
-            It is decidable whether $\gamma_\kappa$ or $\gamma_\lambda$
+            It is decidable whether $\gamma_\kappa$ and $\gamma_\lambda$
             are (pointed) contractible in $\geom{K}$ and $\geom{L}$,
             respectively.
             
         \item
-            Let $\gamma_\kappa$ be (pointed) contractible. Then
+            If $\gamma_\kappa$ is (pointed) contractible,
             it is decidable whether $\Loop{K,\kappa}$ implements $\Loop{L,\lambda}$.
     \end{itemize}
 \end{thCorollary}
 
 \begin{proof}
     The first part is immediate from \cref{ch4:wordproblem}. For the second
-    part note that the algebraic signature of~$\Loop{K,\kappa}$ is
+    part let $\gamma_\kappa$ be pointed  contractible. As a direct consequence, the
+    algebraic signature of~$\Loop{K,\kappa}$ is
     \[ (\pi_1(K,\dot\kappa), 1) \]
     (where $1\in\pi_1(K,\dot\kappa)$ denotes the identity element).
     Then \cref{ch3:classification}, the fact that $1$ must be mapped to the

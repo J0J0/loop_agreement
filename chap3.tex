@@ -83,7 +83,6 @@ precise soon, but first we introduce some useful conventions.
             every two vertices $v,v'\in V(K)$ there exists a walk~$w$ in~$K$
             with $\dot w = v$ and $\ddot w = v'$. (This clearly implies that
             $\geom K$ is path connected in the usual topological sense.)
-            % TODO: Maybe put the "definition" first!?
     \end{itemize}
 \end{thConvention}
 
@@ -101,8 +100,6 @@ precise soon, but first we introduce some useful conventions.
         . \end{cases}
     \]
 \end{thDef}
-%
-% TODO: what's happening with the (-1)-Simplex!?
 
 Our informal description above has an exact interpretation now: if the input
 configuration is, say, $\{0,1\}\in\Delta^2$, the output configuration has to
@@ -143,7 +140,6 @@ realization. We also show that every homomorphism of fundamental groups where
 the domain space is the geometric realization of a finite, $2$-dimensional
 simplicial complex is in fact induced by a continuous map and how that affects
 \emph{maps between algebraic signatures}.
-% TODO: ^  sounds awkward -.-
 
 \begin{thDef}[topological loop associated to a triangle loop]
     \label{ch3:def:assoctopoloop}
@@ -257,8 +253,13 @@ however, we have the following
     the constant loop at~$[x_0]\in X$ or one of the loops~$\gamma_{j'}$.
     It is easy to see that $\phi_j$ is pointed contractible in~$X$ because
     it is the projected boundary loop of a $2$-simplex in~$\geom{K}$.
-    % TODO: v  maybe swap the order of the arguments to make it clearer
-    The following calculation shows that $g_1\after\phi_j$ is pointed
+    Furthermore,
+    \[ [g_1\after\gamma]_\ast = \psi([\gamma]_\ast) \]
+    (and likewise for $\gamma'$ and $\gamma''$) clearly holds if $\gamma$
+    is the constant loop and for $\gamma = \gamma_{j'}$ we have
+    $[g_1\after\gamma_{j'}]_\ast = [\eta_{j'}]_\ast = \psi([\gamma_{j'}]_\ast)$
+    by definition of $g_1$ and $\eta_{j'}$.
+    Now the following calculation shows that $g_1\after\phi_j$ is pointed
     contractible in~$Y$ as well:
     \begin{align*}
         [g_1\after\phi_j]_\ast
@@ -269,17 +270,11 @@ however, we have the following
             \psi([\gamma'']_\ast)
         \\
         &= \psi([\phi_j]_\ast) = \psi(1) = 1 \in \pi_1(Y,y_0)
-    ; \end{align*}
-    in the second equality $[g_1\after\gamma]_\ast = \psi([\gamma]_\ast)$ (and
-    likewise for $\gamma'$ and $\gamma''$) clearly holds if $\gamma$ is the
-    constant loop and for $\gamma=\gamma_{j'}$ we have
-    \[ [g_1\after\gamma_{j'}]_\ast = [\eta_{j'}]_\ast = \psi([\gamma_{j'}]_\ast)
-    \]
-    by definition of $g_1$ and $\eta_{j'}$. But if $g_1\after\phi_j\colon
-    S^1\to Y$ is contractible it can be extended to a map
-    $g_{2j}\colon D^2\to Y$.
+    . \end{align*}
+    Thus $g_1\after\phi_j\colon S^1\to Y$ can be extended to a map
+    $g_{2j}\colon D^2\to Y$ for all $j\in\setOneto\ell$.
     %
-    Thus we obtain a commutative diagram
+    We obtain a commutative diagram
     \[
         \xymatrix@R=0.5cm@C=1.2cm{
             \coprod_{j=1}^\ell S^1 \ar[r]^-{\coprod_{j=1}^\ell \phi_j} \ar@{ `->}[d]

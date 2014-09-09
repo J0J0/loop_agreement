@@ -69,7 +69,7 @@ We are now going to (topologically) classify finite weak
 $2$-pseudomanifolds. (It is well known that the finiteness condition
 corresponds to compactness on the topological side of geometric realizations,
 but in our combinatorial context of simplicial complexes \enquote{finite}
-sounds more appropriately.) The above discussion already shows, that
+sounds more appropriately.) The above discussion already shows that
 we only have to deal with $0$-simplices in the $2$-dimensional case,
 namely with vertices that do not have a euclidean neighborhood.
 To identify those vertices combinatorially, we consider the \emph{star}
@@ -89,9 +89,9 @@ of a vertex:
     of~$K$.
     \begin{itemize}
         \item
-            Then there exist $k\in\N$ and subcomplexes $K_0,\dots,K_k$ of~$K$,
-            which we call the \emph{wedge summands of~$\st(v)$}, with the following
-            properties:
+            Then there exist $k\in\N$ and (up to order) unique subcomplexes
+            $K_0,\dots,K_k$ of~$K$, which we call the \emph{wedge summands
+            of~$\st(v)$}, with the following properties:
             \begin{itemize}[labelsep=3mm,leftmargin=!]
                 \item
                     $\st(v) = \bigcup_{j=0}^k K_j$
@@ -112,8 +112,8 @@ of a vertex:
 \end{thProposition}
 
 \begin{proof}
-    First, observe that the star of~$v$ is completely determined by the
-    $2$-simplices containing~$v$, because every $0$- or $1$-simplex is
+    At first observe that the star of~$v$ is completely determined by the
+    $2$-simplices containing~$v$ because every $0$- or $1$-simplex is
     contained in some $2$-simplex by definition of a pseudomanifold.
     Let $F_0=\{v,x_0,x_1\}\in K$ be a
     $2$-simplex of which $v$ is a vertex. Then the $1$-simplex
@@ -130,7 +130,7 @@ of a vertex:
     Let $F$ and $F'$ be $2$-simplices of two different wedge summands.
     Then $F\cap F'$ cannot be a $1$-simplex, because that would contradict
     the fact that every $1$-simplex is the face of exactly two $2$-simplices.
-    It follows, that $F\cap F' = \{v\}$, and thus, $\st(v)$ is the
+    It follows that $F\cap F' = \{v\}$, and thus, $\st(v)$ is the
     \enquote{combinatorial wedge} of the wedge summands. The second assertion
     follows by passing to the geometric realization.
     \\
@@ -157,14 +157,14 @@ of a vertex:
     components of~$\st(v)$ as in the proposition. Then we form a new complex
     out of~$K$ in the following way: remove~$v$ and add vertices
     $v_0,\dots,v_k$; then, for all $j\in\setZeroto k$, replace every $v$ in a
-    simplex of~$K_j$ by~$v_j$. The result is a two-dimensional pseudomanifold where, by
+    simplex of~$K_j$ by~$v_j$. The result is a 2-dimensional pseudomanifold where, by
     construction, the star of each vertex~$v_j$ consists of a single component.
     By induction on~$\abs{V'}$ we obtain a complex~$K'$ such that \emph{every}
     vertex of~$K'$ has that property. By definition of pseudomanifolds and
-    \cref{ch4:starinpmfd}, we see, that every point of~$\geom{K'}$ has a
-    euclidean neighborhood, thus, $\geom{K'}$ is a compact $2$-manifold, that is
+    \cref{ch4:starinpmfd} we see that every point of~$\geom{K'}$ has a
+    euclidean neighborhood, thus $\geom{K'}$ is a compact $2$-manifold, that is
     a disjoint union of closed surfaces. The simplicial projection map $K'\to K$
-    (which maps newly introduced points~$v_j$ to the point~$v$ they originated
+    (which maps the recently introduced points~$v_j$ to the point~$v$ they originated
     from) induces a surjective continuous map $\geom{K'}\to\geom{K}$, and since
     $\geom{K'}$ is compact and $\geom{K}$ is hausdorff, this map is the desired
     quotient map.

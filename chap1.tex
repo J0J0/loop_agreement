@@ -2,11 +2,11 @@
 %
 \section{Motivation and Notation}
 Usually, \emph{topology} is considered a branch of \enquote{pure mathematics}
-which has the reputation of not beeing particularly usefull in other fields than
+which has the reputation of not being particularly useful in other fields than
 mathematics itself. In this thesis, however, we use topological methods for
 a theoretical model of \emph{distributed computing}, especially so called
 \emph{loop agreement tasks}. Distributed computing is the study of writing
-programs that run simultaneously on multiple proccessing units, which
+programs that run simultaneously on multiple processing units, which
 communicate through a given network protocol. Often it is a complex problem to
 decide whether a given task can be solved under certain preconditions depending
 on the hardware environment and the constrains imposed by the communication
@@ -15,14 +15,12 @@ abstract model of distributed computing in \cref{ch2}, using \emph{simplicial
 complexes} and so called \emph{carrier maps} (which are a generalisation of
 \emph{simplicial maps}). Here we follow 
 Herlihy et~al.~\cite{bookc:herlihyetal13} and adopt their definitions found
-in Chapter~4 of their book. Then we are going to describe \emph{loop agreement
+in Chapter~4 of their book. Then we describe \emph{loop agreement
 tasks} and establish a link to the \emph{fundamental group of a space}. The
-corresponding classification result of \cref{ch3} is taken from
-\cite[Chapter~15]{bookc:herlihyetal13}, but our approach and proof will be a bit
-different. (If you do not have the book available, most of the chapter can also
-be found in an earlier paper by Herlihy and
-Rajsbaum~\cite{paper:herlihyrajsbaum03}.) In the last chapter we investigate how
-the preceeding material can be applied to loop agreement tasks living on
+corresponding classification result of \cref{ch3} is taken from Herlihy~et~al.
+\cite[Ch.~15]{bookc:herlihyetal13}\cite{paper:herlihyrajsbaum03}, but our
+approach and proof will be a bit different. In the last chapter we investigate
+how the preceding material can be applied to loop agreement tasks living on
 \emph{(two-dimensional) pseudomanifolds}, accompanied by an implementation in
 \emph{Haskell}.
 
@@ -32,8 +30,8 @@ Most importantly, the processes run \emph{asynchronously}, that is, a process
 cannot wait for another process. It has to do its computation in a finite number
 of steps with whatever information it got up to that point. Therefore, such
 programs are called \emph{wait-free}. This also includes the problem of
-\enquote{crashed processes} (processes that halted prematurely, e.\,g. because
-of a hardware malfunction), because in a wait-free computation a process cannot
+\enquote{crashed processes} (processes that halted prematurely, e.\,g. due to
+a hardware malfunction), because in a wait-free computation a process cannot
 know how many other processes are still running. Secondly, tasks are
 \emph{colorless}, which means that it is irrelevant which process has which
 input (respectively output) value, only the set of input (respectively output)
@@ -48,9 +46,9 @@ justify our use of so called \emph{barycentric agreement protocols} in the
 following.
 
 We get back to the model and its interpretation in \cref{ch2}, but we will not
-go into much more detail concerning the above technical terms. More explanations
-on those terms in the context of distributed computing and how they relate to
-the mathematical model can be found in the book by
+go into much more detail concerning the technical terms mentioned above.
+More explanations on those terms in the context of distributed computing and how
+they relate to the mathematical model can be found in the book by
 Herlihy et~al.~\cite{bookc:herlihyetal13}, a paper by
 Herlihy and Shavit~\cite{paper:herlihyshavit99}, and a paper by
 Herlihy and Rajsbaum~\cite{paper:herlihyrajsbaum03}.
@@ -68,7 +66,7 @@ Throughout this thesis, we use the following notation and conventions:
         $\bigcup_{B\in A} B$.
         
     \item
-        The natural numbers $\N$ start at $0$.
+        The natural numbers $\N$ include $0$.
         
     \item
         A \enquote{map} between topological spaces always means
@@ -83,11 +81,10 @@ Since our mathematical model for distributed computing fundamentally relies on
 \emph{simplicial complexes}, the following contains a brief review of the basic
 definitions and properties used in this thesis. We include it for the sake of
 completeness but \emph{not} to replace an introduction on the topic by a good
-text book. You may want to consult, for example,
+text book. References for further reading are, for example,
 Munkres~\cite[\S1\,ff. and \S14\,ff.]{bookc:munkres84},
 Fritsch and Piccinini~\cite[Ch.~3]{bookc:fritschpiccinini90}
-or Spanier~\cite[Ch.~3]{bookc:spanier66}
-for further reading.
+or Spanier~\cite[Ch.~3]{bookc:spanier66}.
  
 \begin{thDef}[(abstract) simplicial complex]\hfill
     \begin{itemize}
@@ -133,17 +130,9 @@ for further reading.
 \end{thDef}
 
 \pagebreak[2]
-\begin{thConvention}\hfill
-    \begin{itemize}
-        \item
+\begin{thConvention}
             Instead of $(V,K)$ we mostly speak of a simplicial complex~$K$ where it
             is understood that $V(K)\defeq V = \bigcup K$.
-            
-        \item
-            Note that every simplicial complex is partially ordered by
-            inclusion and we shall occasionally use this fact without
-            further notice.
-    \end{itemize}
 \end{thConvention}
 
 \begin{thDef}[simplicial map]
@@ -180,6 +169,7 @@ for further reading.
 \begin{thDef}[geometric realization]\hfill
     \begin{itemize}
         \item
+            % TODO: v  (-1)-simplex!?
             Let $K$ be a simplicial complex. The \emph{geometric realization
             of~$K$} is the topological space
             \[ \geom{K} \defeq \coprod_{F\in K} \Deltageo^{\dim(F)}
@@ -190,7 +180,7 @@ for further reading.
             For a vertex~$v$ and a simplex~$F$ of~$K$ we denote by $\geom v$ 
             and~$\geom F$ the corresponding point and subspace of~$\geom K$,
             respectively (i.\,e. the image (point) under the canonical inclusion
-            followed by the quotient map). Consequently, for a subspace
+            followed by the quotient map). Consequently, for a subcomplex
             $K'\subset K$ we write $\geom{K'}$ for $\bigcup \{ \geom{F'} \Mid
             F'\in K' \} \subset \geom K$. For $x\in\geom K$ the (unique)
             simplex~$F$ of~$K$ such that the interior of~$\geom F$ contains~$x$
@@ -209,7 +199,17 @@ More explicit definitions and explanations of geometric realizations can be
 found in the references mentioned at the beginning of this section.
 
 \pagebreak[2]
+\begin{thDef}[triangulation]
+    Let $X$ be a topological space. Then $X$ is \emph{triangulable} if
+    there exists a simplicial complex~$K$ and a homeomorphism
+    $f\colon\geom{K}\to X$. Such a pair $(K,f)$ is then called
+    a \emph{triangulation of~$X$} and we say that \emph{$X$ is triangulated
+    by~$K$}.
+\end{thDef}
+
 \begin{thDef}[barycentric subdivision]
+    \label{ch1:def:sd}
+    %
     Let $K$ be a simplicial complex. The \emph{(first) barycentric subdivsion
     of~$K$} is the simplicial complex
     \[ \sd K  \defeq \bigl\{

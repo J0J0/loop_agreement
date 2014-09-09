@@ -1,4 +1,7 @@
-\documentclass[11pt,a4paper,english,DIV=11,bibliography=totoc,titlepage=false]{scrreprt}
+\documentclass[11pt,a4paper,english,%
+               DIV=9,%
+               twoside=semi,BCOR=5mm,%
+               bibliography=totoc]{scrreprt}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% packages
@@ -152,7 +155,7 @@
 \MakeCategoryName{Simp}
 \MakeCategoryName{Top}
 
-\newcommand{\finSimp}[1][2]{\Simp^{\mr{fin\kern1ptc}}_#1}
+\newcommand{\finSimp}[1][2]{\Simp^{\mr{fin,c}}_#1}
 
 %
 \newcommand{\lXX}[2]{\mathop{{}_{#2}\mkern-2.5mu#1}}
@@ -263,6 +266,7 @@
 \begin{document}
 
 \input{titlepage}
+\mbox{}\thispagestyle{empty}\newpage
 
 \pdfbookmark[1]{\contentsname}{toc}
 \tableofcontents
@@ -275,7 +279,8 @@
 \input{chap4b}
 
 \appendix
-\printbibliography
+\printbibliography\newpage
+\mbox{}\thispagestyle{empty}
 \input{statement_of_authorship}
 
 \end{document}

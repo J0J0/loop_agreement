@@ -1,7 +1,7 @@
 \chapter{Distributed Computing via Combinatorial Topology}
 \label{ch2}
 Based on the combinatorial description of (sufficiently well-behaved)
-topological spaces by simplicial complexes, we can define and (briefly) explain
+topological spaces by simplicial complexes we can define and (briefly) explain
 our model for \emph{distributed tasks} and \emph{protocols that solve tasks}.
 We give the strict mathematical definitions first and explain their
 interpretation in the context of distributed computing afterwards.
@@ -19,7 +19,7 @@ simplicial complexes that is more flexible than simplicial maps:
             A \emph{carrier map $\Phi\colon K\to L$} is a monotonic map
             \[ \Phi\colon K \to \{ L' \Mid L'\subset L \text{ is a subcomplex} \}  , \]
             where both sets are partially ordered by inclusion. More explicitly:
-            for simplicies $F' \subset F$ in $K$ we require $\Phi(F') \subset
+            For simplicies $F' \subset F$ in $K$ we require $\Phi(F') \subset
             \Phi(F)$ as subcomplexes of~$L$.
             
         \item
@@ -43,7 +43,7 @@ simplicial complexes that is more flexible than simplicial maps:
     \end{itemize}
 \end{thDef}
 
-Note: while we say \enquote{carrier map $K\to L$}, the codomain of a carrier map
+Note: While we say \enquote{carrier map $K\to L$}, the codomain of a carrier map
 is \emph{not} actually~$L$ (but the set of subcomplexes of the latter).
 
 % TODO: example(s) / illustration for carrier maps
@@ -92,6 +92,8 @@ and \emph{protocols} as well as the concept of \emph{task solving}.
     \end{itemize}
 \end{thDef}
 
+% TODO: !! add convention about the (-1)-simplex
+
 \begin{thDef}[task solving]
     Let $\cI,\cO$ and $\cP$ be simplicial complexes,
     let $\Phi\colon\cI\to\cO$ be a task,
@@ -127,10 +129,10 @@ We start with an example:
     
     Now we explain what the corresponding input and output complexes are:
     The input complex encodes every possible \emph{input configuration},
-    that is, $F$ is a simplex of $\cI$ in this case if and only if
-    $F\subset X$. (If it makes you more comfortable, assume that
-    there are more processes than input values.) 
-    % TODO: ^  maybe clarify why one might want to assume that
+    that is, $F$ is a simplex of~$\cI$ in this case if and only if
+    $F\subset X$. (At this point, we should assume that there are more
+    processes than input values because an input configuration with more
+    values than processes does not make much sense.)
     The output complex encodes
     every allowed \emph{output configuration}, that is, $F'\in\cO$ if and only
     if $F'\subset X$ is a singleton set. The carrier map~$\Phi$ then encodes
@@ -169,21 +171,21 @@ As mentioned % TODO: check
 in the introduction, this corresponds to the fact that we model
 protocols that are \emph{wait-free}.
 
-Finally, if $\Xi$ solves $\Phi$ and $\delta\colon\cP\to\cO$ is a decicion
-map, it is clear that $\delta$ is the \enquote{function that gets applied
+Finally, if $\Xi$ solves $\Phi$ and $\delta\colon\cP\to\cO$ is a decision
+map, $\delta$ is the \enquote{function that gets applied
 to a process's (protocol) output value} to produce a valid task
 output value. The protocol output value represents \enquote{everything
 a process has learned} during the communication and the map~$\delta$
 \enquote{decides which task output value to choose based on that
-information}, hence the name \emph{decicion map}.
+information}, hence the name \emph{decision map}.
 
-You may have noticed that we did not use the simplicial properties of
+We should note that we did not use the simplicial properties of
 $\cI$, $\cO$, $\cP$ or the maps $\Phi$, $\Xi$, $\delta$ in our
 informal description, so it is natural to ask why we chose simplicial
 complexes as a mathematical basis. Simply put, those properties are
 related to the various assumptions about the underlying distributional
 system. In this thesis, however, we will not go into much more detail,
-but you can find an extensive discussion of the correspondece between
+but there is an extensive discussion of the correspondence between
 the above \enquote{combinatorial model} and the \enquote{operational
 model} (which describes tasks and protocols from a computer
 scientist's point of view) in the book by
@@ -232,8 +234,8 @@ role in \cref{ch2:sec:consequences}.
             $\skel^{k-1}\colon\Delta^{p-1}\to(\Delta^{p-1})^{\leq k-1}$.
             
         \item
-            For $k=1$, we see that $(p,1)$-set agreement equals $p$-consensus
-            \pcref{ch2:consensus}.
+            For $k=1$, we see that $(p,1)$-set agreement coincides with
+            $p$-consensus \pcref{ch2:consensus}.
             
         \item
             If $p\leq k$, the task is trivial because every process can simply
@@ -250,7 +252,8 @@ role in \cref{ch2:sec:consequences}.
 \end{thExample}
 
 Another important class of examples are \emph{barycentric agreement tasks}. To
-state them formally, we first need to recognize $\sd$ as a carrier map:
+state them formally, we first need to recognize $\sd$ \pcref{ch1:def:sd}
+as a carrier map:
 Let $K$ be a simplicial complex. For a simplex~$F$ of~$K$ we define
 $\sd_K(F) \defeq \sd K(F)$ which is a subcomplex of~$\sd K$. Thus we
 obtain a carrier map $\sd_K\colon K\to\sd K$. Since we can compose
@@ -263,20 +266,20 @@ $K\to\sd^N\!K$ for all $N\in\N$ which we denote by $\sd_K^N$.
     \emph{$N$-th barycentric agreement task for the input complex~$K$}
     is the task $\sd_K^N\colon K\to\sd^N K$.
     
-    Informally, the processes are assigned vertices of some simplex~$F$
+    In other words, the processes are assigned vertices of some simplex~$F$
     of~$K$ and the task is to decide on vertices of a simplex
     of~$\sd_K^N(F)$, the $N$-th barycentric subdivision of~$F$
     (as a subcomplex of $\sd^N K$).
 \end{thExample}
 
-Also note, that for all $K\in\Simp$ and all $N\in\N$ the carrier map
+Also note that for all $K\in\Simp$ and all $N\in\N$ the carrier map
 $\sd_K^N$ is strict and \enquote{surjective} (in the sense of the image
 complex). Therefore $\sd_K^N$ is also a protocol which we denote by
-the same symbol (there is not actually any danger of confusion).
+the same symbol (there is no actual danger of confusion).
 
 
 \section{Implements-Relation on Tasks}
-Informally, it is relatively clear what it means that some tasks implements
+Informally, it is relatively clear what it means that some tasks implement
 (or rather can be used to implement) another task. This section will make
 that intuition formal in an appropriate sense.
 
@@ -334,8 +337,8 @@ this is the case, we say \emph{the tasks of $T$ implement $\Phi'$}.
 In this thesis, however, we only need a restriced version of this concept.
 First of all, when we talk about whether some \emph{task implements another},
 we always assume that the set of solved tasks includes the barycentric agreement
-tasks \pcref{ch2:barycentricagreement} for all~$N\in\N$ and all occuring
-complexes. Second, we only consider the case where the first task's carrier map
+tasks \pcref{ch2:barycentricagreement} for all~$N\in\N$ and all occurring
+complexes. Secondly, we only consider the case where the first task's carrier map
 is strict, which means it \enquote{solves itself as a protocol} (like in the
 $(p\mkern1mu{\leq}\mkern1muk)$-case of \cref{ch2:setagreement}). And lastly, we
 only allow a specific amount and order of protocols used. Put formally, this
@@ -351,8 +354,8 @@ becomes:
     $\sd_{\cI}^N\colon\cI\to\sd^N\cI$ and~$\Phi$, solves~$\Phi'$.
 \end{thDef}
 
-We will see later that this is enough for our purposes. We also note, that the
-assumption of available barycentric agreement protocols is not absurd, to
+We will see later that this is enough for our purposes. We also note that the
+assumption of available barycentric agreement protocols is not absurd, on
 the contrary: Herlihy et~al.~\cite[Corollary 4.2.10]{bookc:herlihyetal13} show
 that our underlying computational model permits an (operational) implementation
 of those protocols and even better, that they can be obtained directly from 

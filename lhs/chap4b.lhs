@@ -23,7 +23,7 @@ type Simplex a = [Vertex a]
 type Complex a = [Simplex a]
 \end{code}
 A |Vertex| can be basically anything, but we require an |Eq| context
-(which should not be much of a restriction). (Note, that this declaration
+(which should not be much of a restriction). (Note that this declaration
 uses a GADT\footnote{generalised algebraic datatype,
 \href{http://www.haskell.org/haskellwiki/Generalised_algebraic_datatype}{%
 \url{www.haskell.org/haskellwiki/Generalised_algebraic_datatype}}}

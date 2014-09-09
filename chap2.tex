@@ -193,30 +193,41 @@ one execution of the specified algorithm. Note, that in this case
 an \enquote{algorithm} is not entirely deterministic (in the sense
 that we cannot predict the exact ouput configuration) because the
 communication between processes introduces a degree of uncertainty.
-As mentioned % TODO: check
-in the introduction, this corresponds to the fact that we model
-protocols that are \emph{wait-free}.
+As mentioned in the introduction, this corresponds to the fact that
+we model protocols that are \emph{wait-free}.
 
 Finally, if $\Xi$ solves $\Phi$ and $\delta\colon\cP\to\cO$ is a decision
-map, $\delta$ is the \enquote{function that gets applied
-to a process's (protocol) output value} to produce a valid task
-output value. The protocol output value represents \enquote{everything
-a process has learned} during the communication and the map~$\delta$
-\enquote{decides which task output value to choose based on that
-information}, hence the name \emph{decision map}.
+map, $\delta$ is, intuitively speaking, the \enquote{function that
+gets applied to a process's (protocol) output value to produce a valid
+task output value}. The protocol output value represents
+\enquote{everything a process has learned} during the communication
+and the map~$\delta$ \enquote{decides which task output value to
+choose based on that information}, hence the name \emph{decision map}.
 
-We should note that we did not use the simplicial properties of
-$\cI$, $\cO$, $\cP$ or the maps $\Phi$, $\Xi$, $\delta$ in our
-informal description, so it is natural to ask why we chose simplicial
+We should note that the simplicial properties of $\cI$, $\cO$, $\cP$
+or the maps $\Phi$, $\Xi$, $\delta$ were not used in our informal
+description so far, so it is natural to ask why we chose simplicial
 complexes as a mathematical basis. Simply put, those properties are
-related to the various assumptions about the underlying distributional
-system. In this thesis, however, we will not go into much more detail,
-but there is an extensive discussion of the correspondence between
-the above \enquote{combinatorial model} and the \enquote{operational
-model} (which describes tasks and protocols from a computer
-scientist's point of view) in the book by
+related to the various assumptions about the underlying distributed
+system. For example, an input complex~$\cI$ has to be a simplicial 
+complex because a process could crash before communicating its input
+value to the other processes: An input configuration $F\in\cI$
+should contain all values that are actually used by any of
+the processes to produce an output value. Now let $F'\subset F$ and
+assume that the processes with input values in $F\setminus F'$ crash
+before sending their values to any of the other processes. Then the
+latter continue their execution \emph{with values from~$F'$ only}, so
+the true input configuration has to be~$F'\subset F$. Put another way,
+$\cI$ must contain all subsets of all elements $F\in\cI$, which is
+precisely the definition of a simplicial complex.
+
+There is much more that could be said about the \enquote{simplicial
+assumptions} of our model but in this thesis we will not go into much more
+detail. However, there is an extensive discussion of the
+correspondence between the above \enquote{combinatorial model} and the
+\enquote{operational model} (which describes tasks and protocols from
+a computer scientist's point of view) in the book by
 Herlihy et~al.~\cite[Ch.\,4]{bookc:herlihyetal13}.
-% TODO ^  explain at least one "simplical assumption" ...
 
 \section{Examples: Set Agreement and Barycentric Agreement}
 Next, we are going to describe another class of examples, relaxed versions of

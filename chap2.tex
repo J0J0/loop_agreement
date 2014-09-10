@@ -87,7 +87,7 @@ is \emph{not} actually~$L$ (but the set of subcomplexes of the latter).
             \not\subset \Delta^2(\{0,1\}) = \Phi_2(\{0,1\}) \]
         although $\{1\} \subset \{0,1\}$.
         
-    \item
+    \item\label{ch2:ex:carriermaps:lat}
         Let $T$ be the complex from \cref{ch2:fig:carriermaps};
         it is well known that it triangulates the torus~$S^1\times S^1$.
         We define $\Phi_3\colon\Delta^2\to T$ as follows:
@@ -96,12 +96,12 @@ is \emph{not} actually~$L$ (but the set of subcomplexes of the latter).
             & \{0,1\} &\mapsto T(\{3,5\})
               \\
               \{0\}   &\mapsto T(\{3\})
-            & \{1,2\} &\mapsto T(\{\{5,9\}, \{9,4\}\})
+            & \{1,2\} &\mapsto T(\{\{5,9\}, \{9,1\}\})
               \\
               \{1\}   &\mapsto T(\{5\})
-            & \{0,2\} &\mapsto T(\{4,3\})
+            & \{0,2\} &\mapsto T(\{1,3\})
               \\
-              \{2\}   &\mapsto T(\{4\})
+              \{2\}   &\mapsto T(\{1\})
             & \{0,1,2\} &\mapsto T
         \rlap{.}
         \end{align*}
@@ -251,7 +251,7 @@ is \emph{not} actually~$L$ (but the set of subcomplexes of the latter).
                     }
                 }
                 %
-                \foreach \coord/\k in {(0,0)/1,(1,0)/2,(2,0)/3,(3,0)/4}
+                \foreach \coord/\k in {(0,0)/1,(1,0)/2,(2,0)/3,(3,0)/1}
                     \path \coord ++(0,-\mar) node {$\k$} 
                           \coord ++(0,3) ++(0,\mar) node {$\k$} ;
                 %

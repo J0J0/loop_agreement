@@ -125,7 +125,9 @@ or Spanier~\cite[Ch.~3]{bookc:spanier66}.
         \item
             Let $F$ be a simplex of~$K$. Then $K(F)$ denotes the subcomplex
             of~$(V,K)$ determined by $F$ and its faces, i.\,e.
-            $K(F) = (F, \, \{ F' \Mid F'\subset F \})$.
+            $K(F) \defeq (F, \, \{ F' \Mid F'\subset F \})$.
+            Similarly, for a subset $A\subset K$, we define
+            $K(A) \defeq (\bigcup A, \bigcup_{F\in A} K(F))$.
     \end{itemize}
 \end{thDef}
 

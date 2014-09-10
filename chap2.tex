@@ -46,10 +46,235 @@ simplicial complexes that is more flexible than simplicial maps:
 Note: While we say \enquote{carrier map $K\to L$}, the codomain of a carrier map
 is \emph{not} actually~$L$ (but the set of subcomplexes of the latter).
 
-% TODO: example(s) / illustration for carrier maps
+\begin{ExampleList}[\label{ch2:ex:carriermaps}%
+    See \cref{ch2:fig:carriermaps} for graphical representations of the
+    following examples.%
+    ]
+    \item
+        Let
+        \begin{align*}
+            L \defeq \bigl\{ &\{0,2,3\},\,
+                \{0,1\},\, \{1,2\},\, \{0,3\},\, \{2,3\},\, \{2,4\},\,
+                \\
+                &\{0\},\, \{1\},\, \{2\},\, \{3\},\, \{4\},\,
+                \emptyset
+            \bigr\}
+        \end{align*}
+        and let
+        \[ K \defeq L\bigl(\bigl\{ \{0,1\},\, \{1,2\},\, \{0,3\},\, \{2,3\}
+                \bigr\}\bigr)
+        . \]
+        Let
+        \[ \Phi_1(F) \defeq L(F) \]
+        for all $F\in K\setminus\bigl\{ \{0,3\} \bigr\}$ and let
+        \[ \Phi_1(\{0,3\}) \defeq L(\{0,2,3\}) . \]
+        Then $\Phi_1$ is a carrier map $K\to L$. It is \emph{not} strict
+        because
+        \[ \Phi_1\bigl(\{0,3\} \cap \{2,3\}\bigr) = L(\{3\}) 
+            \subsetneq L(\{2,3\}) = \Phi_1(\{0,3\}) \cap \Phi_1(\{2,3\})
+        . \]
+        The image complex of $\Phi_1$ is
+        \[ \Phi_1[K] = L \setminus \bigl\{ \{2,4\}, \{4\} \bigr\}  . \]
+        
+    \item
+        Let
+        \[ \Phi_2(F) \defeq \Delta^2(F) \]
+        for all $F\in\Delta^2\setminus\bigl\{\{1\}\bigr\}$ and let
+        \[ \Phi_2(\{1\}) \defeq \Delta^2 . \]
+        Then $\Phi_2$ is \emph{not} a carrier map $\Delta^2\to\Delta^2$
+        because is is not monotonic: we have
+        \[ \Phi_2(\{1\}) = \Delta^2
+            \not\subset \Delta^2(\{0,1\}) = \Phi_2(\{0,1\}) \]
+        although $\{1\} \subset \{0,1\}$.
+        
+    \item
+        Let $T$ be the complex from \cref{ch2:fig:carriermaps};
+        it is well known that it triangulates the torus~$S^1\times S^1$.
+        We define $\Phi_3\colon\Delta^2\to T$ as follows:
+        \begin{align*}
+               \emptyset &\mapsto \emptyset
+            & \{0,1\} &\mapsto T(\{3,5\})
+              \\
+              \{0\}   &\mapsto T(\{3\})
+            & \{1,2\} &\mapsto T(\{\{5,9\}, \{9,4\}\})
+              \\
+              \{1\}   &\mapsto T(\{5\})
+            & \{0,2\} &\mapsto T(\{4,3\})
+              \\
+              \{2\}   &\mapsto T(\{4\})
+            & \{0,1,2\} &\mapsto T
+        \rlap{.}
+        \end{align*}
+        It is easy to see that $\Phi_3$ is indeed a carrier map,
+        that it is strict and that its image complex is~$T$.
+\end{ExampleList}
 
-We can also compose carrier maps with simplicial maps from both sides.
-To define that properly, we need
+\begin{figure}
+    \centering
+    \newcommand{\mar}{10pt}
+    \newcommand{\labelL}{-1.75cm}
+    \newcommand{\labelR}{11.5cm}
+    %
+    \begin{tikzpicture}
+        \colorlet{COne}{green!30!blue}
+        %
+        \begin{scope}[yshift=10cm]
+            \begin{scope}
+                \path
+                    (0,0) node [Svertex] {}
+                    (2,0) node [Svertex] {}
+                    (2,2) node [Svertex] {} 
+                    (0,2) node [Svertex] {} ;
+                \draw [Sedge] (0,0) -- (2,0) -- (2,2) -- (0,2) ;
+                \draw [Sedge=COne] (0,0) -- (0,2) ;
+                \draw (0,0) -- (2,0) -- (2,2) -- (0,2) -- cycle ;
+                \path
+                    (0,0) node [Dpoint] {} +(-\mar,0) node {$0$}  
+                    (2,0) node [Dpoint] {} +(\mar,0)  node {$1$}  
+                    (2,2) node [Dpoint] {} +(\mar, 0) node {$2$} 
+                    (0,2) node [Dpoint] {} +(-\mar,0) node {$3$} ;
+            \end{scope}
+            %
+            \draw [->, line width=0.8pt]
+                (3.6,1) -- node [above] {$\Phi_1$} (5,1) ;
+            %
+            \begin{scope}[xshift=7.4cm]
+                \newcommand{\mypath}{%
+                    (0,0) -- (2,0) -- (2,2) -- (0,2) -- cycle}
+                \path
+                    (0,0) node [Svertex] {}
+                    (2,0) node [Svertex] {}
+                    (2,2) node [Svertex] {} 
+                    (0,2) node [Svertex] {} ;
+                \draw [Sedge] (0,0) -- (2,0) -- (2,2) -- (0,2) ;
+                \draw [Sedge=COne] (0,0) -- (0,2) ;
+                \fill [Dfill] (0,0) -- (2,2) -- (0,2) -- cycle ;
+                \pattern [pattern color=COne, pattern=my north west lines]
+                    (0,0) -- (2,2) -- (0,2) -- cycle ;
+                \draw \mypath 
+                      (0,0) -- (2,2) -- (2.5,1) ;
+                \path
+                    (0,0)   node [Dpoint] {} +(-\mar,0) node {$0$} 
+                    (2,0)   node [Dpoint] {} +(\mar, 0) node {$1$}
+                    (2,2)   node [Dpoint] {} +(\mar, 0) node {$2$}
+                    (0,2)   node [Dpoint] {} +(-\mar,0) node {$3$}
+                    (2.5,1) node [Dpoint] {} +(\mar, 0) node {$4$} ;
+            \end{scope}
+            %
+            \path
+                (\labelL,1) node {$K$}
+                (\labelR,1) node {$L$} ;
+        \end{scope}
+        %
+        %
+        \begin{scope}[yshift=5cm]
+            \begin{scope}[yshift=15pt]
+                \newcommand{\mypath}{%
+                    (0,0) -- (2,0) -- (60:2) -- cycle}
+                \path
+                    (0,0)  node [Svertex] {}
+                    (60:2) node [Svertex] {} ;
+                \draw [Sedge] \mypath ;
+                \fill [Dfill] \mypath ;
+                \path
+                    (2,0)  node [Svertex=COne] {} ;
+                \draw \mypath ;
+                \path
+                    (0,0)  node [Dpoint] {} +(0,-\mar) node {$0$}  
+                    (2,0)  node [Dpoint] {} +(0,-\mar) node {$1$}  
+                    (60:2) node [Dpoint] {} +(0,\mar)  node {$2$} ;
+            \end{scope}
+            %
+            \draw [->, line width=0.8pt]
+                (3.6,1.5) -- node [above] {$\Phi_2$} (5,1.5) ;
+            %
+            \begin{scope}[xshift=7.4cm,yshift=15pt]
+                \newcommand{\mypath}{%
+                    (0,0) -- (2,0) -- (60:2) -- cycle}
+                \path
+                    (0,0)  node [Svertex] {}
+                    (60:2) node [Svertex] {} ;
+                \draw [Sedge] \mypath ;
+                \fill [Dfill] \mypath ;
+                \pattern [pattern color=COne, pattern=my north west lines]
+                    \mypath ;
+                \path
+                    (2,0)  node [Svertex=COne] {} ;
+                \draw \mypath ;
+                \path
+                    (0,0)  node [Dpoint] {} +(0,-\mar) node {$0$}  
+                    (2,0)  node [Dpoint] {} +(0,-\mar) node {$1$}  
+                    (60:2) node [Dpoint] {} +(0,\mar)  node {$2$} ;
+            \end{scope}
+            %
+            \path
+                (\labelL,1.5) node {$\Delta^2$}
+                (\labelR,1.5) node {$\Delta^2$} ;
+        \end{scope}
+        %
+        %
+        \begin{scope}
+            \begin{scope}[yshift=15pt]
+                \newcommand{\mypath}{%
+                    (0,0) -- (2,0) -- (60:2) -- cycle}
+                \path
+                    (0,0)  node [Svertex] {}
+                    (2,0)  node [Svertex] {}
+                    (60:2) node [Svertex] {} ;
+                \draw [Sedge] \mypath ;
+                \fill [Dfill] \mypath ;
+                \draw \mypath ;
+                \path
+                    (0,0)  node [Dpoint] {} +(0,-\mar) node {$0$}  
+                    (2,0)  node [Dpoint] {} +(0,-\mar) node {$1$}  
+                    (60:2) node [Dpoint] {} +(0,\mar)  node {$2$} ;
+            \end{scope}
+            %
+            \draw [->, line width=0.8pt] (3.6,1.5) -- node [above] {$\Phi_3$} (5,1.5) ;
+            %
+            \begin{scope}[xshift=7cm]
+                \foreach \coord in {(2,0),(3,1),(3,3),(2,3)}
+                    \path \coord node [Svertex] {} ;
+                %
+                \path [Sedge]
+                    (2,0) -- (3,1) -- (3,3) -- (2,3) ;
+                %
+                \foreach \myx in {0,1,2} {
+                    \foreach \myy in {0,1,2} {
+                        \begin{scope}[shift={(\myx,\myy)}]
+                            \path [Dfill] (0,0) rectangle (1,1);
+                            \draw (0,0) -- (1,0) -- (1,1) ;
+                            \draw (0,0) -- (1,1) -- (0,1) -- cycle ;
+                            \foreach \coord in {(0,0),(0,1),(1,0),(1,1)}
+                                \node [Dpoint] at \coord {};
+                        \end{scope}
+                    }
+                }
+                %
+                \foreach \coord/\k in {(0,0)/1,(1,0)/2,(2,0)/3,(3,0)/4}
+                    \path \coord ++(0,-\mar) node {$\k$} 
+                          \coord ++(0,3) ++(0,\mar) node {$\k$} ;
+                %
+                \foreach \coord/\k in {(0,1)/5,(0,2)/9}
+                    \path \coord ++(-\mar,0) node {$\k$}
+                          \coord ++(3,0) ++(\mar,0) node {$\k$} ;
+            \end{scope}
+            %
+            \path
+                (\labelL,1.5) node {$\Delta^2$}
+                (\labelR,1.5) node {$T$} ;
+        \end{scope}
+        %
+    \end{tikzpicture}
+    %
+    \vspace{0.5cm}
+    %
+    \caption{Examples of carrier maps, see also \cref{ch2:ex:carriermaps}.}
+    \label{ch2:fig:carriermaps}
+\end{figure}
+
+In addition to the composition of carrier maps we can also compose carrier maps
+with simplicial maps from both sides. To define that properly, we need
 
 \begin{thDef}[image complex under a simplicial map]
     For a simplicial map $f\colon K\to L$ and a subcomplex $K'$ of
@@ -92,7 +317,7 @@ and \emph{protocols} as well as the concept of \emph{task solving}.
     \end{itemize}
 \end{thDef}
 
-\begin{thConvention}[the (-1)-simplex]
+\begin{thConvention}[the $(-1)$-simplex]
     Our definition of a simplicial complex ensures that it always includes the
     $(-1)$-simplex (i.\,e. the empty simplex) whenever the complex is not empty
     itself. In the context of tasks and protocols, however, the empty simplex
@@ -229,7 +454,11 @@ correspondence between the above \enquote{combinatorial model} and the
 a computer scientist's point of view) in the book by
 Herlihy et~al.~\cite[Ch.\,4]{bookc:herlihyetal13}.
 
-\section{Examples: Set Agreement and Barycentric Agreement}
+\vfill % !!! layout hack
+
+
+\section[Examples: Set Agreement and Barycentric Agreement]{%
+         Examples:\newline Set Agreement and Barycentric Agreement}
 Next, we are going to describe another class of examples, relaxed versions of
 the consensus task \pcref{ch2:consensus}, one of which will play an important
 role in \cref{ch2:sec:consequences}.
@@ -253,7 +482,7 @@ role in \cref{ch2:sec:consequences}.
     the formal task (in the sense of \cref{ch2:def:taskprotocol})
     is given by the input complex~$\Delta^{p-1}$, the output complex
     $(\Delta^{p-1})^{\leq k-1}$ and the following carrier map~$\skel^{k-1}$:
-    if $F\in\Delta^p$ is an input configuration, $\skel^{k-1}(F)$ is the
+    if $F\in\Delta^{p-1}$ is an input configuration, $\skel^{k-1}(F)$ is the
     $(k{-}1)$-skeleton of the complex determined by $F$:
     \[ \skel^{k-1}(F) \defeq \bigl(\Delta^{p-1}(F)\bigr)^{\leq k-1}
     ; \]
@@ -291,6 +520,10 @@ role in \cref{ch2:sec:consequences}.
 Another important class of examples are \emph{barycentric agreement tasks}. To
 state them formally, we first need to recognize $\sd$ \pcref{ch1:def:sd}
 as a carrier map:
+
+\vfill % !!! layout hack
+
+\pagebreak[2]\noindent
 Let $K$ be a simplicial complex. For a simplex~$F$ of~$K$ we define
 $\sd_K(F) \defeq \sd K(F)$ which is a subcomplex of~$\sd K$. Thus we
 obtain a carrier map $\sd_K\colon K\to\sd K$. Since we can compose
@@ -299,7 +532,8 @@ $K\to\sd^N\!K$ for all $N\in\N$ which we denote by $\sd_K^N$.
 
 \begin{thExample}[barycentric agreement]
     \label{ch2:barycentricagreement}
-    Let $K$ be a simplicial complex and let $N\in\N$. The
+    %
+    \;Let $K$ be a simplicial complex and let~$N\in\N$. The
     \emph{$N$-th barycentric agreement task for the input complex~$K$}
     is the task $\sd_K^N\colon K\to\sd^N K$.
     

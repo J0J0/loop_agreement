@@ -40,6 +40,7 @@
 \usepackage{mymathmisc} % my own mymathmisc.sty
 
 \usepackage{lhs2texheader} % necessary for lhs2TeX
+\let\tt=\ttfamily % because lhs2TeX still uses \tt
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% macro definitions and other things
@@ -233,8 +234,42 @@
 \qqTXqq{and}
 
 
-%% use some tikz libraries
-%\usetikzlibrary{arrows,calc,intersections}
+% use some tikz libraries
+\usetikzlibrary{calc,decorations.pathmorphing,patterns}
+
+% define some tikz styles and colors
+\tikzset{
+        Dpoint/.style={%
+            fill=black, shape=circle, inner sep=1.5pt}
+    ,   Dfill/.style={%
+            fill=#1, opacity=0.2}
+    ,   Dfill/.default={black!20}
+    ,   Svertex/.style={%
+            fill, shape=circle, inner sep=3pt, color=#1}
+    ,   Svertex/.default={Cdarkgreen}
+    ,   Sedge/.style={%
+            draw, line width=2.5pt, rounded corners=4pt, color=#1}
+    ,   Sedge/.default={Cdarkgreen}
+    ,   Lzigzag/.style={%
+            line join=round,
+            decorate, decoration={
+                zigzag,
+                segment length=4,
+                amplitude=.9,post=lineto,
+                post length=2pt
+            }}
+}
+
+\colorlet{Cdarkgreen}{green!80!black}
+
+\pgfdeclarepatternformonly{my north west lines}{%
+    \pgfqpoint{-1pt}{-1pt}}{\pgfqpoint{10pt}{10pt}}{\pgfqpoint{7pt}{7pt}}%
+{
+  \pgfsetlinewidth{0.5pt}
+  \pgfpathmoveto{\pgfqpoint{0pt}{7pt}}
+  \pgfpathlineto{\pgfqpoint{7.1pt}{-0.1pt}}
+  \pgfusepath{stroke}
+}
 
 % xy tip selection (ComputerModern)
 \SelectTips{cm}{}

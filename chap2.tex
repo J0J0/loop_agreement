@@ -92,7 +92,7 @@ is \emph{not} actually~$L$ (but the set of subcomplexes of the latter).
         it is well known that it triangulates the torus~$S^1\times S^1$.
         We define $\Phi_3\colon\Delta^2\to T$ as follows:
         \begin{align*}
-               \emptyset &\mapsto \emptyset
+              \emptyset &\mapsto \{\emptyset\}
             & \{0,1\} &\mapsto T(\{3,5\})
               \\
               \{0\}   &\mapsto T(\{3\})
@@ -273,8 +273,8 @@ is \emph{not} actually~$L$ (but the set of subcomplexes of the latter).
     \label{ch2:fig:carriermaps}
 \end{figure}
 
-In addition to the composition of carrier maps we can also compose carrier maps
-with simplicial maps from both sides. To define that properly, we need
+In addition to the composition of carrier maps we can also define how to compose
+carrier maps with simplicial maps from both sides. To do that properly, we need
 
 \begin{thDef}[image complex under a simplicial map]
     For a simplicial map $f\colon K\to L$ and a subcomplex $K'$ of
@@ -326,15 +326,15 @@ and \emph{protocols} as well as the concept of \emph{task solving}.
     \begin{itemize}
         \item
             Unless mentioned otherwise, a task $\Phi\colon\cI\to\cO$ always
-            maps the empty simplex to the empty subcomplex of~$\cO$ (i.\,e.
-            $\Phi(\emptyset) = \emptyset$).
+            maps the empty simplex to the subcomplex of~$\cO$ containing only
+            the empty simplex (i.\,e. $\Phi(\emptyset) = \{\emptyset\}$).
             
         \item
             The same rule applies mutatis mutandis to protocols.
             
         \item
-            When we describe tasks or protocols, we often ignore the
-            $(-1)$-simplex as part of all complexes. For instance,
+            When we describe tasks or protocols, we occasionally ignore the
+            $(-1)$-simplex as part of some or all complexes. For instance,
             we might write something like $\Phi(F) = \{\{x\}\}$ whereas
             it had to be $\Phi(F) = \{\emptyset,\{x\}\}$ for the
             latter to be a proper simplicial complex. The effect of
@@ -556,8 +556,7 @@ that intuition formal in an appropriate sense.
 
 In \cref{ch2:def:carriermap} we saw how to compose carrier maps,
 which naturally applies to tasks (because a task is just a carrier
-map without further restrictions). Since we would also like to compose
-protocols we prove the following
+map). Since we would also like to compose protocols we prove the following
 
 \begin{thLemma}[composition of strict carrier maps]
     Let $K,L,M$ be simplicial complexes and let $\Phi\colon K\to L$
@@ -572,18 +571,21 @@ protocols we prove the following
     . \]
     By definition of $\Psi\after\Phi$, basic set theory and strictness
     of~$\Psi$ we obtain:
-    \[ (\Psi\after\Phi)(F) \cap (\Psi\after\Phi)(F')
-        \,=
+    \begin{align*}
+    (\Psi\after\Phi)(F) \cap (\Psi\after\Phi)(F')
+        \,&=
         \Bigl( \mkern2mu \bigcup_{G\in\mathrlap{\Phi(F)}} \, \Psi(G) \Bigr)
             \cap \Bigl( \bigcup_{G'\in\mathrlap{\Phi(F')}} \, \Psi(G') \Bigr)
-        \mkern8mu=
+            \\[5pt]
+        &=
         \bigcup_{G\in\Phi(F)} \; \bigcup_{G'\in\Phi(F')}
             \Psi(G\cap G')
-    . \]
+    . \end{align*}
     Since $\Phi(F)$ and $\Phi(F')$ are subcomplexes of~$L$, they contain every
     face of $G\in\Phi(F)$ and $G'\in\Phi(F')$, respectively. In particular,
     $G\cap G'$ is already a simplex of $\Phi(F)\cap\Phi(F')$, which shows the
     non-trivial inclusion of the following equality:
+\pagebreak[2]
     \[ \bigcup_{G\in\Phi(F)} \; \bigcup_{G'\in\Phi(F')} \Psi(G\cap G')
         \quad\surround{\mkern2mu}{=}
         \bigcup_{\tilde G\in\Phi(F)\cap \Phi(F')} \Psi(\tilde G)

@@ -40,7 +40,7 @@ through \emph{shared memory}, every outgoing communication of a process consists
 of \enquote{everything it knows} and reading the memory always happens as an
 \emph{atomic snapshot}. The method of communication does not actually affect
 our model, but Herlihy et~al.~\cite{bookc:herlihyetal13} develop their theory of
-\emph{colorless layered immediate snapshot protocols} and protocols that can be
+\emph{colorless layered immediate snapshot \mbox{protocols}} and protocols that can be
 built from those around the above assumptions, so we include the latter to
 justify our use of so called \emph{barycentric agreement protocols} in the
 following.
@@ -110,6 +110,7 @@ or Spanier~\cite[Ch.~3]{bookc:spanier66}.
             \]
             whenever $K\neq\emptyset$ and $-2$ otherwise.
             
+\pagebreak[2]
         \item
             The simplicial complex $(V,K)$ is called \emph{finite} if
             $\abs{K}$ is finite.
@@ -131,7 +132,6 @@ or Spanier~\cite[Ch.~3]{bookc:spanier66}.
     \end{itemize}
 \end{thDef}
 
-\pagebreak[2]
 \begin{thConvention}
             Instead of $(V,K)$ we mostly speak of a simplicial complex~$K$ where it
             is understood that $V(K)\defeq V = \bigcup K$.

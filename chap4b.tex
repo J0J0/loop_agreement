@@ -310,7 +310,7 @@ We get back to the gluing problem later and start with the identification
 of the surfaces~$S_j$. Assume that $K$ is given as \ensuremath{\Varid{c}\mathbin{::}\Conid{Complex}\;\Varid{a}} and
 that \ensuremath{\Varid{v}\mathbin{::}\Conid{Vertex}\;\Varid{a}} is a vertex of \ensuremath{\Varid{c}}. Then \ensuremath{\Varid{fixSingularity}\;\Varid{v}\;\Varid{c}} returns
 a complex with the singularity at (the vertex corresponding to) \ensuremath{\Varid{v}} resolved.
-This is the implementation of \ensuremath{\Varid{fixSingularity}}:
+This is the implementation of the function \ensuremath{\Varid{fixSingularity}}:
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{5}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -320,38 +320,42 @@ This is the implementation of \ensuremath{\Varid{fixSingularity}}:
 \column{14E}{@{}l@{}}%
 \column{15}{@{}>{\hspre}c<{\hspost}@{}}%
 \column{15E}{@{}l@{}}%
-\column{17}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{18}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{19}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{22}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{23}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{24}{@{}>{\hspre}c<{\hspost}@{}}%
 \column{24E}{@{}l@{}}%
 \column{27}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{28}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{32}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{32E}{@{}l@{}}%
+\column{35}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{fixSingularity}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow \Conid{Vertex}\;\Varid{a}\to \Conid{Complex}\;\Varid{a}\to \Conid{Complex}\;(\Varid{a},\Conid{Int}){}\<[E]%
 \\
-\>[B]{}\Varid{fixSingularity}\;\Varid{v}\;\Varid{c}\mathrel{=}{}\<[E]%
+\>[B]{}\Varid{fixSingularity}\;\Varid{v}\;\Varid{c}\mathrel{=}{}\<[23]%
+\>[23]{}\mathbf{let}\;{}\<[28]%
+\>[28]{}\Varid{f}{}\<[32]%
+\>[32]{}\mathrel{=}{}\<[32E]%
+\>[35]{}\Varid{id}\mathbin{\&\&\&}\Varid{const}\;\mathrm{0}{}\<[E]%
 \\
-\>[B]{}\hsindent{5}{}\<[5]%
-\>[5]{}\mathbf{let}\;{}\<[10]%
-\>[10]{}\Varid{f}{}\<[14]%
-\>[14]{}\mathrel{=}{}\<[14E]%
-\>[17]{}\Varid{id}\mathbin{\&\&\&}\Varid{const}\;\mathrm{0}{}\<[E]%
+\>[28]{}\Varid{c'}{}\<[32]%
+\>[32]{}\mathrel{=}{}\<[32E]%
+\>[35]{}\Varid{complexMap}\;\Varid{f}\;\Varid{c}{}\<[E]%
 \\
-\>[10]{}\Varid{c'}{}\<[14]%
-\>[14]{}\mathrel{=}{}\<[14E]%
-\>[17]{}\Varid{complexMap}\;\Varid{f}\;\Varid{c}{}\<[E]%
+\>[28]{}\Varid{v'}{}\<[32]%
+\>[32]{}\mathrel{=}{}\<[32E]%
+\>[35]{}\Varid{vMap}\;\Varid{f}\;\Varid{v}{}\<[E]%
 \\
-\>[10]{}\Varid{v'}{}\<[14]%
-\>[14]{}\mathrel{=}{}\<[14E]%
-\>[17]{}\Varid{vMap}\;\Varid{f}\;\Varid{v}{}\<[E]%
-\\
-\>[B]{}\hsindent{5}{}\<[5]%
-\>[5]{}\mathbf{in}\;{}\<[9]%
-\>[9]{}\Varid{fixSingularity'}\;\Varid{v'}\;\Varid{c'}{}\<[E]%
+\>[23]{}\mathbf{in}\;{}\<[28]%
+\>[28]{}\Varid{fixSingularity'}\;\Varid{v'}\;\Varid{c'}{}\<[E]%
 \\[\blanklineskip]%
-\>[B]{}\Varid{fixSingularity'}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow \Conid{Vertex}\;(\Varid{a},\Conid{Int})\to \Conid{Complex}\;(\Varid{a},\Conid{Int})\to \Conid{Complex}\;(\Varid{a},\Conid{Int}){}\<[E]%
+\>[B]{}\Varid{fixSingularity'}\mathbin{::}{}\<[21]%
+\>[21]{}(\Conid{Eq}\;\Varid{a})\Rightarrow {}\<[E]%
+\\
+\>[21]{}\Conid{Vertex}\;(\Varid{a},\Conid{Int})\to \Conid{Complex}\;(\Varid{a},\Conid{Int})\to \Conid{Complex}\;(\Varid{a},\Conid{Int}){}\<[E]%
 \\
 \>[B]{}\Varid{fixSingularity'}\;\Varid{v}\;\Varid{c}\mathrel{=}{}\<[E]%
 \\
@@ -368,7 +372,7 @@ This is the implementation of \ensuremath{\Varid{fixSingularity}}:
 \>[15]{}\to {}\<[15E]%
 \>[19]{}\Varid{fixSingularity''}\;\Varid{v}\;\Varid{sSs}\;\Varid{c}{}\<[E]%
 \\[\blanklineskip]%
-\>[B]{}\Varid{fixSingularity''}\mathbin{::}\mbox{\small(type omitted)}{}\<[E]%
+\>[B]{}\Varid{fixSingularity''}\mathbin{::}\mbox{\small(type omitted for readability)}{}\<[E]%
 \\
 \>[B]{}\Varid{fixSingularity''}\;\Varid{v}\;\Varid{sSs}\;\Varid{c}\mathrel{=}{}\<[E]%
 \\
@@ -385,8 +389,8 @@ This is the implementation of \ensuremath{\Varid{fixSingularity}}:
 \>[27]{}\Varid{concatMap}\;(\Varid{replaceStarSummand}\;\Varid{v})\mathbin{\$}[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mskip1.5mu]\mathbin{`\Varid{zip}`}\Varid{sSs'}{}\<[E]%
 \\
 \>[B]{}\hsindent{5}{}\<[5]%
-\>[5]{}\mathbf{in}\;{}\<[9]%
-\>[9]{}(\Varid{c}\mathbin{\char92 \char92 }\Varid{oldSimplices})\mathbin{`\Varid{union}`}\Varid{newSimplices}{}\<[E]%
+\>[5]{}\mathbf{in}\;{}\<[10]%
+\>[10]{}(\Varid{c}\mathbin{\char92 \char92 }\Varid{oldSimplices})\cup\Varid{newSimplices}{}\<[E]%
 \\[\blanklineskip]%
 \>[B]{}\\[-1.2\baselineskip]{}\<[E]%
 \\[\blanklineskip]%
@@ -409,10 +413,13 @@ This is the implementation of \ensuremath{\Varid{fixSingularity}}:
 \>[5]{}\hsindent{4}{}\<[9]%
 \>[9]{}\Varid{s}\mathbin{:\char95 }{}\<[14]%
 \>[14]{}\to {}\<[14E]%
-\>[18]{}\mathbf{let}\;{}\<[23]%
-\>[23]{}\Varid{summand}\mathrel{=}\Varid{dfsSimplices}\;\Varid{st}\;\Varid{s}{}\<[E]%
+\>[18]{}\mathbf{let}{}\<[E]%
 \\
-\>[23]{}\Varid{st'}\mathrel{=}\Varid{st}\mathbin{\char92 \char92 }\Varid{summand}{}\<[E]%
+\>[18]{}\hsindent{4}{}\<[22]%
+\>[22]{}\Varid{summand}\mathrel{=}\Varid{dfsSimplices}\;\Varid{st}\;\Varid{s}{}\<[E]%
+\\
+\>[18]{}\hsindent{4}{}\<[22]%
+\>[22]{}\Varid{st'}\mathrel{=}\Varid{st}\mathbin{\char92 \char92 }\Varid{summand}{}\<[E]%
 \\
 \>[18]{}\mathbf{in}\;{}\<[22]%
 \>[22]{}\Varid{summand}\mathbin{:}\Varid{findSummands}\;\Varid{st'}{}\<[E]%
@@ -487,14 +494,18 @@ Put together, the above discussion provides the desired identification of the
 closed surfaces~$S_j$. The function
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{baseSurfaces}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow \Conid{Complex}\;\Varid{a}\to [\mskip1.5mu \Conid{Surface}\mskip1.5mu]{}\<[E]%
 \\
-\>[B]{}\Varid{baseSurfaces}\mathrel{=}\Varid{map}\;\Varid{identifySurface}\mathbin{\circ}\Varid{connectedComponents}\mathbin{\circ}\Varid{fixAllSingularities}{}\<[E]%
+\>[B]{}\Varid{baseSurfaces}\mathrel{=}{}\<[E]%
+\\
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\Varid{map}\;\Varid{identifySurface}\mathbin{\circ}\Varid{connectedComponents}\mathbin{\circ}\Varid{fixAllSingularities}{}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
-composes the functions we met before (or a slight variation in case of
-\ensuremath{\Varid{fixAllSingularities}}). It takes a complex and yields a list of surfaces,
+composes the functions we met before (respectively a slight variation in case
+of \ensuremath{\Varid{fixAllSingularities}}). It takes a complex and yields a list of surfaces,
 the~$S_j$ for the particular complex. For instance, assume that \ensuremath{\Varid{tor}} is a
 complex that triangulates the torus, \ensuremath{\mathbin{\#}} denotes connected sum and \ensuremath{\mathbin{\char92 /}}
 denotes wedge sum. Then we have:\begin{hscode}\SaveRestoreHook
@@ -533,14 +544,15 @@ In our implementation we use the following types to store the multigraph
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{21}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{24}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{24}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{24E}{@{}l@{}}%
 \column{25}{@{}>{\hspre}c<{\hspost}@{}}%
 \column{25E}{@{}l@{}}%
-\column{26}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{27}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{28}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{39}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{39E}{@{}l@{}}%
-\column{43}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{40}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{40E}{@{}l@{}}%
+\column{44}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\mathbf{type}\;\Conid{GluingGraphD}{}\<[25]%
 \>[25]{}\mathrel{=}{}\<[25E]%
@@ -561,20 +573,22 @@ In our implementation we use the following types to store the multigraph
 \\
 \>[B]{}\mathbf{data}\;\Conid{GluedD}\;\Varid{a}\mathrel{=}\Conid{GluedD}\;\{\mskip1.5mu {}\<[E]%
 \\
-\>[B]{}\hsindent{26}{}\<[26]%
-\>[26]{}\Varid{glGraphD}{}\<[39]%
-\>[39]{}\mathbin{::}{}\<[39E]%
-\>[43]{}\Conid{GluingGraphD}{}\<[E]%
+\>[B]{}\hsindent{27}{}\<[27]%
+\>[27]{}\Varid{glGraphD}{}\<[40]%
+\>[40]{}\mathbin{::}{}\<[40E]%
+\>[44]{}\Conid{GluingGraphD}{}\<[E]%
 \\
 \>[B]{}\hsindent{24}{}\<[24]%
-\>[24]{},\Varid{glVertices}{}\<[39]%
-\>[39]{}\mathbin{::}{}\<[39E]%
-\>[43]{}\Conid{GluedVertices}\;\Varid{a}{}\<[E]%
+\>[24]{},{}\<[24E]%
+\>[27]{}\Varid{glVertices}{}\<[40]%
+\>[40]{}\mathbin{::}{}\<[40E]%
+\>[44]{}\Conid{GluedVertices}\;\Varid{a}{}\<[E]%
 \\
 \>[B]{}\hsindent{24}{}\<[24]%
-\>[24]{},\Varid{glComplexes}{}\<[39]%
-\>[39]{}\mathbin{::}{}\<[39E]%
-\>[43]{}\Conid{GluedComplexes}\;\Varid{a}\mskip1.5mu\}{}\<[E]%
+\>[24]{},{}\<[24E]%
+\>[27]{}\Varid{glComplexes}{}\<[40]%
+\>[40]{}\mathbin{::}{}\<[40E]%
+\>[44]{}\Conid{GluedComplexes}\;\Varid{a}\mskip1.5mu\}{}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
 \ensuremath{\Conid{GluingGraphD}} represents the function $e$; a node (of either type) is an \ensuremath{\Conid{Int}}
@@ -635,9 +649,9 @@ accompanying helpers):
 \\[\blanklineskip]%
 \>[B]{}\Varid{isGluedV}\mathbin{::}\Conid{Vertex}\;(\Varid{a},\Conid{Int})\to \Conid{Bool}{}\<[E]%
 \\
-\>[B]{}\Varid{isGluedV}\;(\Conid{Vertex}\;(\anonymous ,\Varid{t}))\mathrel{=}\Varid{t}\not\equiv \mathrm{0}{}\<[E]%
+\>[B]{}\Varid{isGluedV}\;(\Conid{Vertex}\;(\anonymous ,\Varid{t}))\mathrel{=}\Varid{t}\neq\mathrm{0}{}\<[E]%
 \\[\blanklineskip]%
-\>[B]{}\Varid{addGluingData}\mathbin{::}\mbox{\small(type omitted)}{}\<[E]%
+\>[B]{}\Varid{addGluingData}\mathbin{::}\mbox{\small(type omitted for readability)}{}\<[E]%
 \\
 \>[B]{}\Varid{addGluingData}\;\Varid{vsi}\;\Varid{j}\;\Varid{comp}\;\Varid{m}\mathrel{=}{}\<[E]%
 \\
@@ -700,7 +714,7 @@ even use the \emph{graphviz} library\footnote{%
 named software\footnote{\href{http://www.graphviz.org/}{%
 \url{www.graphviz.org}}})
 to export a nice figure of the gluing graph to a png file,
-respectively draw the graph on the screen (using an X11 windowing
+respectively to draw the graph on the screen (using an X11 windowing
 system). For example, let \ensuremath{\Varid{tor}} be as above and let \ensuremath{\Varid{ptor}} be a complex that
 triangulates the \emph{pinched torus} (i.\,e. $(S^1\times S^1)/
 (\{[0]\}\times S^1)$ or, alternatively, a $2$-sphere with two
@@ -715,40 +729,44 @@ draws the multigraph in \cref{ch4:fig:gluinggraph}.
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.3\textwidth]{figs/gluinggraph}
+    \includegraphics[width=0.55\textwidth]{figs/gluinggraph}
     \caption{Example of a gluing graph}
     \label{ch4:fig:gluinggraph}
 \end{figure}
 
-\begin{table}[h]\centering
-\begin{tabular}{lp{7cm}}
+\begin{table}[ht]
+\centering
+\begin{tabular}{lp{4.5cm}}
     \textbf{module} & \textbf{types and functions}
     \\[4pt]
-    \text{\tt SimplicialComplex} & \ensuremath{\Conid{Vertex}}, \ensuremath{\Conid{Simplex}}, \ensuremath{\Conid{Complex}},          \newline
-                          \ensuremath{\Varid{connectedComponents}}, \ensuremath{\Varid{dfsSimplices}},   \newline
+    \text{\tt SimplicialComplex} & \ensuremath{\Conid{Vertex}}, \ensuremath{\Conid{Simplex}}, \ensuremath{\Conid{Complex}},   \newline
+                          \ensuremath{\Varid{connectedComponents}},            \newline
+                          \ensuremath{\Varid{dfsSimplices}},                   \newline
                           \ensuremath{\Varid{parentSimplices}}
     \\[3pt]
-    \text{\tt TwoDimPseudoManifold} & \ensuremath{\Varid{baseSurfaces}},                               \newline
-                             \ensuremath{\Varid{fixSingularity}} etc., \ensuremath{\Varid{fixAllSingularities}}, \newline
+    \text{\tt TwoDimPseudoManifold} & \ensuremath{\Varid{baseSurfaces}},            \newline
+                             \ensuremath{\Varid{fixSingularity}} etc.,     \newline
+                             \ensuremath{\Varid{fixAllSingularities}},     \newline
                              \ensuremath{\Varid{starSummands}} etc.
     \\[3pt]
     \text{\tt TwoDimManifold} & \ensuremath{\Varid{identifySurface}}
     \\[3pt]
     \text{\tt Surface} & \ensuremath{\Conid{Surface}}
     \\[3pt]
-    \text{\tt TwoDimPseudoManifold\char46{}GluingGraph} \quad & \ensuremath{\Conid{GluedD}} etc.,           \newline
-                                               \ensuremath{\Varid{gluingGraph}} etc.       \newline
-                                               \ensuremath{\Varid{gluingGraphSurf}} etc.
+    \text{\tt TwoDimPseudoManifold\char46{}GluingGraph}
+        \hspace*{0.8cm}                 & \ensuremath{\Conid{GluedD}} etc.,           \newline
+                                          \ensuremath{\Varid{gluingGraph}} etc.       \newline
+                                          \ensuremath{\Varid{gluingGraphSurf}} etc.
     \\[3pt]
-    \text{\tt TwoDimPseudoManifold\char46{}GraphViz} & \ensuremath{\Varid{writeGluingGraph}}, \ensuremath{\Varid{visualizeGluingGraph}}
+    \text{\tt TwoDimPseudoManifold\char46{}GraphViz} & \ensuremath{\Varid{writeGluingGraph}},       \newline
+                                      \ensuremath{\Varid{visualizeGluingGraph}}
 \end{tabular}
 \caption{Correspondence between presented functions and modules}
 \label{ch4:tab:funcs1}
 \end{table}
 
 
-
-\section{Loop Agreement Tasks on 2-dimensional Pseudomanifolds}
+\section{Loop Agreement Tasks on Two-dimensional Pseudomanifolds}
 \label{ch4:sec:latonpmfd}
 Lastly, we consider loop agreement tasks on finite weak $2$-pseudomanifolds.
 We show that the \emph{word problem} for fundamental groups of such $2$-pseudomanifolds
@@ -766,7 +784,7 @@ Then the following proposition is a consequence of this fact and
     \label{ch4:wordproblem}
     %
     The word problem for the fundamental group of a $2$-dimensional finite weak
-    pseudomanifold is solvable.
+    pseudo\-manifold (based at any vertex) is solvable.
 \end{thProposition}
 
 \begin{proofsketch}
@@ -777,24 +795,26 @@ Then the following proposition is a consequence of this fact and
     \]
     by the Seifert-van-Kampen theorem (where the wedge of complexes is defined
     in the obvious way). Secondly, let $K$ be a finite weak $2$-pseudomanifold
-    and let $K'$ be the resulting complex after identifying two distinct vertices
-    $v_1,v_2$ of $K$ to a single vertex~$v'$. Then we have
+    and let $v_1,v_2$ be vertices of $K$ that have disjoint stars.
+    Let $K'$ be the resulting complex after identifying $v_1$ and $v_2$ to a
+    single vertex $v'$. Then we have
     \[ \pi_1(K',v') \cong \pi_1(K,v_1) \ast \Z , \]
     as can be seen by using the standard construction of the fundamental group
     of a simplicial complex in terms of generators and relations (see e.\,g.
     Herlihy~et~al.~\cite[Subsec.~15.1.2]{bookc:herlihyetal13}
     for the latter).
 
-    Now let $K$ be a finite weak $2$-pseudomanifold and let $v\in V(K)$.
+    Now let $K$ be a finite weak $2$-pseudomanifold, let $v\in V(K)$
+    and assume without loss of generality that $K$ is connected.
     By \cref{ch4:pmfdclass} and an inductive application of the above arguments
     we see that $\pi_1(K,v)$ is isomorphic to a free product of the form
     \[ \pi_1(S_1,x_1) \ast \cdots \ast \pi_1(S_k,x_k)
         \ast \underbrace{\Z \ast \cdots \ast \Z}_{\ell\text{ times}}
     \]
     where $S_1,\dots,S_k$ are the closed surfaces of \cref{ch4:pmfdclass},
-    $s_j\in S_j$ for all $j\in\setOneto k$, and $\ell\in\N$.
-    A reduced word $x_1x_2\dots x_r$ in such a free product is the identity
-    element if and only if each $x_j$ is the idendity element in its corresponding group.
+    $x_j\in S_j$ for all $j\in\setOneto k$, and $\ell\in\N$.
+    A reduced word $g_1g_2\dots g_r$ in such a free product is the identity
+    element if and only if each $g_j$ is the idendity element in its corresponding group.
     Since we know how to solve the word problem for each free factor
     of~$\pi_1(K,v)$, we also know how to solve it for $\pi_1(K,v)$ itself.
     \\
@@ -859,12 +879,13 @@ result of type \begin{hscode}\SaveRestoreHook
 \>[3]{}(\Conid{GluedObj}\;\Conid{Scheme},\Conid{LoopS}){}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
-where a \ensuremath{\Conid{Scheme}} is just a labelling scheme of a polygon and a \ensuremath{\Conid{LoopS}}
-is a representation of our input loop in terms of the symbols used in those
-schemes.
+where a \ensuremath{\Conid{Scheme}} is just a labelling scheme of a polygon, \ensuremath{\Conid{GluedObj}\;\Conid{Scheme}}
+stores the schemes for our surfaces~$S_j$ (of \cref{ch4:pmfdclass})
+and a \ensuremath{\Conid{LoopS}} is a representation of our input loop in terms of the symbols
+used in those schemes.
 As an example, consider the wedge of two tori. Then the first component of the
 above tuple would contain the labelling schemes $aba^{-1}b^{-1}$ and
-$cdc^{-1}d^{-1}$, and the second component would be any word in the letters
+$cdc^{-1}d^{-1}$ and the second component would be any word in the letters
 $\{a,b,c,d\}$ and their formal inverses. For instance,
 $abcdc^{-1}d^{-1}a^{-1}b^{-1}$ would specify a contractible loop.
 
@@ -882,6 +903,6 @@ word that cannot be further simplified. Depending on the involved surfaces
 $\{\text{\ensuremath{\Conid{Sphere}}}, \text{\ensuremath{\Conid{Torus}}}, \text{\ensuremath{\Conid{PrPlane}}}, \text{\ensuremath{\Conid{KleinB}}}\}$)
 and \ensuremath{\Varid{dehnAlg}} to solve the word problem.
 
-The implementation of Dehn's algorithm can be found in the module
-\text{\tt DehnAlgorithm} and all other functions of this section are defined
-in \text{\tt TwoDimPseudoManifold\char46{}Loop}.
+The implementation of Dehn's algorithm and the function \ensuremath{\Varid{dehnAlg}} can be found
+in the module \text{\tt DehnAlgorithm} and all other functions of this section are
+defined in \text{\tt TwoDimPseudoManifold\char46{}Loop}.

@@ -9,7 +9,7 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[english]{babel}
+\usepackage[main=english,ngerman]{babel}
 
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -250,14 +250,14 @@
     ,   Sedge/.style={%
             draw, line width=2.5pt, rounded corners=4pt, color=#1}
     ,   Sedge/.default={Cdarkgreen}
-    ,   Lzigzag/.style={%
-            line join=round,
-            decorate, decoration={
-                zigzag,
-                segment length=4,
-                amplitude=.9,post=lineto,
-                post length=2pt
-            }}
+%    ,   Lzigzag/.style={%
+%            line join=round,
+%            decorate, decoration={
+%                zigzag,
+%                segment length=4,
+%                amplitude=.9,post=lineto,
+%                post length=2pt
+%            }}
 }
 
 \colorlet{Cdarkgreen}{green!80!black}
@@ -301,7 +301,7 @@
 \begin{document}
 
 \input{titlepage}
-\mbox{}\thispagestyle{empty}\newpage
+\cleardoublepage
 
 \pdfbookmark[1]{\contentsname}{toc}
 \tableofcontents
@@ -314,8 +314,9 @@
 \input{chap4b}
 
 \appendix
-\printbibliography\newpage
-\mbox{}\thispagestyle{empty}
+\cleardoublepage
+\printbibliography
+\cleardoublepage
 \input{statement_of_authorship}
 
 \end{document}

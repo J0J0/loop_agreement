@@ -1,12 +1,12 @@
 \chapter{Two-dimensional Pseudomanifolds}
-\section{Classification of finite 2-dimensional Pseudomanifolds}
+\section{Classification of Finite Two-dimensional Pseudomanifolds}
 \begin{thDef}[(weak) pseudomanifold]
     \label{ch4:def:pseudomanifold}
     Let $n\in\N$. 
     \begin{itemize}
         \item
             An \emph{$n$-dimensional weak pseudomanifold (without boundary)}
-            (or \emph{weak $n$-pseudomanifold}) is a simplicial complex~$K$
+            (or \emph{weak $n$-pseudo\-manifold}) is a simplicial complex~$K$
             of dimension~$n$ satisfying the following properties:
             \begin{itemize}
                 \item
@@ -37,9 +37,65 @@ if $\supp(x)$ is an $n$- or $(n{-}1)$-simplex of~$K$,
 we can find a neighborhood of~$x$ that is homeomorphic
 to~$\R^n$. On the other hand, if the dimension of~$\supp(x)$
 is less than~$n{-}1$, singularities can occur at~$x$.
-% TODO: add example
 Thus, the geometric realization of~$K$ partially behaves like a manifold but may
-fail to be locally euclidean at some points, hence the name \emph{pseudo}manifold.
+fail to be locally euclidean at some points, hence the name \emph{pseudo}manifold
+(see \cref{ch4:fig:pseudomanifold}).
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}[scale=1.75]
+        \newcommand{\stdsimplex}{%
+            \begin{scope}[Dfill]
+                \fill
+                    (A) -- (B) -- (C) -- cycle;
+                \fill
+                    (A) -- (B) -- (D) -- cycle;
+                \fill [opacity=0.85]
+                    (A) -- (D) -- (C) -- cycle;
+                \fill
+                    (B) -- (C) -- (D) -- cycle;
+            \end{scope}
+            %
+            \path
+                (A) node [Dpoint] {} --
+                (B) node [Dpoint] {} --
+                (C) node [Dpoint] {} -- cycle
+                (D) node [Dpoint] {};
+            %     
+            \draw
+                (A) -- (D) -- (C) -- cycle
+                (D) -- (C) -- (B) -- cycle ;
+            \draw [dashed]
+                (A) -- (B) ;
+        }
+        %
+        \begin{scope}[shift={(-1,0)}]
+            \coordinate (A) at (0,0,1);
+            \coordinate (B) at (1,0,0);
+            \coordinate (C) at (0,0.8,0);
+            \coordinate (D) at (1.2,0,1.8);
+            %
+            \stdsimplex
+        \end{scope}
+        %
+        \begin{scope}[shift={(1,0)},xscale=-1]
+            \coordinate (A) at (-0.3,0.2,0.5);
+            \coordinate (B) at (1,0,0);
+            \coordinate (C) at (0.1,0.8,0);
+            \coordinate (D) at (0.8,0.15,1.5);
+            %
+            \stdsimplex
+        \end{scope}
+        %
+        \path
+            (0,0,0) node [Svertex, inner sep=5pt, opacity=0.4] {} 
+                    node [Dpoint] {} ;
+        %
+    \end{tikzpicture}
+    \caption{Example of a $2$-dimensional pseudomanifold where the highlighted 
+             vertex does \emph{not} have a euclidean neighborhood}
+    \label{ch4:fig:pseudomanifold}
+\end{figure}
 
 \begin{thRemark}[(weak) pseudomanifolds with boundary and manifold protocols]
     If we replace the second property in \cref{ch4:def:pseudomanifold} by
@@ -166,3 +222,5 @@ of a vertex:
     quotient map.
     \\
 \end{proof}
+
+\vfill % !!! layout hack

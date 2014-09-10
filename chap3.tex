@@ -170,14 +170,14 @@ the domain space is the geometric realization of a finite, $2$-dimensional
 simplicial complex is in fact induced by a continuous map and how that affects
 \emph{maps between algebraic signatures}.
 
-\begin{thDef}[topological loop associated to a triangle loop]
+\begin{thDef}[topological loop associated to a triangle loop]\hfill
     \label{ch3:def:assoctopoloop}
     %
-    Let $K\in\finSimp$.
+    Let $K\in\finSimp$, let $c=(v_0,\dots,v_n)$ be a cycle in~$K$,
+    and let $\kappa=\ppp$ be a triangle loop in~$K$.
     \begin{itemize}
         \item
-            Let $c=(v_0,\dots,v_n)$ be a cycle in~$K$ and for
-            $j\in\setZeroto{n-1}$ let $i_j\colon\geom{\{v_j,v_{j+1}\}} 
+            For $j\in\setZeroto{n-1}$ let $i_j\colon\geom{\{v_j,v_{j+1}\}}
             \hookrightarrow\geom K$ be the canonical inclusion.
             The \emph{(topological) loop~$\gamma_c$ associated to~$c$} is the
             (well-defined) injective continuous map
@@ -188,8 +188,8 @@ simplicial complex is in fact induced by a continuous map and how that affects
             . \]
             
         \item
-            Let $\kappa=\ppp$ be a triangle loop in~$K$. The \emph{(topological)
-            loop~$\gamma_\kappa$ associated to~$\kappa$} is
+            The \emph{(topological) loop~$\gamma_\kappa$ associated to~$\kappa$}
+            is
             \[ \gamma_\kappa \defeq \gamma_{p_0\ast p_1\ast p_2}  . \]
     \end{itemize}
 \end{thDef}
@@ -345,10 +345,10 @@ however, we have the following
     If $f$ is a map as above, the induced homomorphism~$\pi_1(f)$ yields
     the map of algebraic signatures as required. Conversely, let $\phi$
     be such a map of algebraic signatures. By \cref{ch3:continuousrealization}
-    there exists a map $f'\colon\geom K\to\geom L$ such that $\pi_1(f')=\phi$.
+    there exists a map $f'\colon\geom K\to\geom L$ with $\pi_1(f')=\phi$.
     Then the loop~$f'\after\gamma_\kappa$ is, by assumption, pointed homotopic
-    to~$\gamma_\lambda$; let $h\colon S^1\times[0,1]\to\geom L$ be such a
-    pointed homotopy. By definition of~$\gamma_\kappa$ we see, that
+    to~$\gamma_\lambda$; let the map $h\colon S^1\times[0,1]\to\geom L$ be such
+    a pointed homotopy. By definition of~$\gamma_\kappa$ we see, that
     $\gamma_\kappa$ defines a homeomorphism between $S^1$ and a
     ($1$-dimensional) subcomplex of~$\geom L$, hence $\gamma_\kappa$
     is a (pointed) cofibration \pcref{ch1:inclcofibration}.
@@ -476,7 +476,8 @@ is immediate from the definition) and so the theorem makes sense as stated.
         }
     \]
     (which can be seen by inspection of the definitions).
-    Furthermore, since $f\after(\sd_K^N\after\Loop{K,\kappa})$ is
+    Furthermore, since the carrier map
+    $f\after(\sd_K^N\after\Loop{K,\kappa})$ is
     carried by~$\Loop{L,\lambda}$, every simplex of~$\sd_K^N(K(p_j))$
     is mapped into~$L(q_j)$ by~$f$ and likewise for the corresponding
     geometric simplices. It follows that

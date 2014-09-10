@@ -1,4 +1,6 @@
 %include polycode.fmt
+%format `union` = "\cup"
+%format /= = "\neq"
 
 \section{Implementation in Haskell}
 \label{ch4:sec:implementation}
@@ -49,27 +51,27 @@ We get back to the gluing problem later and start with the identification
 of the surfaces~$S_j$. Assume that $K$ is given as |c :: Complex a| and
 that |v :: Vertex a| is a vertex of |c|. Then |fixSingularity v c| returns
 a complex with the singularity at (the vertex corresponding to) |v| resolved.
-This is the implementation of |fixSingularity|:
+This is the implementation of the function |fixSingularity|:
 \begin{code}
 fixSingularity :: (Eq a) => Vertex a -> Complex a -> Complex (a, Int)
-fixSingularity v c =
-    let  f   =  id &&& const 0
-         c'  =  complexMap f c
-         v'  =  vMap f v
-    in  fixSingularity' v' c'
+fixSingularity v c =  let  f   =  id &&& const 0
+                           c'  =  complexMap f c
+                           v'  =  vMap f v
+                      in   fixSingularity' v' c'
  
-fixSingularity' :: (Eq a) => Vertex (a, Int) -> Complex (a, Int) -> Complex (a, Int)
+fixSingularity' ::  (Eq a) =>
+                    Vertex (a, Int) -> Complex (a, Int) -> Complex (a, Int)
 fixSingularity' v c =
     case starSummands v c of
         _:[]  ->  c
         sSs   ->  fixSingularity'' v sSs c
 
-fixSingularity'' :: {-"\mbox{\small(type omitted)}"-}
+fixSingularity'' :: {-"\mbox{\small(type omitted for readability)}"-}
 fixSingularity'' v sSs c =
     let  sSs' = map (parentSimplices [v] . generatedBy) sSs
          oldSimplices  =  [v] : concatMap (delete [v]) sSs'
          newSimplices  =  concatMap (replaceStarSummand v) $ [1..] `zip` sSs'
-    in  (c \\ oldSimplices) `union` newSimplices
+    in   (c \\ oldSimplices) `union` newSimplices
 
 {-"\\[-1.2\baselineskip]"-}
 
@@ -80,8 +82,9 @@ findSummands :: Complex a -> StarSummands a
 findSummands st =
     case filter (isNSimplex 2) st of
         []   ->  []
-        s:_  ->  let  summand = dfsSimplices st s
-                      st' = st \\ summand
+        s:_  ->  let
+                     summand = dfsSimplices st s
+                     st' = st \\ summand
                  in  summand : findSummands st'
 \end{code}
 To be able to split a vertex into multiple copies (like in the proof of
@@ -133,10 +136,11 @@ Put together, the above discussion provides the desired identification of the
 closed surfaces~$S_j$. The function
 \begin{code}
 baseSurfaces :: (Eq a) => Complex a -> [Surface]
-baseSurfaces = map identifySurface . connectedComponents . fixAllSingularities
+baseSurfaces =
+    map identifySurface . connectedComponents . fixAllSingularities
 \end{code}
-composes the functions we met before (or a slight variation in case of
-|fixAllSingularities|). It takes a complex and yields a list of surfaces,
+composes the functions we met before (respectively a slight variation in case
+of |fixAllSingularities|). It takes a complex and yields a list of surfaces,
 the~$S_j$ for the particular complex. For instance, assume that |tor| is a
 complex that triangulates the torus, |#| denotes connected sum and |\/|
 denotes wedge sum. Then we have:
@@ -169,9 +173,9 @@ type GluedObj o         =  LM.Map Int o
 type GluedVertices  a   =  GluedObj (Vertex a)
 type GluedComplexes a   =  GluedObj (Complex (a, Int))
 data GluedD a = GluedD {  
-                         glGraphD     ::  GluingGraphD
-                       , glVertices   ::  GluedVertices a
-                       , glComplexes  ::  GluedComplexes a }
+                          glGraphD     ::  GluingGraphD
+                       ,  glVertices   ::  GluedVertices a
+                       ,  glComplexes  ::  GluedComplexes a }
 \end{code}
 |GluingGraphD| represents the function $e$; a node (of either type) is an |Int|
 which is mapped by |GluedVertices| and |GluedComplexes| to the corresponding
@@ -195,7 +199,7 @@ gluingGraphFromFixed c =
 isGluedV :: Vertex (a, Int) -> Bool
 isGluedV (Vertex (_,t)) = t /= 0
 
-addGluingData :: {-"\mbox{\small(type omitted)}"-}
+addGluingData :: {-"\mbox{\small(type omitted for readability)}"-}
 addGluingData vsi j comp m =
     foldr (\ v -> M.insertWith (+) (toId v,j) 1) m gluedToVs
         where
@@ -224,7 +228,7 @@ even use the \emph{graphviz} library\footnote{%
 named software\footnote{\href{http://www.graphviz.org/}{%
 \url{www.graphviz.org}}})
 to export a nice figure of the gluing graph to a png file,
-respectively draw the graph on the screen (using an X11 windowing
+respectively to draw the graph on the screen (using an X11 windowing
 system). For example, let |tor| be as above and let |ptor| be a complex that
 triangulates the \emph{pinched torus} (i.\,e. $(S^1\times S^1)/
 (\{[0]\}\times S^1)$ or, alternatively, a $2$-sphere with two
@@ -234,40 +238,44 @@ draws the multigraph in \cref{ch4:fig:gluinggraph}.
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.3\textwidth]{figs/gluinggraph}
+    \includegraphics[width=0.55\textwidth]{figs/gluinggraph}
     \caption{Example of a gluing graph}
     \label{ch4:fig:gluinggraph}
 \end{figure}
 
-\begin{table}[h]\centering
-\begin{tabular}{lp{7cm}}
+\begin{table}[ht]
+\centering
+\begin{tabular}{lp{4.5cm}}
     \textbf{module} & \textbf{types and functions}
     \\[4pt]
-    @SimplicialComplex@ & |Vertex|, |Simplex|, |Complex|,          \newline
-                          |connectedComponents|, |dfsSimplices|,   \newline
+    @SimplicialComplex@ & |Vertex|, |Simplex|, |Complex|,   \newline
+                          |connectedComponents|,            \newline
+                          |dfsSimplices|,                   \newline
                           |parentSimplices|
     \\[3pt]
-    @TwoDimPseudoManifold@ & |baseSurfaces|,                               \newline
-                             |fixSingularity| etc., |fixAllSingularities|, \newline
+    @TwoDimPseudoManifold@ & |baseSurfaces|,            \newline
+                             |fixSingularity| etc.,     \newline
+                             |fixAllSingularities|,     \newline
                              |starSummands| etc.
     \\[3pt]
     @TwoDimManifold@ & |identifySurface|
     \\[3pt]
     @Surface@ & |Surface|
     \\[3pt]
-    @TwoDimPseudoManifold.GluingGraph@ \quad & |GluedD| etc.,           \newline
-                                               |gluingGraph| etc.       \newline
-                                               |gluingGraphSurf| etc.
+    @TwoDimPseudoManifold.GluingGraph@
+        \hspace*{0.8cm}                 & |GluedD| etc.,           \newline
+                                          |gluingGraph| etc.       \newline
+                                          |gluingGraphSurf| etc.
     \\[3pt]
-    @TwoDimPseudoManifold.GraphViz@ & |writeGluingGraph|, |visualizeGluingGraph|
+    @TwoDimPseudoManifold.GraphViz@ & |writeGluingGraph|,       \newline
+                                      |visualizeGluingGraph|
 \end{tabular}
 \caption{Correspondence between presented functions and modules}
 \label{ch4:tab:funcs1}
 \end{table}
 
 
-
-\section{Loop Agreement Tasks on 2-dimensional Pseudomanifolds}
+\section{Loop Agreement Tasks on Two-dimensional Pseudomanifolds}
 \label{ch4:sec:latonpmfd}
 Lastly, we consider loop agreement tasks on finite weak $2$-pseudomanifolds.
 We show that the \emph{word problem} for fundamental groups of such $2$-pseudomanifolds
@@ -285,7 +293,7 @@ Then the following proposition is a consequence of this fact and
     \label{ch4:wordproblem}
     %
     The word problem for the fundamental group of a $2$-dimensional finite weak
-    pseudomanifold is solvable.
+    pseudo\-manifold (based at any vertex) is solvable.
 \end{thProposition}
 
 \begin{proofsketch}
@@ -296,24 +304,26 @@ Then the following proposition is a consequence of this fact and
     \]
     by the Seifert-van-Kampen theorem (where the wedge of complexes is defined
     in the obvious way). Secondly, let $K$ be a finite weak $2$-pseudomanifold
-    and let $K'$ be the resulting complex after identifying two distinct vertices
-    $v_1,v_2$ of $K$ to a single vertex~$v'$. Then we have
+    and let $v_1,v_2$ be vertices of $K$ that have disjoint stars.
+    Let $K'$ be the resulting complex after identifying $v_1$ and $v_2$ to a
+    single vertex $v'$. Then we have
     \[ \pi_1(K',v') \cong \pi_1(K,v_1) \ast \Z , \]
     as can be seen by using the standard construction of the fundamental group
     of a simplicial complex in terms of generators and relations (see e.\,g.
     Herlihy~et~al.~\cite[Subsec.~15.1.2]{bookc:herlihyetal13}
     for the latter).
 
-    Now let $K$ be a finite weak $2$-pseudomanifold and let $v\in V(K)$.
+    Now let $K$ be a finite weak $2$-pseudomanifold, let $v\in V(K)$
+    and assume without loss of generality that $K$ is connected.
     By \cref{ch4:pmfdclass} and an inductive application of the above arguments
     we see that $\pi_1(K,v)$ is isomorphic to a free product of the form
     \[ \pi_1(S_1,x_1) \ast \cdots \ast \pi_1(S_k,x_k)
         \ast \underbrace{\Z \ast \cdots \ast \Z}_{\ell\text{ times}}
     \]
     where $S_1,\dots,S_k$ are the closed surfaces of \cref{ch4:pmfdclass},
-    $s_j\in S_j$ for all $j\in\setOneto k$, and $\ell\in\N$.
-    A reduced word $x_1x_2\dots x_r$ in such a free product is the identity
-    element if and only if each $x_j$ is the idendity element in its corresponding group.
+    $x_j\in S_j$ for all $j\in\setOneto k$, and $\ell\in\N$.
+    A reduced word $g_1g_2\dots g_r$ in such a free product is the identity
+    element if and only if each $g_j$ is the idendity element in its corresponding group.
     Since we know how to solve the word problem for each free factor
     of~$\pi_1(K,v)$, we also know how to solve it for $\pi_1(K,v)$ itself.
     \\
@@ -368,12 +378,13 @@ to explain the corresponding functions |schemesWL| and |normalize|
 in detail here. After applying those functions, we get an intermediate
 result of type 
 > (GluedObj Scheme, LoopS)
-where a |Scheme| is just a labelling scheme of a polygon and a |LoopS|
-is a representation of our input loop in terms of the symbols used in those
-schemes.
+where a |Scheme| is just a labelling scheme of a polygon, |GluedObj Scheme|
+stores the schemes for our surfaces~$S_j$ (of \cref{ch4:pmfdclass})
+and a |LoopS| is a representation of our input loop in terms of the symbols
+used in those schemes.
 As an example, consider the wedge of two tori. Then the first component of the
 above tuple would contain the labelling schemes $aba^{-1}b^{-1}$ and
-$cdc^{-1}d^{-1}$, and the second component would be any word in the letters
+$cdc^{-1}d^{-1}$ and the second component would be any word in the letters
 $\{a,b,c,d\}$ and their formal inverses. For instance,
 $abcdc^{-1}d^{-1}a^{-1}b^{-1}$ would specify a contractible loop.
 
@@ -386,6 +397,6 @@ word that cannot be further simplified. Depending on the involved surfaces
 $\{\text{|Sphere|}, \text{|Torus|}, \text{|PrPlane|}, \text{|KleinB|}\}$)
 and |dehnAlg| to solve the word problem.
 
-The implementation of Dehn's algorithm can be found in the module
-@DehnAlgorithm@ and all other functions of this section are defined
-in @TwoDimPseudoManifold.Loop@.
+The implementation of Dehn's algorithm and the function |dehnAlg| can be found
+in the module @DehnAlgorithm@ and all other functions of this section are
+defined in @TwoDimPseudoManifold.Loop@.

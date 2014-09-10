@@ -31,7 +31,7 @@ cannot wait for another process. It has to do its computation in a finite number
 of steps with whatever information it got up to that point. Therefore, such
 programs are called \emph{wait-free}. This also includes the problem of
 \enquote{crashed processes} (processes that halted prematurely, e.\,g. due to
-a hardware malfunction), because in a wait-free computation a process cannot
+a hardware malfunction) because in a wait-free computation a process cannot
 know how many other processes are still running. Secondly, tasks are
 \emph{colorless}, which means that it is irrelevant which process has which
 input (respectively output) value, only the set of input (respectively output)
@@ -153,7 +153,7 @@ or Spanier~\cite[Ch.~3]{bookc:spanier66}.
 \begin{thExample}[standard simplex (as a complex)]
     Let $n\in\N$. The \emph{$n$-dimensional standard simplex} is
     \[ \Delta^n \defeq \setZeroto n  . \]
-    The standard simplex~$\Delta^n$ together with all its faces forms a
+    The standard simplex~$\Delta^n$ together with all subsets thereof forms a
     simplicial complex, which (by abuse of notation) we also denote by~$\Delta^n$
     (the meaning will be clear from the context). We write $\partial\Delta^n$
     for the $(n{-}1)$-skeleton of $\Delta^n$.
@@ -186,8 +186,10 @@ or Spanier~\cite[Ch.~3]{bookc:spanier66}.
             followed by the quotient map). Consequently, for a subcomplex
             $K'\subset K$ we write $\geom{K'}$ for $\bigcup \{ \geom{F'} \Mid
             F'\in K' \} \subset \geom K$. For $x\in\geom K$ the (unique)
-            simplex~$F$ of~$K$ such that the interior of~$\geom F$ contains~$x$
-            is $\supp(x) = F$.
+            simplex~$F$ of~$K$ such that the \enquote{interior} of~$\geom F$
+            contains~$x$ is $\supp(x) = F$ where by interior we mean the
+            image in $\geom{F}$ of the interior of
+            $\Deltageo^{\dim(F)}\subset\R^{\dim(F)+1}$.
             
         \item
             Let $K,L$ be simplicial complexes and let $f\colon K\to L$ be a
@@ -207,7 +209,7 @@ found in the references mentioned at the beginning of this section.
     there exists a simplicial complex~$K$ and a homeomorphism
     $f\colon\geom{K}\to X$. Such a pair $(K,f)$ is then called
     a \emph{triangulation of~$X$} and we say that \emph{$X$ is triangulated
-    by~$K$}.
+    by~$K$} or that \emph{$K$ triangulates $X$}.
 \end{thDef}
 
 \begin{thDef}[barycentric subdivision]
@@ -231,11 +233,11 @@ found in the references mentioned at the beginning of this section.
         \item
             There exists a homeomorphism
             \[ \beta_K\colon \geom{\sd K} \to \geom{K}  , \]
-            given by the affine extension to each simplex of the following map
-            $\geom{(\sd K)^{\leq 0}}\to\geom{K}$: for a vertex~$v$ of $\sd K$,
-            which is a simplex of~$K$, say $v = F\in K$, the point
-            $\geom{v}\in\geom{\sd K}$ is mapped to the barycenter of
-            $\geom F\subset\geom K$.
+            given by the affine extension to each geometric simplex of the
+            following map $\geom{(\sd K)^{\leq 0}}\to\geom{K}$: for a vertex~$v$
+            of $\sd K$, which is a simplex of~$K$, say $v = F\in K$, the point
+            $\geom{v}\in\geom{\sd K}$ is mapped to the barycenter of $\geom
+            F\subset\geom K$.
             
         \item
             In particular, the above homeomorphism induces a homeomorphism

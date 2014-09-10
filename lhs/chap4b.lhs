@@ -24,7 +24,7 @@ type Simplex a = [Vertex a]
 
 type Complex a = [Simplex a]
 \end{code}
-A |Vertex| can be basically anything, but we require an |Eq| context
+A |Vertex| can be basically anything but we require an |Eq| context
 (which should not be much of a restriction). (Note that this declaration
 uses a GADT\footnote{generalised algebraic datatype,
 \href{http://www.haskell.org/haskellwiki/Generalised_algebraic_datatype}{%
@@ -76,7 +76,7 @@ fixSingularity'' v sSs c =
 {-"\\[-1.2\baselineskip]"-}
 
 starSummands :: Vertex a -> Complex a -> StarSummands a
-starSummands = findSummands .: star
+starSummands v c = findSummands $ star v c
 
 findSummands :: Complex a -> StarSummands a
 findSummands st =
@@ -94,7 +94,7 @@ obtains the wedge summands of $\st(v)$ and passes them to |fixSingularity''|
 unless there is no singularity at~|v|. The latter function then implements
 what is described in the proof of the theorem (where |parentSimplices s c1|
 returns all simplices of $c_1$ of which |s| is a face).
-The computation of the star summands are quite clear once we explain what
+The computation of the star summands is quite clear once we explain what
 |dfsSimplices| does. \emph{Dfs} is an abbreviation for \emph{depth first
 search}, a common algorithm for graph traversal. In this case
 |dfsSimplices c1 s1| starts at a simplex $s_1\in c_1$ of dimension~$d$ and
@@ -207,9 +207,10 @@ addGluingData vsi j comp m =
             gluedToVs  =  map (vMap fst) gluedVs 
             toId v     =  fromJust $ lookup v vsi
 \end{code}
-Furthermore, we provide a utility function that extracts the most interesting
-parts from a |GluedD|, that is the actual multigraph (as a |GluingGraphD|)
-and the glued surfaces (identified as |Surface|):
+Furthermore, we provide a utility function that calls |gluingGraph| and
+extracts the most interesting parts from the |GluedD|, that is the actual
+multigraph (as a |GluingGraphD|) and the glued surfaces (identified as
+|Surface|):
 \begin{code}
 type GluedSurfaces  =  GluedObj Surface
 
@@ -320,12 +321,16 @@ Then the following proposition is a consequence of this fact and
     \[ \pi_1(S_1,x_1) \ast \cdots \ast \pi_1(S_k,x_k)
         \ast \underbrace{\Z \ast \cdots \ast \Z}_{\ell\text{ times}}
     \]
-    where $S_1,\dots,S_k$ are the closed surfaces of \cref{ch4:pmfdclass},
-    $x_j\in S_j$ for all $j\in\setOneto k$, and $\ell\in\N$.
-    A reduced word $g_1g_2\dots g_r$ in such a free product is the identity
-    element if and only if each $g_j$ is the idendity element in its corresponding group.
-    Since we know how to solve the word problem for each free factor
-    of~$\pi_1(K,v)$, we also know how to solve it for $\pi_1(K,v)$ itself.
+    where $S_1,\dots,S_k$ are the closed surfaces that can be glued to~$K$
+    \pcref{ch4:pmfdclass}, $x_j\in S_j$ for all $j\in\setOneto k$, and
+    $\ell\in\N$. Now let $g_1g_2\dots g_r$ be a word in this free product.
+    We apply Dehn's algorithm to each $g_j$ that is an
+    element of one of the fundamental groups of the surfaces and
+    freely reduce the resulting word. Then we repeat this steps until we
+    either arrive at the empty word or the word cannot be reduced further.
+    (This process must terminate becase the word length decreases with every
+    step.) In the first case the word $g_1g_2\dots g_r$ is the identity element
+    and in the second case it is non-trivial.
     \\
 \end{proofsketch}
 
@@ -333,7 +338,7 @@ Then the following proposition is a consequence of this fact and
     \label{ch4:latonpmfd}
     %
     Let $K,L\in\finSimp$ and let $\kappa,\lambda$ be triangle loops in $K$ and
-    $L$, respectively. Futhermore, let $K$ and $L$ be weak $2$-pseudomanifolds.
+    $L$, respectively. Furthermore, let $K$ and $L$ be weak $2$-pseudomanifolds.
     \begin{itemize}
         \item 
             It is decidable whether $\gamma_\kappa$ and $\gamma_\lambda$

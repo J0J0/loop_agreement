@@ -283,7 +283,7 @@ follows:
 \>[B]{}\mathbf{type}\;\Conid{Complex}\;\Varid{a}\mathrel{=}[\mskip1.5mu \Conid{Simplex}\;\Varid{a}\mskip1.5mu]{}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
-A \ensuremath{\Conid{Vertex}} can be basically anything, but we require an \ensuremath{\Conid{Eq}} context
+A \ensuremath{\Conid{Vertex}} can be basically anything but we require an \ensuremath{\Conid{Eq}} context
 (which should not be much of a restriction). (Note that this declaration
 uses a GADT\footnote{generalised algebraic datatype,
 \href{http://www.haskell.org/haskellwiki/Generalised_algebraic_datatype}{%
@@ -396,7 +396,7 @@ This is the implementation of the function \ensuremath{\Varid{fixSingularity}}:
 \\[\blanklineskip]%
 \>[B]{}\Varid{starSummands}\mathbin{::}\Conid{Vertex}\;\Varid{a}\to \Conid{Complex}\;\Varid{a}\to \Conid{StarSummands}\;\Varid{a}{}\<[E]%
 \\
-\>[B]{}\Varid{starSummands}\mathrel{=}\Varid{findSummands}\mathbin{.:}\Varid{star}{}\<[E]%
+\>[B]{}\Varid{starSummands}\;\Varid{v}\;\Varid{c}\mathrel{=}\Varid{findSummands}\mathbin{\$}\Varid{star}\;\Varid{v}\;\Varid{c}{}\<[E]%
 \\[\blanklineskip]%
 \>[B]{}\Varid{findSummands}\mathbin{::}\Conid{Complex}\;\Varid{a}\to \Conid{StarSummands}\;\Varid{a}{}\<[E]%
 \\
@@ -432,7 +432,7 @@ obtains the wedge summands of $\st(v)$ and passes them to \ensuremath{\Varid{fix
 unless there is no singularity at~\ensuremath{\Varid{v}}. The latter function then implements
 what is described in the proof of the theorem (where \ensuremath{\Varid{parentSimplices}\;\Varid{s}\;\Varid{c1}}
 returns all simplices of $c_1$ of which \ensuremath{\Varid{s}} is a face).
-The computation of the star summands are quite clear once we explain what
+The computation of the star summands is quite clear once we explain what
 \ensuremath{\Varid{dfsSimplices}} does. \emph{Dfs} is an abbreviation for \emph{depth first
 search}, a common algorithm for graph traversal. In this case
 \ensuremath{\Varid{dfsSimplices}\;\Varid{c1}\;\Varid{s1}} starts at a simplex $s_1\in c_1$ of dimension~$d$ and
@@ -677,9 +677,10 @@ accompanying helpers):
 \>[27]{}\Varid{fromJust}\mathbin{\$}\Varid{lookup}\;\Varid{v}\;\Varid{vsi}{}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
-Furthermore, we provide a utility function that extracts the most interesting
-parts from a \ensuremath{\Conid{GluedD}}, that is the actual multigraph (as a \ensuremath{\Conid{GluingGraphD}})
-and the glued surfaces (identified as \ensuremath{\Conid{Surface}}):
+Furthermore, we provide a utility function that calls \ensuremath{\Varid{gluingGraph}} and
+extracts the most interesting parts from the \ensuremath{\Conid{GluedD}}, that is the actual
+multigraph (as a \ensuremath{\Conid{GluingGraphD}}) and the glued surfaces (identified as
+\ensuremath{\Conid{Surface}}):
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{21}{@{}>{\hspre}c<{\hspost}@{}}%
@@ -811,12 +812,16 @@ Then the following proposition is a consequence of this fact and
     \[ \pi_1(S_1,x_1) \ast \cdots \ast \pi_1(S_k,x_k)
         \ast \underbrace{\Z \ast \cdots \ast \Z}_{\ell\text{ times}}
     \]
-    where $S_1,\dots,S_k$ are the closed surfaces of \cref{ch4:pmfdclass},
-    $x_j\in S_j$ for all $j\in\setOneto k$, and $\ell\in\N$.
-    A reduced word $g_1g_2\dots g_r$ in such a free product is the identity
-    element if and only if each $g_j$ is the idendity element in its corresponding group.
-    Since we know how to solve the word problem for each free factor
-    of~$\pi_1(K,v)$, we also know how to solve it for $\pi_1(K,v)$ itself.
+    where $S_1,\dots,S_k$ are the closed surfaces that can be glued to~$K$
+    \pcref{ch4:pmfdclass}, $x_j\in S_j$ for all $j\in\setOneto k$, and
+    $\ell\in\N$. Now let $g_1g_2\dots g_r$ be a word in this free product.
+    We apply Dehn's algorithm to each $g_j$ that is an
+    element of one of the fundamental groups of the surfaces and
+    freely reduce the resulting word. Then we repeat this steps until we
+    either arrive at the empty word or the word cannot be reduced further.
+    (This process must terminate becase the word length decreases with every
+    step.) In the first case the word $g_1g_2\dots g_r$ is the identity element
+    and in the second case it is non-trivial.
     \\
 \end{proofsketch}
 
@@ -824,7 +829,7 @@ Then the following proposition is a consequence of this fact and
     \label{ch4:latonpmfd}
     %
     Let $K,L\in\finSimp$ and let $\kappa,\lambda$ be triangle loops in $K$ and
-    $L$, respectively. Futhermore, let $K$ and $L$ be weak $2$-pseudomanifolds.
+    $L$, respectively. Furthermore, let $K$ and $L$ be weak $2$-pseudomanifolds.
     \begin{itemize}
         \item 
             It is decidable whether $\gamma_\kappa$ and $\gamma_\lambda$

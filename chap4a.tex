@@ -37,13 +37,13 @@ if $\supp(x)$ is an $n$- or $(n{-}1)$-simplex of~$K$,
 we can find a neighborhood of~$x$ that is homeomorphic
 to~$\R^n$. On the other hand, if the dimension of~$\supp(x)$
 is less than~$n{-}1$, singularities can occur at~$x$.
-Thus, the geometric realization of~$K$ partially behaves like a manifold but may
+Thus the geometric realization of~$K$ partially behaves like a manifold but may
 fail to be locally euclidean at some points, hence the name \emph{pseudo}manifold
 (see \cref{ch4:fig:pseudomanifold}).
 
 \begin{figure}[b]
     \centering
-    \begin{tikzpicture}[scale=1.75]
+    \begin{tikzpicture}[scale=1.70]
         \newcommand{\stdsimplex}{%
             \begin{scope}[Dfill]
                 \fill
@@ -92,8 +92,9 @@ fail to be locally euclidean at some points, hence the name \emph{pseudo}manifol
                     node [Dpoint] {} ;
         %
     \end{tikzpicture}
-    \caption{Example of a $2$-dimensional pseudomanifold where the highlighted 
-             vertex does \emph{not} have a euclidean neighborhood}
+    \caption{Example of a finite but not strongly connected $2$-dimensional
+             weak pseudomanifold where the highlighted vertex does \emph{not}
+             have a euclidean neighborhood}
     \label{ch4:fig:pseudomanifold}
 \end{figure}
 
@@ -165,9 +166,9 @@ of a vertex:
 
 \begin{proof}
     At first observe that the star of~$v$ is completely determined by the
-    $2$-simplices containing~$v$ because every $0$- or $1$-simplex is
-    contained in some $2$-simplex by definition of a pseudomanifold.
-    Let $F_0=\{v,x_0,x_1\}\in K$ be a
+    $2$-sim\-plices containing~$v$ because every $0$- or $1$-simplex is
+    contained in some simplex of dimension~$2$ by definition of a
+    pseudomanifold.  Let $F_0=\{v,x_0,x_1\}\in K$ be a
     $2$-simplex of which $v$ is a vertex. Then the $1$-simplex
     $\{v,x_1\}$ is the face of another $2$-simplex $F_1=\{v,x_1,x_2\}$
     and so on. Since there are only finitely many simplices, this process
@@ -180,7 +181,7 @@ of a vertex:
     $2$-simplices containing~$v$, we obtain a finite number of such wedge
     summands.
     Let $F$ and $F'$ be $2$-simplices of two different wedge summands.
-    Then $F\cap F'$ cannot be a $1$-simplex, because that would contradict
+    Then $F\cap F'$ cannot be a $1$-simplex because that would contradict
     the fact that every $1$-simplex is the face of exactly two $2$-simplices.
     It follows that $F\cap F' = \{v\}$, and thus, $\st(v)$ is the
     \enquote{combinatorial wedge} of the wedge summands. The second assertion
@@ -206,17 +207,18 @@ of a vertex:
     have a euclidean neighborhood. By \cref{ch4:starinpmfd} and a standard
     connectedness argument, these are exactly those vertices whose star consists
     of more than one wedge summand. Let $v\in V'$ and let $K_0,\dots,K_k$ be the
-    components of~$\st(v)$ as in the proposition. Then we form a new complex
+    wedge summands of~$\st(v)$ as in the proposition. Then we form a new complex
     out of~$K$ in the following way: remove~$v$ and add vertices
     $v_0,\dots,v_k$; then, for all $j\in\setZeroto k$, replace every $v$ in a
-    simplex of~$K_j$ by~$v_j$. The result is a 2-dimensional pseudomanifold where, by
-    construction, the star of each vertex~$v_j$ consists of a single component.
+    simplex of~$K_j$ by~$v_j$. The result is a 2-dimensional pseudomanifold
+    where, by construction, the star of each vertex~$v_j$ consists of a single
+    wedge summand.
     By induction on~$\abs{V'}$ we obtain a complex~$K'$ such that \emph{every}
     vertex of~$K'$ has that property. By definition of pseudomanifolds and
     \cref{ch4:starinpmfd} we see that every point of~$\geom{K'}$ has a
     euclidean neighborhood, thus $\geom{K'}$ is a compact $2$-manifold, that is
     a disjoint union of closed surfaces. The simplicial projection map $K'\to K$
-    (which maps the recently introduced points~$v_j$ to the point~$v$ they originated
+    (which maps recently introduced points~$v_j$ to the point~$v$ they originated
     from) induces a surjective continuous map $\geom{K'}\to\geom{K}$, and since
     $\geom{K'}$ is compact and $\geom{K}$ is hausdorff, this map is the desired
     quotient map.

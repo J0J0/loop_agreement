@@ -7,8 +7,8 @@ We give the strict mathematical definitions first and explain their
 interpretation in the context of distributed computing afterwards.
 
 \section{Mathematical Framework}
-The following definitions rely on an additional type of map operating on
-simplicial complexes that is more flexible than simplicial maps:
+The following definitions rely on an additional type of map that is operating on
+simplicial complexes and that is more flexible than simplicial maps:
 
 \begin{thDef}[carrier map]
     \label{ch2:def:carriermap}
@@ -23,8 +23,8 @@ simplicial complexes that is more flexible than simplicial maps:
             \Phi(F)$ as subcomplexes of~$L$.
             
         \item
-            Let $\Phi\colon K\to L$ be a carrier map. Then $\Phi$ is
-            \emph{strict} if it satisfies
+            For the rest of this definition, let $\Phi\colon K\to L$ be a carrier
+            map. Then $\Phi$ is \emph{strict} if it satisfies
             \[ \Phi(F\cap F') = \Phi(F) \cap \Phi(F') \]
             for all simplices $F,F'\in K$.
             
@@ -33,7 +33,8 @@ simplicial complexes that is more flexible than simplicial maps:
             For $A\subset K$ the subcomplex
             \[ \Phi[A] \defeq \bigcup \Phi(A) \]
             of~$L$ is the \emph{image complex of $A$ under $\Phi$}
-            and we call $\Phi[K]$ simply \emph{image complex of~$\Phi$}.
+            and we call the complex $\Phi[K]$ simply the
+            \emph{image complex of~$\Phi$}.
             
         \item
             Let $\Psi\colon L\to M$ be another carrier map. Then the
@@ -284,7 +285,8 @@ carrier maps with simplicial maps from both sides. To do that properly, we need
 \end{thDef}
 
 \begin{thDef}[composition of carrier maps with simplicial maps]
-    Let $\Phi\colon K_2\to K_3$ be a carrier map and let
+    Let $K_1$~to~$K_4$ be simplicial complexes,
+    let $\Phi\colon K_2\to K_3$ be a carrier map, and let
     $f\colon K_1\to K_2$ and $g\colon K_3\to K_4$ be simplicial
     maps. We define the carrier maps
     $\Phi\after f\colon K_1\to K_3$ and $g\after\Phi\colon K_2\to K_4$
@@ -354,7 +356,7 @@ and \emph{protocols} as well as the concept of \emph{task solving}.
     such that $\delta\after\Xi$ \emph{is carried by $\Phi$},
     which means that
     \[ (\delta\after\Xi)(F) \subset \Phi(F) \]
-    as subcomplexes of $\cO$ is satisfied for all $F\in\cI$.
+    as subcomplexes of $\cO$ holds for all $F\in\cI$.
     Such a map $\delta$ is called a \emph{decision map}.
 \end{thDef}
 
@@ -414,7 +416,7 @@ the system of processes. Then these processes run some sort of
 captured by $\Xi$ and $\cP$. That means if $F\in\cI$ is an input
 configuration, $\Xi(F) \subset \cP$ includes every possible output
 configuration that may arise from the input configuration~$F$ and
-one execution of the specified algorithm. Note, that in this case
+one execution of the specified algorithm. Note that in this case
 an \enquote{algorithm} is not entirely deterministic (in the sense
 that we cannot predict the exact ouput configuration) because the
 communication between processes introduces a degree of uncertainty.
@@ -448,7 +450,7 @@ precisely the definition of a simplicial complex.
 
 There is much more that could be said about the \enquote{simplicial
 assumptions} of our model but in this thesis we will not go into much more
-detail. However, there is an extensive discussion of the
+detail. There is, however, an extensive discussion of the
 correspondence between the above \enquote{combinatorial model} and the
 \enquote{operational model} (which describes tasks and protocols from
 a computer scientist's point of view) in the book by
@@ -478,15 +480,15 @@ role in \cref{ch2:sec:consequences}.
     the task requires the processes to choose at most $k$ distinct
     output values (from the set of input values).
     
-    An analogous analysis as in \cref{ch2:consensus} shows, that
+    An analogous analysis as in \cref{ch2:consensus} shows that
     the formal task (in the sense of \cref{ch2:def:taskprotocol})
     is given by the input complex~$\Delta^{p-1}$, the output complex
-    $(\Delta^{p-1})^{\leq k-1}$ and the following carrier map~$\skel^{k-1}$:
+    $(\Delta^{p-1})^{\leq k-1}$, and the following carrier map~$\skel^{k-1}$:
     if $F\in\Delta^{p-1}$ is an input configuration, $\skel^{k-1}(F)$ is the
-    $(k{-}1)$-skeleton of the complex determined by $F$:
+    $(k{-}1)$-skeleton of the complex determined by $F$, that is
     \[ \skel^{k-1}(F) \defeq \bigl(\Delta^{p-1}(F)\bigr)^{\leq k-1}
-    ; \]
-    this obviously defines a carrier map. (To keep the notation
+    , \]
+    which obviously defines a carrier map. (To keep the notation
     readable we write only $\skel^{k-1}$ even though the carrier map,
     of course, also depends on~$p$.)
     
@@ -501,7 +503,7 @@ role in \cref{ch2:sec:consequences}.
             
         \item
             For $k=1$, we see that $(p,1)$-set agreement coincides with
-            $p$-consensus \pcref{ch2:consensus}.
+            the $p$-consensus task \pcref{ch2:consensus}.
             
         \item
             If $p\leq k$, the task is trivial because every process can simply
@@ -556,9 +558,11 @@ that intuition formal in an appropriate sense.
 
 In \cref{ch2:def:carriermap} we saw how to compose carrier maps,
 which naturally applies to tasks (because a task is just a carrier
-map). Since we would also like to compose protocols we prove the following
+map). As we would also like to compose protocols, we prove the following
 
 \begin{thLemma}[composition of strict carrier maps]
+    \label{ch2:strictcompos}
+    %
     Let $K,L,M$ be simplicial complexes and let $\Phi\colon K\to L$
     and $\Psi\colon L\to M$ be strict carrier maps.
     Then their composition $\Psi\after\Phi\colon K\to M$ is strict as well.
@@ -581,7 +585,7 @@ map). Since we would also like to compose protocols we prove the following
         \bigcup_{G\in\Phi(F)} \; \bigcup_{G'\in\Phi(F')}
             \Psi(G\cap G')
     . \end{align*}
-    Since $\Phi(F)$ and $\Phi(F')$ are subcomplexes of~$L$, they contain every
+    Since $\Phi(F)$ and $\Phi(F')$ are both subcomplexes of~$L$, they contain every
     face of $G\in\Phi(F)$ and $G'\in\Phi(F')$, respectively. In particular,
     $G\cap G'$ is already a simplex of $\Phi(F)\cap\Phi(F')$, which shows the
     non-trivial inclusion of the following equality:
@@ -601,6 +605,11 @@ map). Since we would also like to compose protocols we prove the following
     Then the composition~$\Xi'\after\Xi$ is again
     a protocol onto its image complex $(\Xi'\after\Xi)[\cI]$.
 \end{thCorollary}
+
+\begin{proof}
+    Immediate from \cref{ch2:strictcompos}.
+    \\
+\end{proof}
 
 Generally, we want to formalize the following situation: suppose we are
 given a set of tasks~$T$ and for each $\Phi\in T$ a protocol that
@@ -627,7 +636,7 @@ becomes:
     $\sd_{\cI}^N\colon\cI\to\sd^N\cI$ and~$\Phi$, solves~$\Phi'$.
 \end{thDef}
 
-We will see later that this is enough for our purposes. We also note that the
+This is enough for our purposes, as we shall see later. We also note that the
 assumption of available barycentric agreement protocols is not absurd, on
 the contrary: Herlihy et~al.~\cite[Corollary 4.2.10]{bookc:herlihyetal13} show
 that our underlying computational model permits an (operational) implementation

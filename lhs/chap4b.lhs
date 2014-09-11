@@ -163,7 +163,7 @@ information down to a \emph{gluing graph}, determined by the following data:
     specifies how often a surface is glued to a particular
     gluing point.
 \end{itemize}
-Note that this defines a (bipartite) multigraph whithout self-loops
+Note that this defines a (bipartite) multigraph without self-loops
 (see \cref{ch4:fig:gluinggraph} for an example).
 In our implementation we use the following types to store the multigraph
 (where |M| and |LM| are the modules @Data.Map.Strict@ and @.Lazy@, respectively):

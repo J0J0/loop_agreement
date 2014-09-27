@@ -118,7 +118,7 @@ and its genus). Instead of including the implementation of
 there are two approaches that come to mind:
 \begin{itemize}[topsep=5pt,labelindent=0pt]
 \item
-    Determine the orientability type explicitely and calculate the genus from
+    Determine the orientability type explicitly and calculate the genus from
     the Euler characteristic.
 \item
     Compute a \emph{fundamental polygon} of the complex and analyse
@@ -148,7 +148,7 @@ denotes wedge sum. Then we have:
 > baseSurfaces $ (tor # tor) \/ tor  {-"\qquad"-} --  [OS.g=2,OS.g=1]
 where \enquote{OS.g=r} means \enquote{orientable surface of genus~$r$}.
 
-Now we treat the gluing. Remeber that we have $\geom{K} \cong
+Now we treat the gluing. Remember that we have $\geom{K} \cong
 (\coprod_{j=1}^k S_j)/{\sim}$ where $\sim$ is an equivalence relation that
 identifies only finitely many points. Since the exact relation $\sim$ is
 neither topologically relevant nor convenient to work with, we strip the gluing
@@ -328,7 +328,7 @@ Then the following proposition is a consequence of this fact and
     element of one of the fundamental groups of the surfaces and
     freely reduce the resulting word. Then we repeat this steps until we
     either arrive at the empty word or the word cannot be reduced further.
-    (This process must terminate becase the word length decreases with every
+    (This process must terminate because the word length decreases with every
     step.) In the first case the word $g_1g_2\dots g_r$ is the identity element
     and in the second case it is non-trivial.
     \\

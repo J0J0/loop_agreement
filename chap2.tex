@@ -19,7 +19,7 @@ simplicial complexes and that is more flexible than simplicial maps:
             A \emph{carrier map $\Phi\colon K\to L$} is a monotonic map
             \[ \Phi\colon K \to \{ L' \Mid L'\subset L \text{ is a subcomplex} \}  , \]
             where both sets are partially ordered by inclusion. More explicitly:
-            For simplicies $F' \subset F$ in $K$ we require $\Phi(F') \subset
+            For simplices $F' \subset F$ in $K$ we require $\Phi(F') \subset
             \Phi(F)$ as subcomplexes of~$L$.
             
         \item
@@ -418,7 +418,7 @@ configuration, $\Xi(F) \subset \cP$ includes every possible output
 configuration that may arise from the input configuration~$F$ and
 one execution of the specified algorithm. Note that in this case
 an \enquote{algorithm} is not entirely deterministic (in the sense
-that we cannot predict the exact ouput configuration) because the
+that we cannot predict the exact output configuration) because the
 communication between processes introduces a degree of uncertainty.
 As mentioned in the introduction, this corresponds to the fact that
 we model protocols that are \emph{wait-free}.
@@ -616,7 +616,7 @@ given a set of tasks~$T$ and for each $\Phi\in T$ a protocol that
 solves $\Phi$, can we use these protocols to to solve another task~$\Phi'$? If
 this is the case, we say \emph{the tasks of $T$ implement $\Phi'$}.
 
-In this thesis, however, we only need a restriced version of this concept.
+In this thesis, however, we only need a restricted version of this concept.
 First of all, when we talk about whether some \emph{task implements another},
 we always assume that the set of solved tasks includes the barycentric agreement
 tasks \pcref{ch2:barycentricagreement} for all~$N\in\N$ and all occurring
